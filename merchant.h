@@ -1,0 +1,23 @@
+#ifndef MERCHANT_H
+#define MERCHANT_H
+#include<string>
+#include"enemy.h"
+#include "style.h"
+#include "type.h"
+class Object;
+class Merchant: public Enemy{
+  	std::string race = "M";
+public:
+	Merchant(int, int);
+       	static bool revenge;
+	bool visit_object(Type t);
+	bool visit(Object&, Type t);
+	//be_visit
+	bool be_visit(Shade& , Type t);
+	bool be_visit(Drow& , Type t);
+	bool be_visit(Vampire& , Type t);
+	bool be_visit(Troll& , Type t);
+	bool be_visit(Goblin& , Type t);
+};
+
+#endif
