@@ -29,7 +29,14 @@
 
 #include "enemy.h"
 #include "human.h"
+#include "dwarf.h"
+#include "halfling.h"
+#include "elf.h"
+#include "orc.h"
+#include "merchant.h"
 
+#include "item.h"
+#include "small_hoard.h"
 using namespace std;
 
 class Enemy;
@@ -251,33 +258,34 @@ void Floor::setStair(){ //generate stairway.
 //	theChamber[n].c.erase(theChamber[n].c.begin() + pos);
 //}
 
-//void Floor::setTreasure(){ //generate gold.
-//	int n = getRandom(0, 4);
-//	int pos = getRandom(0, theChamber[n].c.size() - 1);
-//	int p = getRandom(1,8);
-//	shared_ptr<Object> o;
-//	switch (p){
-//		case 1: 
-//		case 2:
-//		case 3:
-//		case 4: 
-//		case 5:
-//			o = make_shared<Normal>();
-//			break;
-//		case 6:
-//        case 7: 
-//			o = make_shared<Small_Hoard>();
-//			break;
-//		case 8:
-//			o = make_shared<Dragon_Hoard>(); //I expect the ctor of DH spawn a dragon here!!!!
-//			break;
-//	}
-//	Pos position = *(theChamber[n].c[pos])->getPos();
-//	o->setCoordinate(position.posy, position.posx);
-//	//theTreasure.emplace_back(o);
-//	*(theChamber[n].c[pos]) = o;
-//	theChamber[n].c.erase(theChamber[n].c.begin() + pos);
-//}
+void Floor::setTreasure(){ //generate gold.
+	int n = getRandom(0, 4);
+	int pos = getRandom(0, theChamber[n].c.size() - 1);
+	Pos position = (*theChamber[n].c[pos])->getPos();
+	int p = getRandom(1,8);
+	shared_ptr<Treasure> o;
+	switch (6){
+		case 1: 
+		case 2:
+		case 3:
+		case 4: 
+		case 5:
+			o = make_shared<Normal_Hoard>(position.posx, position.posy);
+			break;
+		case 6:
+        case 7: 
+			o = make_shared<Small_Hoard>(position.posx, position.posy);
+			break;
+		case 8:
+			o = make_shared<Dragon_Hoard>(position.posx, position.posy); //I expect the ctor of DH spawn a dragon here!!!!
+			break;
+	}
+	//o->setCoordinate(position.posy, position.posx);
+	//theTreasure.emplace_back(o);
+	*(theChamber[n].c[pos]) = o;
+	w->notify(*(*theChamber[n].c[pos]));
+	theChamber[n].c.erase(theChamber[n].c.begin() + pos);
+}
 
 
 void Floor::setEnemy(){ //generate enemy.
@@ -286,7 +294,7 @@ void Floor::setEnemy(){ //generate enemy.
 	int p = getRandom(1,18);
     Pos position = (*theChamber[n].c[pos])->getPos();
 	shared_ptr<Enemy> o = nullptr;
-	switch (1){
+	switch (p){
 		case 1: 
 		case 2:
 		case 3:
@@ -297,7 +305,7 @@ void Floor::setEnemy(){ //generate enemy.
 		case 5:
 		case 6:
 		case 7: 
-		//	o = make_shared<Dwarf>(position.posx, position.posy);
+			o = make_shared<Dwarf>(position.posx, position.posy);
            // o->setAttributes(position.posy, position.posx, DWARF, false, nullptr);
 			break;
 		case 8:
@@ -305,36 +313,30 @@ void Floor::setEnemy(){ //generate enemy.
 		case 10: 
 		case 11:
 		case 12:
-		//	o = make_shared<Halfling>(position.posx, position.posy);
+			o = make_shared<Halfling>(position.posx, position.posy);
            // o->setAttributes(position.posy, position.posx, HALFLING, false, nullptr);
 			break;
 		case 13: 
 		case 14:
-		//	o = make_shared<Elf>(position.posx, position.posy);
+			o = make_shared<Elf>(position.posx, position.posy);
           //  o->setAttributes(position.posy, position.posx, ELF, false, nullptr);
 			break;
 		case 15:
 		case 16: 
-		//	o = make_shared<Orc>(position.posx, position.posy);
+			o = make_shared<Orc>(position.posx, position.posy);
            // o->setAttributes(position.posy, position.posx, ORC, false, nullptr);
 			break;
 		case 17:
 		case 18:
-		//	o = make_shared<Merchant>(position.posx, position.posy);
+			o = make_shared<Merchant>(position.posx, position.posy);
            // o->setAttributes(position.posy, position.posx, MERCHANT, false, nullptr);
 			break;
 	}
 	
 	theEnemy.emplace_back(o);
 	*(theChamber[n].c[pos]) = o;
-	cout << "haha" << endl;
-	cout << (*theChamber[n].c[pos])->getPos().style << endl;
-	
 	w->notify(*(*theChamber[n].c[pos]));
-	cout << "haha2" << endl;
-
 	theChamber[n].c.erase(theChamber[n].c.begin() + pos);
-	cout << "haha3" << endl;
 }
 
 void Floor::floorVisit(string s, Type type){

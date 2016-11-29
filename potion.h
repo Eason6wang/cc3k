@@ -9,9 +9,8 @@ class Potion :public Item {
 	std::shared_ptr<Potion> potion;
 	public:
 	virtual Info modify () = 0;
-	Potion (int posx, int posy, Style style, std::shared_ptr<Potion> potion);
+	Potion (int row, int col, Style style, std::shared_ptr<Potion> potion);
 	virtual ~Potion () = default;
-	bool be_visit (Player &player, Type type) override;
 };
 
 #endif

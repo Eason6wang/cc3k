@@ -28,8 +28,8 @@ class Wound_Def;
 class Player: public Character{
   	PlayerInfo playerInfo;
   public: 
-    PlayerInfo getPlayerInfo();
-    Player(int, int, int, int, int, Style);
+    PlayerInfo& getPlayerInfo();
+    Player(int hp, int atk, int def, int row, int col, Style style);
     //Player(Player &);
     void levelUp();
     virtual ~Player() = default;

@@ -1,9 +1,17 @@
 #include "dragon_hoard.h"
+#include "type.h"
+#include "shade.h"
 
-Dragon_Hoard::Dragon_Hoard (int posx, int posy, Style style, int gold)
-		:Treasure{posx, posy, style, gold} {}
-
-bool Dragon_Hoard::be_visit (Player &player, Type type) {
-	if (type == MOVE) return true;
-	else return false;
+bool Dragon__Hoard::be_visit (Shade &shade, Type type) {
+	if (type == MOVE) {
+		shade.getPlayerInfo().gold += getGold();
+		return true;
+	}
+	if (type == ATTACK) {
+		return false;
+	}
 }
+
+Dragon__Hoard::Dragon__Hoard (int row, int col)
+	:Treasure{row, col, DRAGON_HOARD, 6} {}
+

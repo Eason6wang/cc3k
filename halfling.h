@@ -3,15 +3,14 @@
 #include"enemy.h"
 #include "style.h"
 #include "type.h"
-#include<string>
 
 class Object;
 
 class Halfling: public Enemy{
-  std::string race = "L";
   public: 
-  	Halfling(int, int);
-   	bool visit(Object&, Type t);
+  	Halfling(int row, int col);
+    bool visit (Object &object, Type type);
+	bool be_visit (Shade &shade, Type type);
 };
 
 

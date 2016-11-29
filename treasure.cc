@@ -1,12 +1,8 @@
 #include "treasure.h"
 #include "object.h"
 
-Treasure::bool visit (Object &object, Type type){
-	object.be_visit (*this, Type type);
-}
+Treasure::Treasure (int row, int col, Style style, int gold) 
+		:Item{row, col, style}, gold{gold} {}
 
-Treasure::Treasure (int pos, int posy, Style style, int gold) 
-		:Item{posx, posy, style}, gold{gold} {}
-
-Treasure::getGold () { return gold; }
+int Treasure::getGold () { return gold; }
 

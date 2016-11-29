@@ -20,14 +20,14 @@
 */
 using namespace std;
 
-Player::Player(int hp, int atk, int def, int r, int c, Style style):
-Character{hp, atk, def, r, c, style}, playerInfo{0, 1, ""}{}
+Player::Player(int hp, int atk, int def, int row, int col, Style style):
+Character{hp, atk, def, row, col, style}, playerInfo{0, 1, ""}{}
 
 void Player::levelUp(){
   playerInfo.level++;
 }
 
-PlayerInfo Player::getPlayerInfo(){
+PlayerInfo& Player::getPlayerInfo(){
   return playerInfo;
 }
 

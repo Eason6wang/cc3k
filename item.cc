@@ -4,8 +4,8 @@
 
 class Item :public Object {
 	public:
-	Item(int posx, int posy, Style style)
-		:Object{posx, posy, style} {}
+	Item(int row, int col, Style style)
+		:Object{row, col, style} {}
 	virtual ~Item() = default;
 };
 

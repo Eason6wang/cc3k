@@ -1,21 +1,16 @@
 #include "small_hoard.h"
-#include "object.h"
-#include "player.h"
-#include "attack_exception.h"
+#include "type.h"
+#include "shade.h"
 
-Small_Hoard::bool visit (Object &object, Type type) {
-	object.be_visit (*this, type);
-}
-
-bool Small_Hoard::be_visit (Player &player, Type type) {
+bool Small_Hoard::be_visit (Shade &shade, Type type) {
 	if (type == MOVE) {
-		player.getInfo().gold += getGold();
+		shade.getPlayerInfo().gold += getGold();
 		return true;
 	}
 	if (type == ATTACK) {
-		throw attack_exception {getPos().style};
+		return false;
 	}
 }
 
-Small_Hoard::Small_Hoard (int posx, int posy, Style style, int gold)
-	:Treasure{posx, posy, style, gold} {}
+Small_Hoard::Small_Hoard (int row, int col)
+	:Treasure{row, col, SMALL_HOARD, 1} {}

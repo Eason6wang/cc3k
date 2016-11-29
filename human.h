@@ -3,7 +3,6 @@
 #include"enemy.h"
 #include "style.h"
 #include "type.h"
-#include<string>
 
 class Object;
 

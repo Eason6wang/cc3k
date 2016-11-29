@@ -3,15 +3,14 @@
 #include"enemy.h"
 #include "style.h"
 #include "type.h"
-#include<string>
 
 class Object;
 
 class Orc: public Enemy{
-  std::string race = "O";
   public: 
-  	Orc(int, int);
-   	bool visit(Object&, Type t);
+  	Orc(int row, int col);
+    bool visit (Object &object, Type type);
+	bool be_visit (Shade &shade, Type type);
 };
 
 #endif

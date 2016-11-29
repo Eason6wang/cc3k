@@ -20,10 +20,10 @@ void GameController::play(string file){
 	f.init(file);
 	f.setPlayer();
 	f.setStair();
-//	for (int i = 0; i < 10; i++){
+	for (int i = 0; i < 10; i++){
 //		f.setPotion();
-//		f.setTreasure();
-//	}
+		f.setTreasure();
+	}
     
 	for (int j = 0; j < 20; j++){
 		f.setEnemy();
