@@ -267,7 +267,7 @@ void Floor::setTreasure(){ //generate gold.
 	Pos position = (*theChamber[n].c[pos])->getPos();
 	int p = getRandom(1,8);
 	shared_ptr<Treasure> o;
-	switch (6){
+	switch (p){
 		case 1: 
 		case 2:
 		case 3:
