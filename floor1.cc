@@ -36,7 +36,10 @@
 #include "merchant.h"
 
 #include "item.h"
+#include "treasure.h"
 #include "small_hoard.h"
+#include "normal_hoard.h"
+#include "dragon_hoard.h"
 using namespace std;
 
 class Enemy;
