@@ -12,7 +12,7 @@ class Dwarf;
 class Halfling;
 class Elf;
 class Orc;
-class Dragon;
+/*class Dragon;
 class Merchant;
 class Small_Hoard;
 class Normal_Hoard;
@@ -24,6 +24,7 @@ class Boost_Def;
 class Poison_Health;
 class Wound_Atk;
 class Wound_Def;
+*/
 
 class Player: public Character{
   	PlayerInfo playerInfo;
@@ -33,13 +34,13 @@ class Player: public Character{
     //Player(Player &);
     void levelUp();
     virtual ~Player() = default;
-/*
+
 	virtual bool be_visit(Human& , Type t) override;
 	virtual bool be_visit(Dwarf& , Type t) override;
 	virtual bool be_visit(Halfling& , Type t) override;
 	virtual bool be_visit(Elf& , Type t) override;
 	virtual bool be_visit(Orc& , Type t) override;
-	virtual bool be_visit(Dragon& , Type t) override;
+/*	virtual bool be_visit(Dragon& , Type t) override;
 	virtual bool be_visit(Merchant& , Type t) override;
 	virtual bool be_visit(Small_Hoard& , Type t) override;
 	virtual bool be_visit(Normal_Hoard& , Type t) override;
