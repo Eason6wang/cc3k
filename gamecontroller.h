@@ -7,7 +7,7 @@
 class Object;
 
 class GameController{
-	Floor f;
+	Floor floor;
 	public:
 	//GameController();
 	//~GameController();

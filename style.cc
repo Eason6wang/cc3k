@@ -1,6 +1,8 @@
 #include "style.h"
+#include <vector>
+#include <string>
 
-vector <const string> name {
+const std::vector<std::string> name {
     "Shade",
     "Drow",
     "Vampire",

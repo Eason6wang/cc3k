@@ -1,49 +1,36 @@
 #include "panel.h"
+#include "style.h"
+#include "playerinfo.h"
+#include "pos.h"
 #include <sstream>
 using namespace std;
-//Panel::Panel();
+
+Panel::Panel(std::shared_ptr<Player> player) :player{player} {}
 	
 	
 void Panel::notify(Subject &whoNotify) {
-	gold = p->getPlayerInfo().gold;
-	floor = p->getPlayerInfo().level;
-	hp = p->getInfo().hp;
-	atk = p->getInfo().atk;
-	def = p->getInfo().def;
-	string action = p->getPlayerInfo().action;
+	gold = player->getPlayerInfo().gold;
+	floor = player->getPlayerInfo().level;
+	hp = player->getInfo().hp;
+	atk = player->getInfo().atk;
+	def = player->getInfo().def;
+	race = getString (player->getPos().style);
+	action = player->getPlayerInfo().action;
 }
 	
 //Panel::~Panel();
 
 
-ostream &operator<<(std::ostream &out, const Panel &p){
-	ostringstream ss;
-	for (int i = 0; i < 63; i++){
-		ss << " ";
-	}
-	string s = ss.str();
-	ostringstream ss1;
-	ss1 << "Race : " << p.race << " Gold: " << p.gold;
-	string s1 = ss1.str();
-	string s2 = s1 + s;
-	int pos = 70;
-	s2[pos] = 'F';
-	s2[pos+1] = 'l';
-	s2[pos+2] = 'o';
-	s2[pos+3] = 'o';
-	s2[pos+4] = 'r';
-	ostringstream ss3;
-    ostringstream ss2;
-	ss2 << p.floor;
-	string s3 = ss3.str();
-	int n = s3.length();
-	for (int j = 0; j < n; j ++){
-		s2[pos+5+j] = s3[j];
-	}
-	out << s2 << endl;
-	out << "HP: " << p.hp << endl;
-	out << "Atk: " << p.atk << endl;
-	out << "Def: " << p.def << endl;
-	out << "Action: " << p.action << endl;
+ostream &operator<<(std::ostream &out, const Panel &panel){
+	string line1 = "Race : " 
+		+ panel.race + " Gold: " 
+		+ to_string (panel.gold);
+	line1.resize (69, ' ');
+	line1 += "Floor " + to_string (panel.floor);
+	cout << line1 << endl;
+	out << "HP: " << panel.hp << endl;
+	out << "Atk: " << panel.atk << endl;
+	out << "Def: " << panel.def << endl;
+	out << "Action: " << panel.action << endl;
 	return out;
 }

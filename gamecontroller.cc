@@ -17,18 +17,18 @@ void GameController::play(string file){
 	//cin >> bonus;
 	//switch 
 	cout << "enter the play()" << endl;
-	f.init(file);
-	f.setPlayer();
-	f.setStair();
+	floor.init(file);
+	floor.setPlayer();
+	floor.setStair();
 	for (int i = 0; i < 10; i++){
 //		f.setPotion();
-		f.setTreasure();
+		floor.setTreasure();
 	}
     
 	for (int j = 0; j < 20; j++){
-		f.setEnemy();
+		floor.setEnemy();
 	}
-    cout << f; //use display.
+    cout << floor; //use display.
 
 	//the floor is generated 	
 	string cmd;
@@ -38,19 +38,19 @@ void GameController::play(string file){
 			string direction;
 		   	if (cmd == "u") {
                 cin >> direction;
-				f.floorVisit(direction, PICKUP);
+				floor.floorVisit(direction, PICKUP);
 			} else if (cmd == "a") {
                 cin >> direction;
-				f.floorVisit(direction, ATTACK);
+				floor.floorVisit(direction, ATTACK);
 			} else if (cmd == "f") {
-				f.pause();
+				floor.pause();
 			} else if (cmd == "r") {
-				f.init(file); //remember to generate enemies again
+				floor.init(file); //remember to generate enemies again
 			} else if (cmd == "q") {
 				throw Quit{};
 			} else {
                 cin >> direction;
-				f.floorVisit(direction, MOVE);
+				floor.floorVisit(direction, MOVE);
 			}
 		}
 		catch (Quit& q) {

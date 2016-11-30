@@ -5,7 +5,7 @@
 class Object;
 
 struct Pos{
-    int posx,posy;
+    int posx, posy;
     Style style;
     bool isRead;
     std::shared_ptr<Object> last;
