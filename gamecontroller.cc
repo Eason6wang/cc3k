@@ -6,6 +6,7 @@
 #include "object.h"
 #include "gamecontroller.h"
 #include "quit.h"
+#include "window.h"
 using namespace std;
 
 //Game::GameController(){}
@@ -17,8 +18,10 @@ void GameController::play(string file){
 	//cin >> bonus;
 	//switch 
 	cout << "enter the play()" << endl;
+	Window theWindow {"welcome.txt"};
+	cout << theWindow;
 	floor.init(file);
-	floor.setPlayer();
+/*	floor.setPlayer();
 	floor.setStair();
 	for (int i = 0; i < 10; i++){
 //		f.setPotion();
@@ -27,7 +30,7 @@ void GameController::play(string file){
     
 	for (int j = 0; j < 20; j++){
 		floor.setEnemy();
-	}
+	}*/
     cout << floor; //use display.
 
 	//the floor is generated 	

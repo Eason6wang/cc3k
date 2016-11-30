@@ -40,6 +40,8 @@
 #include "small_hoard.h"
 #include "normal_hoard.h"
 #include "dragon_hoard.h"
+
+//#include "buff.h"
 using namespace std;
 
 class Enemy;
@@ -150,7 +152,17 @@ void Floor::init(string file){ // set up the board according to the given floor 
 		//cout << cham.c.size() << endl;
 		theChamber.emplace_back(cham);
 	}
-	cout << "out init" << endl;
+	setPlayer();
+	setStair();
+	for (int i = 0; i < 10; i++){
+//		f.setPotion();
+		setTreasure();
+	}
+    
+	for (int j = 0; j < 20; j++){
+		setEnemy();
+	}
+cout << "out init" << endl;
 }
 
 void Floor::setChamber(int r, int c, vector<shared_ptr<Object>*>& arr) {
