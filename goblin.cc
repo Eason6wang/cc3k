@@ -1,4 +1,9 @@
-#include"goblin"
+#include"goblin.h"
+#include "object.h"
 
-Goblin::Goblin(int hp = 110, int atk = 15, int def = 20):
-  Player{hp, atk, def}{}
+Goblin::Goblin(int row, int col):
+  Player{110, 15, 20, row, col, GOBLIN}{}
+
+bool Goblin::visit (Object &object, Type type) {
+	object.be_visit (*this, type);
+}

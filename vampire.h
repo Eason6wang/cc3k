@@ -1,9 +1,11 @@
 #ifndef __VAMPIRE_H_
 #define __VAMPIRE_H_
+#include "player.h"
+#include "type.h"
 
 class Vampire: public Player{
   public:
-  	Vampire(int, int, int); 
+  	Vampire(int row, int col); 
    	bool visit(Object&, Type t);
 
 };

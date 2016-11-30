@@ -1,4 +1,9 @@
 #include"vampire.h"
+#include "object.h"
 
-Vampire::Vampire(int hp  = 50, int atk = 25, int def = 25):
-  Player{hp, atk, def}{}
+Vampire::Vampire(int row, int col):
+  Player{50, 25, 25, row, col, VAMPIRE}{}
+
+bool Vampire::visit (Object &object, Type type) {
+	object.be_visit (*this, type);
+}

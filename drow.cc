@@ -1,4 +1,10 @@
 #include"drow.h"
+#include "style.h"
+#include "object.h"
 
-Drow::Drow(int hp = 150, int atk = 25, int def = 15):
-  Player{hp, atk, def}{}
+Drow::Drow(int row, int col):
+  Player{150, 25, 15, row, col, DROW}{}
+
+bool Drow::visit (Object &object, Type type) {
+	object.be_visit (*this, type);
+}

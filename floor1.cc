@@ -6,10 +6,10 @@
 #include <fstream>
 #include "style.h"
 #include "shade.h"
-//#include "drow.h"
-//#include "vampire.h"
-//#include "troll.h"
-//#include "goblin.h"
+#include "drow.h"
+#include "vampire.h"
+#include "troll.h"
+#include "goblin.h"
 //#include "restore_health.h"
 //#include "boost_atk.h"
 //#include "boost_def.h"
@@ -201,20 +201,20 @@ void Floor::setPlayer(){ // generate player.
 		if (player_select == 's'){
             thePlayer = make_shared<Shade>(position.posx, position.posy); //the hp atk .. is assigned in ctor.
             //thePlayer->setAttributes(position.posy, position.posx, SHADE, false, nullptr);
-//		} else if (player == 'd') {
-//			thePlayer = make_shared<Drow>(position.posy, position.posx, DROW);
-//            //thePlayer->setAttributes(position.posy, position.posx, DROW, false, nullptr);
-//		} else if (player == 'v') {
-//			thePlayer = make_shared<Vampire>(position.posy, position.posx, VAMPIRE);
-//            //thePlayer->setAttributes(position.posy, position.posx,VAMPIRE, false, nullptr);
-//		} else if (player == 'g') {
-//			thePlayer = make_shared<Goblin>(position.posy, position.posx, GOBLIN);
-//           //thePlayer->setAttributes(position.posy, position.posx, GOBLIN, false, nullptr);
-//		} else if (player == 't') {
-//			thePlayer = make_shared<Troll>(position.posy, position.posx, TROLL);  //add auto ???
-//           // thePlayer->setAttributes(position.posy, position.posx, TROLL, false, nullptr);
+		} else if (player_select == 'd') {
+			thePlayer = make_shared<Drow>(position.posx, position.posy);
+            //thePlayer->setAttributes(position.posy, position.posx, DROW, false, nullptr);
+		} else if (player_select == 'v') {
+			thePlayer = make_shared<Vampire>(position.posx, position.posy);
+            //thePlayer->setAttributes(position.posy, position.posx,VAMPIRE, false, nullptr);
+		} else if (player_select == 'g') {
+			thePlayer = make_shared<Goblin>(position.posx, position.posy);
+           //thePlayer->setAttributes(position.posy, position.posx, GOBLIN, false, nullptr);
+		} else if (player_select == 't') {
+			thePlayer = make_shared<Troll>(position.posx, position.posy);  //add auto ???
+           // thePlayer->setAttributes(position.posy, position.posx, TROLL, false, nullptr);
 		} else {
-			//thePlayer = make_shared<Shade>();
+			thePlayer = make_shared<Shade>(position.posx, position.posy);
 			continue;
         }
 		break;

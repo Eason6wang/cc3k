@@ -19,7 +19,7 @@ void Object::set_last (std::shared_ptr<Object> last) {
 	pos.last = last;
 };
 
-bool Object::visit_object(Type type){ return false; }
+bool Object::visit_objects(Type type){ return false; }
 bool Object::visit(Object &object, Type type){ return false; }
 //be_visit
 bool Object::be_visit(Shade& shade, Type type){ return false; }

@@ -17,7 +17,7 @@ public:
 	void set_last (std::shared_ptr<Object> last);
 
     //virtual Info& getInfo();
-	virtual bool visit_object(Type type);
+	virtual bool visit_objects(Type type);
 	virtual bool visit(Object &object, Type type);
 	//be_visit
 	virtual bool be_visit(Shade& shade, Type type);
