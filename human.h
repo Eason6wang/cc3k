@@ -11,7 +11,7 @@ class Human: public Enemy{
   public: 
   	Human(int row, int col);
     bool visit (Object &object, Type type);
-	bool be_visit (Shade &shade, Type type);
+	//bool be_visit (Shade &shade, Type type);
 };
 
 #endif

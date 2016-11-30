@@ -23,10 +23,10 @@ bool Object::visit_object(Type type){ return false; }
 bool Object::visit(Object &object, Type type){ return false; }
 //be_visit
 bool Object::be_visit(Shade& shade, Type type){ return false; }
-//bool Object::be_visit(Drow& drow, Type type){ return false; }
-//bool Object::be_visit(Vampire& vampire, Type type){ return false; }
-//bool Object::be_visit(Troll& typeroll, Type type){ return false; }
-//bool Object::be_visit(Goblin& goblin, Type type){ return false; }
+bool Object::be_visit(Drow& drow, Type type){ return false; }
+bool Object::be_visit(Vampire& vampire, Type type){ return false; }
+bool Object::be_visit(Troll& typeroll, Type type){ return false; }
+bool Object::be_visit(Goblin& goblin, Type type){ return false; }
 bool Object::be_visit(Human& human, Type type){ return false; }
 bool Object::be_visit(Dwarf& dwarf, Type type){ return false; }
 bool Object::be_visit(Halfling& halfling, Type type){ return false; }

@@ -21,10 +21,10 @@ public:
 	virtual bool visit(Object &object, Type type);
 	//be_visit
 	virtual bool be_visit(Shade& shade, Type type);
-//	virtual bool be_visit(Drow& drow, Type type);
-//	virtual bool be_visit(Vampire& vampire, Type type);
-//	virtual bool be_visit(Troll& typeroll, Type type);
-//	virtual bool be_visit(Goblin& goblin, Type type);
+	virtual bool be_visit(Drow& drow, Type type);
+	virtual bool be_visit(Vampire& vampire, Type type);
+	virtual bool be_visit(Troll& typeroll, Type type);
+	virtual bool be_visit(Goblin& goblin, Type type);
 	virtual bool be_visit(Human& human, Type type);
 	virtual bool be_visit(Dwarf& dwarf, Type type);
 	virtual bool be_visit(Halfling& halfling, Type type);
