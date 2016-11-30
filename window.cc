@@ -86,6 +86,10 @@ Window::~Window(){}
 //}
 
 ostream &operator<<(ostream &out, const Window &w){
+	//clear screen;
+	for (int i = 0; i < 100; i++){
+		cout << endl;
+	}
 	int c = w.width;
 	int r = w.height;
 	for (int i = 0; i < r; i++){
