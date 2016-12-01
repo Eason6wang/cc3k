@@ -10,7 +10,6 @@ class Orc: public Enemy{
   public: 
   	Orc(int row, int col);
     bool visit (Object &object, Type type);
-	bool be_visit (Shade &shade, Type type);
 };
 
 #endif

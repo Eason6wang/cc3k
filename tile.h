@@ -15,6 +15,7 @@ class Elf;
 class Orc;
 class Dragon;
 class Merchant;
+class Normal_Hoard;
 
 class Tile final:public Cell {
 	public:
@@ -31,7 +32,7 @@ class Tile final:public Cell {
 	bool be_visit (Orc &enemy, Type type) override;
 //	bool be_visit (Dragon &enemy, Type type) override;
 //	bool be_visit (Merchant &enemy, Type type) override;
-
+//	bool be_visit (Normal_Hoard &, Type type) override;
 };
 
 #endif

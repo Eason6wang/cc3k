@@ -19,6 +19,7 @@
 #include "wound_atk.h"
 #include "wound_def"
 */
+using namespace std;
 
 Player::Player(int hp, int atk, int def, int row, int col, Style style):
 Character{hp, atk, def, row, col, style}, playerInfo{0, 1, ""}{}
@@ -34,9 +35,9 @@ PlayerInfo& Player::getPlayerInfo(){
 
 
 bool Player::be_visit(Human& enemy, Type type){
-	if (type == MOVE) return false;
+    if (type == MOVE) return false;
     if(type == ATTACK){
-  	int damage = Character::getDamage(enemy.getInfo().atk, this->getInfo().def);
+  	int damage = getDamage(enemy.getInfo().atk, this->getInfo().def);
   	this->getInfo().hp -= damage;
 	std::string newAction = getString(Object::getPos().style) 
 		+" deals " + std::to_string(damage) + " damage to PC. ";
