@@ -17,14 +17,14 @@ bool Enemy::be_visit(Shade& player, Type type){ // default
 		cout << "shade be attacked" << endl;
   	int damage = getDamage(player.getInfo().atk, this->getInfo().def);
   	this->getInfo().hp -= damage;
-	std::string newAction = "PC deals " + std::to_string(damage) +
-	           " damage to " + getString(Object::getPos().style) + ". ";
+	std::string newAction = "PC deals " + std::to_string(damage) + " damage to " + 
+	    getString(Object::getPos().style) + to_string(getInfo().hp) + ". ";
   	player.getPlayerInfo().action.assign(newAction);
-	/*if(info.hp <= 0){
+	if(getInfo().hp <= 0){
 	  //throw
 	} else {
-	  return false;
-	} */
+	  return true;
+	} 
     }
 	return false;
 }
