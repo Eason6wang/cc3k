@@ -166,6 +166,7 @@
 		for (int j = 0; j < 20; j++){
 			setEnemy();
 		}
+		cout << theEnemy.size() << endl;
 	cout << "out init" << endl;
 	}
 
@@ -399,7 +400,7 @@
 			cout << "true" << endl;
 			thePlayer->getPos().posx = target_c;
 			thePlayer->getPos().posy = target_r;
-			//w->notify(*thePlayer);
+			w->notify(*thePlayer);
 			cout << *this;
 		}
 		//		if (type == MOVE) {
@@ -412,16 +413,25 @@
 	//}
 	//enemy random move.
 	sort(theEnemy.begin(), theEnemy.end(), compare);
-	//for (auto o: theEnemy){
-	//   	cout << getString(o->getPos().style ) << endl;
-   //	}
-/*cout << "enemy random move start" << endl;
+	for (auto o: theEnemy){
+	   	cout << getString(o->getPos().style) << endl;
+   	}
+	cout << "enemy random move start" << endl;
 	if (!stop) {
 		for (int i = 0; i < theEnemy.size(); i++) {
-			enemyMove(i);
+			vector<bool> possibility;
+			for (int j = 0; j < 8; j++){
+			possibility.emplace_back(false);
+			}
+			if (enemyMove(i, possibility)){
+				cout << i << "enemy success move" << endl;
+			} else {
+				cout << "enemy move false" << endl;
+			}
 		}
 	}
-cout << "enemy random move complete" << endl;*/
+	cout << *this;
+cout << "enemy random move complete" << endl;
 }
 
 void Floor::pause(){
@@ -429,10 +439,7 @@ void Floor::pause(){
 	else stop = false;
 }
 //
-/*bool Floor::enemyMove(int n) {
-cout << "enemy random " << n  << endl;
-	bool b1,b2,b3,b4,b5,b6,b7,b8;
-	b1 = b2 = b3 = b4 = b5 = b6 = b7 = b8 = false;
+bool Floor::enemyMove(int n, vector<bool>& possibility) {
 	int r = theEnemy[n]->getPos().posy;
 	int c = theEnemy[n]->getPos().posx;
 	int target_r, target_c;
@@ -440,55 +447,63 @@ cout << "enemy random " << n  << endl;
 	if (i == 1) {
 		target_r = r-1;
 		target_c = c;
-		b1 = true;
+		possibility[i] = true;
 	} else if (i == 2) {
 		target_r = r+1;
 		target_c = c;
-		b2 = true;
+		possibility[i] = true;
 	} else if (i == 3) {
 		target_r = r;
 		target_c = c+1;
-		b3 = true;
+		possibility[i] = true;
 	} else if (i == 4) {
 		target_r = r;
 		target_c = c-1;
-		b4 = true;
+		possibility[i] = true;
 	} else if (i == 5){
 		target_r = r-1;
 		target_c = c+1;
-		b5 = true;
+		possibility[i] = true;
 	} else if (i == 6){
 		target_r = r-1;
 		target_c = c-1;
-		b6 = true;
+		possibility[i] = true;
 	} else if (i == 7){
 		target_r = r+1;
 		target_c = c+1;
-		b7 = true;
+		possibility[i] = true;
 	} else {
 		target_r = r+1;
 		target_c = c-1;
-		b8 = true;
+		possibility[i] = true;
 	}
 	//can move to that position for some reason).
 //	if (i != 0) {
-    bool b = theEnemy[n]->visit(*board[target_r][target_c], MOVE);
     //board[r][c] = theEnemy[n]->getPos().last;
     //theEnemy[n]->getPos().last == board[target_r][target_c];
     //board[target_r][target_c] = theEnemy[n];
 //	} else {
 //		return true;
 //	}
-	if (b) { //this part is to make sure all 8 positions have been checked.
-	   return true;
-	} else if (!(b1 && b2 && b3 && b4 && b5 && b6 && b7 && b8)) {
-		enemyMove(n);
+	//this part is to make sure all 8 positions have been checked.
+    if (theEnemy[n]->visit(*board[target_r][target_c], MOVE)){
+		swap(theEnemy[n]->getPos().posx, board[target_r][target_c]->getPos().posx);
+		swap(theEnemy[n]->getPos().posy, board[target_r][target_c]->getPos().posy);
+		swap(board[r][c], board[target_r][target_c]);
+		w->notify(*theEnemy[n]);
+		w->notify(*board[r][c]);
+	  	return true;
+	} else if (!(possibility[1] &&  possibility[2] &&  possibility[3] &&
+		   	possibility[4] && possibility[5] && possibility[6] &&
+		   	possibility[7] && possibility[8])) {
+		enemyMove(n, possibility);
 	} else {
+		cout << getString(theEnemy[n]->getPos().style) << endl;
 		cout << "someone is stucked" << endl;
 		return false;
 	}
     return false; //still need to check here.
-}*/
+}
 
 ostream &operator<<(std::ostream &out, const Floor &f){
 	out << *f.w; //this is window.

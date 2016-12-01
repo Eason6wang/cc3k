@@ -76,6 +76,9 @@ void Window::notify(Subject &whoNotify){
 		case PASSAGE:
 			theDisplay[r][c] = '#';
 			break;
+		case TILE:
+			theDisplay[r][c] = '.';
+			break;
 	}
 }
 

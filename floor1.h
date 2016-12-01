@@ -28,7 +28,7 @@ class Floor{
 	int height;
 	int width;
 	bool stop;
-	bool enemyMove(int n);
+	bool enemyMove(int n, std::vector<bool>& possibility);
 	void clearFloor();
 //	int getRandom(int min, int max);
 	public:	
