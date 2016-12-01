@@ -399,7 +399,7 @@
 			cout << "true" << endl;
 			thePlayer->getPos().posx = target_c;
 			thePlayer->getPos().posy = target_r;
-			//w->notify(*thePlayer);
+			w->notify(*thePlayer);
 			cout << *this;
 		}
 		//		if (type == MOVE) {
