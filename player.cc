@@ -39,7 +39,7 @@ bool Player::be_visit(Human& enemy, Type type){
     if(type == ATTACK){
   	int damage = getDamage(enemy.getInfo().atk, this->getInfo().def);
   	this->getInfo().hp -= damage;
-	std::string newAction = getString(Object::getPos().style) 
+	std::string newAction = getString(enemy.getPos().style) 
 		+" deals " + std::to_string(damage) + " damage to PC. ";
   	playerInfo.action += newAction;
 	if(getInfo().hp <= 0){
@@ -56,7 +56,7 @@ bool Player::be_visit(Orc& enemy, Type type){
     if(type == ATTACK){
   	int damage = Character::getDamage(enemy.getInfo().atk, this->getInfo().def);
   	this->getInfo().hp -= damage;
-	std::string newAction = getString(Object::getPos().style) 
+	std::string newAction = getString(enemy.getPos().style) 
 		+" deals " + std::to_string(damage) + " damage to PC. ";
   	playerInfo.action += newAction;
 	if(getInfo().hp <= 0){
@@ -72,7 +72,7 @@ bool Player::be_visit(Dwarf& enemy, Type type){
     if(type == ATTACK){
   	int damage = Character::getDamage(enemy.getInfo().atk, this->getInfo().def);
   	this->getInfo().hp -= damage;
-	std::string newAction = getString(Object::getPos().style) 
+	std::string newAction = getString(enemy.getPos().style) 
 		+" deals " + std::to_string(damage) + " damage to PC. ";
   	playerInfo.action += newAction;
 	if(getInfo().hp <= 0){
@@ -89,7 +89,7 @@ bool Player::be_visit(Halfling& enemy, Type type){
     if(type == ATTACK){
   	int damage = Character::getDamage(enemy.getInfo().atk, this->getInfo().def);
   	this->getInfo().hp -= damage;
-	std::string newAction = getString(Object::getPos().style) 
+	std::string newAction = getString(enemy.getPos().style) 
 		+" deals " + std::to_string(damage) + " damage to PC. ";
   	playerInfo.action += newAction;
 	if(getInfo().hp <= 0){
@@ -106,7 +106,7 @@ bool Player::be_visit(Elf& enemy, Type type){
     if(type == ATTACK){
   	int damage = Character::getDamage(enemy.getInfo().atk, this->getInfo().def);
   	this->getInfo().hp -= damage;
-	std::string newAction = getString(Object::getPos().style) 
+	std::string newAction = getString(enemy.getPos().style) 
 		+" deals " + std::to_string(damage) + " damage to PC. ";
   	playerInfo.action += newAction;
 	if(getInfo().hp <= 0){

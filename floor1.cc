@@ -451,6 +451,8 @@
 		}
 	}
 	cout << *this;
+	thePlayer->getPlayerInfo().action = "";
+
 cout << "enemy random move complete" << endl;
 }
 
