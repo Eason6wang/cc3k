@@ -5,6 +5,7 @@
 bool Small_Hoard::be_visit (Shade &shade, Type type) {
 	if (type == MOVE) {
 		shade.getPlayerInfo().gold += getGold();
+		//throw to let floor change the floor.
 		return true;
 	}
 	if (type == ATTACK) {

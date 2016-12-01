@@ -107,4 +107,19 @@ ostream &operator<<(ostream &out, const Window &w){
 	return out;
 }
 
+string Window::outPut(){
+	ostringstream ss;
+	int c = width;
+	int r = height;
+	for (int i = 0; i < r; i++){
+		for (int j = 0; j < c; j++){
+			if (i == p.posy && j == p.posx){
+				ss << '@';
+			} else ss << theDisplay[i][j];
+		}
+		ss << endl;
+	}
+	string rs = ss.str();
+	return rs;
+}
 

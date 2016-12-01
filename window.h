@@ -1,6 +1,7 @@
 #ifndef __WINDOW_H_
 #define __WINDOW_H_
 #include <iostream>
+#include <sstream>
 #include <vector>
 #include <string>
 #include "observer.h"
@@ -25,6 +26,7 @@ class Window: public Observer {
     
     //SubscriptionType subType() const override;
 
+	std::string outPut();
 	friend std::ostream &operator<<(std::ostream &out, const Window &w);
 };
 

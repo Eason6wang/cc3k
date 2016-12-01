@@ -1,11 +1,11 @@
 #ifndef _FLOOR_H_
 #define _FLOOR_H_
 #include <iostream>
+#include <sstream>
 #include <vector>
 #include <string>
 #include "type.h"
 #include "object.h"
-#include "display.h"
 #include "chamber.h"
 #include "player.h"
 
@@ -13,6 +13,7 @@ class Window;
 class Panel;
 class Player;
 class Enemy;
+class Display;
 
 class Floor{
 	std::vector<std::vector<std::shared_ptr<Object>>> board; //the board
@@ -23,22 +24,23 @@ class Floor{
 //	std::vector<std::shared_ptrTreasure> theTreasure;
 	std::vector<Chamber> theChamber; //store the chamber
 //	std::shared_ptr<Object> tmp;
-    std::shared_ptr<Window> w; //display.
-    std::shared_ptr<Panel> p; //planar.
+ //   std::shared_ptr<Window> w; //display.
+ //   std::shared_ptr<Panel> p; //planar.
+	Display& theDisplay;
 	int height;
 	int width;
 	bool stop;
 	bool enemyMove(int n, std::vector<bool>& possibility);
-	void clearFloor();
 //	int getRandom(int min, int max);
 	public:	
-	Floor();
+	Floor(Display& display);
 	void floorVisit(std::string s, Type type);
+	void clearFloor();
 	//~Floor();
 	
 	///void floor_move();
 	///void floor_attack();
-    void init(std::string file); // set up the board according to the given floor in the file.
+    void init(std::string file = "plainfloor.txt"); // set up the board according to the given floor in the file.
     void setChamber(int r, int c, std::vector<std::shared_ptr<Object>*>& arr);
 	void setPlayer(); // generate player.
 	void setStair(); //generate stairway.
@@ -47,6 +49,7 @@ class Floor{
 	void setEnemy(); //generate enemy.
     
 	void pause();
+	std::string outPut();
 	
 	friend std::ostream &operator<<(std::ostream &out, const Floor &f);
 };
