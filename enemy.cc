@@ -11,14 +11,24 @@ using namespace std;
 Enemy::Enemy(int hp, int atk, int def, int row, int col, Style style):
   Character{hp, atk, def, row, col, style} {}
 
-bool Enemy::be_visit(Shade& shade, Type type){ // default
-	if (type == MOVE) return false;
-	if (type == ATTACK) {
-       int damage = Character::getDamage(shade.getInfo().atk, this->getInfo().def);
-       if (this->getInfo().hp -= damage) return false;// throw
-	}
-    return false;
+bool Enemy::be_visit(Shade& player, Type type){ // default
+    if (type == MOVE) return false;
+    if(type == ATTACK){
+  	int damage = getDamage(player.getInfo().atk, this->getInfo().def);
+  	this->getInfo().hp -= damage;
+	std::string newAction = "PC deals " + std::to_string(damage) +
+	           " damage to " + getString(Object::getPos().style) + ". ";
+  	player.getPlayerInfo().action.assign(newAction);
+	/*if(info.hp <= 0){
+	  //throw
+	} else {
+	  return false;
+	} */
+    }
+	return false;
 }
+
+//below has not been changed
 bool Enemy::be_visit(Drow& drow, Type type){ // default
 	if (type == MOVE) return false;
 	if (type == ATTACK) {

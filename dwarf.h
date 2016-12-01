@@ -10,7 +10,6 @@ class Dwarf: public Enemy{
   public: 
   	Dwarf(int row, int col);
    	bool visit(Object& object, Type type);
-	bool be_visit (Shade &shade, Type type);
 };
 
 
