@@ -6,7 +6,7 @@
 #include "troll.h"
 #include "goblin.h"
 using namespace std;
-
+#include <iostream>
 
 Enemy::Enemy(int hp, int atk, int def, int row, int col, Style style):
   Character{hp, atk, def, row, col, style} {}
@@ -14,6 +14,7 @@ Enemy::Enemy(int hp, int atk, int def, int row, int col, Style style):
 bool Enemy::be_visit(Shade& player, Type type){ // default
     if (type == MOVE) return false;
     if(type == ATTACK){
+		cout << "shade be attacked" << endl;
   	int damage = getDamage(player.getInfo().atk, this->getInfo().def);
   	this->getInfo().hp -= damage;
 	std::string newAction = "PC deals " + std::to_string(damage) +

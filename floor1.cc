@@ -430,16 +430,16 @@
 			int c = theEnemy[i]->getPos().posx;
 			vector<bool> playeraround;
 			for (int t = 0; t < 8; t++){
-				playeraround.emplace_back(false);
+				playeraround.emplace_back(theEnemy[i]->visit(*thePlayer, ATTACK));
 			}
-			playeraround[0]	= theEnemy[i]->visit(*board[r+1][c], ATTACK);
+		/*	playeraround[0]	= theEnemy[i]->visit(*board[r+1][c], ATTACK);
 			playeraround[1]	= theEnemy[i]->visit(*board[r+1][c+1], ATTACK);
 			playeraround[2]	= theEnemy[i]->visit(*board[r+1][c-1], ATTACK);
 			playeraround[3]	= theEnemy[i]->visit(*board[r-1][c], ATTACK);
 			playeraround[4]	= theEnemy[i]->visit(*board[r-1][c+1], ATTACK);
 			playeraround[5]	= theEnemy[i]->visit(*board[r-1][c-1], ATTACK);
 			playeraround[6]	= theEnemy[i]->visit(*board[r][c+1], ATTACK);
-			playeraround[7]	= theEnemy[i]->visit(*board[r][c-1], ATTACK);
+			playeraround[7]	= theEnemy[i]->visit(*board[r][c-1], ATTACK); */
 			if (!(playeraround[0] || playeraround[1] || playeraround[2] ||
 					playeraround[3] || playeraround[4] || playeraround[5] || playeraround[6]||
 					playeraround[7])) {

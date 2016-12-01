@@ -28,6 +28,7 @@ bool Door::be_visit (Goblin& player, Type type){
 	if (type == MOVE) return true;
     return false;
 }
+/*
 bool Door::be_visit (Human& enemy, Type type){
 	if (type == ATTACK) return false;
 	if (type == MOVE) return true;
@@ -54,7 +55,7 @@ bool Door::be_visit (Elf& enemy, Type type){
     return false;
 
 }
-/*
+
 bool Door::be_visit (Dragon& enemy, Type type){
 	if (type == ATTACK) return false;
 	if (type == MOVE) return true;

@@ -19,7 +19,7 @@ class Merchant;
 class Stair final:public Cell {
 	public:
     Stair (int posx, int posy);
-        bool be_visit (Shade &player, Type type) override;
+/*        bool be_visit (Shade &player, Type type) override;
 	bool be_visit (Drow &player, Type type) override;
 	bool be_visit (Vampire &player, Type type) override;
 	bool be_visit (Troll &player, Type type) override;
@@ -32,7 +32,7 @@ class Stair final:public Cell {
 //	bool be_visit (Dragon &enemy, Type type) override;
 //	bool be_visit (Merchant &enemy, Type type) override;
 
-
+*/
 };
 
 
