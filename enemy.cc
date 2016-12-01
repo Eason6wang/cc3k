@@ -5,6 +5,8 @@
 #include "vampire.h"
 #include "troll.h"
 #include "goblin.h"
+#include "buff.h"
+#include "visitexcept.h"
 using namespace std;
 #include <iostream>
 
@@ -21,7 +23,9 @@ bool Enemy::be_visit(Shade& player, Type type){ // default
 	    getString(Object::getPos().style) + to_string(getInfo().hp) + ". ";
   	player.getPlayerInfo().action.assign(newAction);
 	if(getInfo().hp <= 0){
-	  //throw
+	    int gold = getRandom(1, 2);
+	    gold == 1 ?  throw VisitExcept{SMALL_HOARD,1} :
+	                 throw VisitExcept{NORMAL_HOARD,1};
 	} else {
 	  return true;
 	} 

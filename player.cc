@@ -43,7 +43,7 @@ bool Player::be_visit(Human& enemy, Type type){
 		+" deals " + std::to_string(damage) + " damage to PC. ";
   	playerInfo.action += newAction;
 	if(getInfo().hp <= 0){
-	  //throw
+	  throw true;// will be catch to display something
 	} else {
 	  return true;
 	} 
@@ -60,7 +60,7 @@ bool Player::be_visit(Orc& enemy, Type type){
 		+" deals " + std::to_string(damage) + " damage to PC. ";
   	playerInfo.action += newAction;
 	if(getInfo().hp <= 0){
-	  //throw
+	  throw true;// will be catch to display something
 	} else {
 	  return true;
 	} 
@@ -76,7 +76,7 @@ bool Player::be_visit(Dwarf& enemy, Type type){
 		+" deals " + std::to_string(damage) + " damage to PC. ";
   	playerInfo.action += newAction;
 	if(getInfo().hp <= 0){
-	  //throw
+	  throw true;// will be catch to display something
 	} else {
 	  return true;
 	} 
@@ -93,7 +93,7 @@ bool Player::be_visit(Halfling& enemy, Type type){
 		+" deals " + std::to_string(damage) + " damage to PC. ";
   	playerInfo.action += newAction;
 	if(getInfo().hp <= 0){
-	  //throw
+	  throw true;// will be catch to display something
 	} else {
 	  return true;
 	} 
@@ -110,7 +110,7 @@ bool Player::be_visit(Elf& enemy, Type type){
 		+" deals " + std::to_string(damage) + " damage to PC. ";
   	playerInfo.action += newAction;
 	if(getInfo().hp <= 0){
-	  //throw
+	  throw true;// will be catch to display something
 	} else {
 	  return true;
 	} 

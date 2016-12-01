@@ -1,14 +1,17 @@
 #include "stair.h"
+#include "visitexcept.h"
 	
 Stair::Stair (int posx, int posy):Cell{posx, posy, STAIR} {}
 
-//throw
-/*
+
 bool Stair::be_visit (Shade& player, Type type){
 	if (type == ATTACK) return false;
-	if (type == MOVE) return true;
+	if (type == MOVE){
+	    throw VisitExcept{STAIR,0};
+	}
     return false;
 }
+/*
 bool Stair::be_visit (Drow& player, Type type){
 	if (type == ATTACK) return false;
 	if (type == MOVE) return true;
