@@ -1,8 +1,10 @@
 #include "buff.h"
+#include "object.h"
 
+using namespace std;
 void clearScreen(){
 	for(int i = 0; i < 100; i++){
-		std::cout << std::endl;
+		cout << endl;
 	}
 }
 
@@ -12,3 +14,18 @@ int getRandom(int min, int max){
 	return rn;
 }
 
+bool compare(shared_ptr<Object> ob1, shared_ptr<Object> ob2){
+	if (ob1->getPos().posy < ob2->getPos().posy) {
+		return true;
+	} else if (ob1->getPos().posy == ob2->getPos().posy) {
+		if (ob1->getPos().posx < ob2->getPos().posx){
+			return true;
+		} else if (ob1->getPos().posx == ob2->getPos().posy) {
+			return true;
+		} else {
+			return false;
+		}
+	} else {
+		return false;
+	}
+}

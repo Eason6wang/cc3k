@@ -29,7 +29,8 @@ void Window::notify(Subject &whoNotify){
         case VAMPIRE:
         case TROLL:
         case GOBLIN:
-			theDisplay[r][c] = '@';
+			p.posx = whoNotify.getPos().posx;
+			p.posy = whoNotify.getPos().posy;
 			break;
 		case HUMAN:
 			theDisplay[r][c] = 'H';
@@ -94,7 +95,9 @@ ostream &operator<<(ostream &out, const Window &w){
 	int r = w.height;
 	for (int i = 0; i < r; i++){
 		for (int j = 0; j < c; j++){
-			out << w.theDisplay[i][j];
+			if (i == w.p.posy && j == w.p.posx){
+				out << '@';
+			} else out << w.theDisplay[i][j];
 		}
 		out << endl;
 	}

@@ -14,7 +14,7 @@ class Subject {
  public:
     void attach(std::shared_ptr<Observer>);
     void notifyObservers();
-    virtual Pos getPos() = 0;
+    virtual Pos& getPos() = 0;
     //virtual PlayerInfo getPlayerInfo();
     //virtual Info getInfo() = 0;
     virtual ~Subject();

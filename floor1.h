@@ -30,11 +30,14 @@ class Floor{
 	bool stop;
 	bool enemyMove(int n);
 	void clearFloor();
-	int getRandom(int min, int max);
+//	int getRandom(int min, int max);
 	public:	
 	Floor();
+	void floorVisit(std::string s, Type type);
 	//~Floor();
 	
+	///void floor_move();
+	///void floor_attack();
     void init(std::string file); // set up the board according to the given floor in the file.
     void setChamber(int r, int c, std::vector<std::shared_ptr<Object>*>& arr);
 	void setPlayer(); // generate player.
@@ -43,7 +46,6 @@ class Floor{
 	void setTreasure(); //generate gold.
 	void setEnemy(); //generate enemy.
     
-	void floorVisit(std::string s, Type type);
 	void pause();
 	
 	friend std::ostream &operator<<(std::ostream &out, const Floor &f);

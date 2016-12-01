@@ -10,11 +10,11 @@
 class Object: public Subject{
 	Pos pos;
 public:
-	Pos getPos();
+	Pos& getPos();
 	Object () = default;
 	Object (int posx, int posy, Style style);
 	void flip ();
-	void set_last (std::shared_ptr<Object> last);
+	//void set_last (std::shared_ptr<Object> last);
 
     //virtual Info& getInfo();
 	virtual bool visit_objects(Type type);

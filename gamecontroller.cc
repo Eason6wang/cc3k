@@ -52,8 +52,8 @@ void GameController::play(string file){
 			} else if (cmd == "q") {
 				throw Quit{};
 			} else {
-                cin >> direction;
-				floor.floorVisit(direction, MOVE);
+				cout << "move !!!!" << endl;
+				floor.floorVisit(cmd, MOVE);
 			}
 		}
 		catch (Quit& q) {

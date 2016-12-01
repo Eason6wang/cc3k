@@ -9,7 +9,7 @@ class Object;
 class Shade: public Player{
 public:
     Shade(int row, int col);
- //   bool visit(Object&, Type t);
+    bool visit(Object&, Type type);
 };
 
 #endif

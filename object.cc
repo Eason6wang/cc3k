@@ -7,17 +7,17 @@ using namespace std;
 //    return o;
 //};
 
-Pos Object::getPos() { return pos; }
+Pos& Object::getPos() { return pos; }
 
-Object::Object(int posx, int posy, Style style): pos{posx,posy, style, false, nullptr}{}
+Object::Object(int posx, int posy, Style style): pos{posx,posy, style, false}{}
     
 Object::~Object () {}
 
 void Object::flip () { pos.isRead = true; }
 
-void Object::set_last (std::shared_ptr<Object> last) {
-	pos.last = last;
-};
+//void Object::set_last (std::shared_ptr<Object> last) {
+//	pos.last = last;
+//};
 
 bool Object::visit_objects(Type type){ return false; }
 bool Object::visit(Object &object, Type type){ return false; }
