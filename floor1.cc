@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 #include <algorithm>
 #include "floor1.h"
 #include "type.h"
@@ -428,21 +429,13 @@
 		for (int i = 0; i < theEnemy.size(); i++) {
 			int r = theEnemy[i]->getPos().posy;
 			int c = theEnemy[i]->getPos().posx;
-			vector<bool> playeraround;
-			for (int t = 0; t < 8; t++){
-				playeraround.emplace_back(theEnemy[i]->visit(*thePlayer, ATTACK));
+			int player_r = thePlayer->getPos().posy;
+			int player_c = thePlayer->getPos().posx;
+			bool playeraround;
+			if (abs(player_r - r) <= 1 && abs(player_c - c) <= 1){
+					if (theEnemy[i]->visit(*thePlayer, ATTACK)) playeraround = true;;
 			}
-		/*	playeraround[0]	= theEnemy[i]->visit(*board[r+1][c], ATTACK);
-			playeraround[1]	= theEnemy[i]->visit(*board[r+1][c+1], ATTACK);
-			playeraround[2]	= theEnemy[i]->visit(*board[r+1][c-1], ATTACK);
-			playeraround[3]	= theEnemy[i]->visit(*board[r-1][c], ATTACK);
-			playeraround[4]	= theEnemy[i]->visit(*board[r-1][c+1], ATTACK);
-			playeraround[5]	= theEnemy[i]->visit(*board[r-1][c-1], ATTACK);
-			playeraround[6]	= theEnemy[i]->visit(*board[r][c+1], ATTACK);
-			playeraround[7]	= theEnemy[i]->visit(*board[r][c-1], ATTACK); */
-			if (!(playeraround[0] || playeraround[1] || playeraround[2] ||
-					playeraround[3] || playeraround[4] || playeraround[5] || playeraround[6]||
-					playeraround[7])) {
+			if (!playeraround){
 				vector<bool> possibility;
 				for (int j = 0; j < 8; j++){
 					possibility.emplace_back(false);
