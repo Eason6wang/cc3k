@@ -7,7 +7,6 @@ class Shade;
 
 class Small_Hoard final:public Treasure {
 	public:
-	bool be_visit (Shade &shade, Type type);
 	Small_Hoard (int row, int col);
 };
 

@@ -12,7 +12,7 @@ class Character: public Object{
 	int getDamage(int atk, int def);
 	public:
 	Character(int hp, int atk, int def, int row, int col, Style style);
-    Info& getInfo();
+    virtual Info& getInfo();
 	virtual ~Character() = default;
 //    virtual PlayerInfo getPlayerInfo() = 0;
 };

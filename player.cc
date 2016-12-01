@@ -1,4 +1,5 @@
 #include"player.h"
+#include "potion.h"
 #include <string>
 
 #include "human.h"
@@ -22,10 +23,14 @@
 using namespace std;
 
 Player::Player(int hp, int atk, int def, int row, int col, Style style):
-Character{hp, atk, def, row, col, style}, playerInfo{0, 1, ""}{}
+Character{hp, atk, def, row, col, style}, playerInfo{0, 1, nullptr, ""}{}
 
 void Player::levelUp(){
   playerInfo.level++;
+}
+
+Info& Player::getInfo () {
+	Character::getInfo() + getPlayerInfo().potion->modify();
 }
 
 PlayerInfo& Player::getPlayerInfo(){
