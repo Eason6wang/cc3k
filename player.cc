@@ -1,5 +1,6 @@
 #include"player.h"
 #include <string>
+#include "buff.h"
 
 #include "human.h"
 #include "dwarf.h"
@@ -22,7 +23,7 @@
 using namespace std;
 
 Player::Player(int hp, int atk, int def, int row, int col, Style style):
-Character{hp, atk, def, row, col, style}, playerInfo{0, 1, ""}{}
+Character{hp, atk, def, row, col, style}, playerInfo{0, 0, ""}{}
 
 void Player::levelUp(){
   playerInfo.level++;
@@ -54,7 +55,7 @@ bool Player::be_visit(Human& enemy, Type type){
 bool Player::be_visit(Orc& enemy, Type type){
 	if (type == MOVE) return false;
     if(type == ATTACK){
-  	int damage = Character::getDamage(enemy.getInfo().atk, this->getInfo().def);
+  	int damage = getDamage(enemy.getInfo().atk, this->getInfo().def);
   	this->getInfo().hp -= damage;
 	std::string newAction = getString(enemy.getPos().style) 
 		+" deals " + std::to_string(damage) + " damage to PC. ";
@@ -70,7 +71,7 @@ bool Player::be_visit(Orc& enemy, Type type){
 bool Player::be_visit(Dwarf& enemy, Type type){
 	if (type == MOVE) return false;
     if(type == ATTACK){
-  	int damage = Character::getDamage(enemy.getInfo().atk, this->getInfo().def);
+  	int damage = getDamage(enemy.getInfo().atk, this->getInfo().def);
   	this->getInfo().hp -= damage;
 	std::string newAction = getString(enemy.getPos().style) 
 		+" deals " + std::to_string(damage) + " damage to PC. ";
@@ -87,7 +88,7 @@ bool Player::be_visit(Dwarf& enemy, Type type){
 bool Player::be_visit(Halfling& enemy, Type type){
 	if (type == MOVE) return false;
     if(type == ATTACK){
-  	int damage = Character::getDamage(enemy.getInfo().atk, this->getInfo().def);
+  	int damage = getDamage(enemy.getInfo().atk, this->getInfo().def);
   	this->getInfo().hp -= damage;
 	std::string newAction = getString(enemy.getPos().style) 
 		+" deals " + std::to_string(damage) + " damage to PC. ";
@@ -104,7 +105,7 @@ bool Player::be_visit(Halfling& enemy, Type type){
 bool Player::be_visit(Elf& enemy, Type type){
 	if (type == MOVE) return false;
     if(type == ATTACK){
-  	int damage = Character::getDamage(enemy.getInfo().atk, this->getInfo().def);
+  	int damage = getDamage(enemy.getInfo().atk, this->getInfo().def);
   	this->getInfo().hp -= damage;
 	std::string newAction = getString(enemy.getPos().style) 
 		+" deals " + std::to_string(damage) + " damage to PC. ";

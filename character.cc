@@ -7,6 +7,3 @@ Info& Character::getInfo(){
   return information;
 }
 
-int Character::getDamage(int atk, int def) {
-	return ((100 * atk) / (100 + def));
-}

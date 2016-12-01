@@ -37,7 +37,7 @@ bool Enemy::be_visit(Shade& player, Type type){ // default
 bool Enemy::be_visit(Drow& drow, Type type){ // default
 	if (type == MOVE) return false;
 	if (type == ATTACK) {
-       int damage = Character::getDamage(drow.getInfo().atk, this->getInfo().def);
+       int damage = getDamage(drow.getInfo().atk, this->getInfo().def);
        if (this->getInfo().hp -= damage) return false;// throw
 	}
     return false;
@@ -45,7 +45,7 @@ bool Enemy::be_visit(Drow& drow, Type type){ // default
 bool Enemy::be_visit(Vampire& vampire, Type type){ // default
 	if (type == MOVE) return false;
 	if (type == ATTACK) {
-       int damage = Character::getDamage(vampire.getInfo().atk, this->getInfo().def);
+       int damage = getDamage(vampire.getInfo().atk, this->getInfo().def);
        if (this->getInfo().hp -= damage) return false;// throw
 	}
     return false;
@@ -53,7 +53,7 @@ bool Enemy::be_visit(Vampire& vampire, Type type){ // default
 bool Enemy::be_visit(Troll& troll, Type type){ // default
 	if (type == MOVE) return false;
 	if (type == ATTACK) {
-       int damage = Character::getDamage(troll.getInfo().atk, this->getInfo().def);
+       int damage = getDamage(troll.getInfo().atk, this->getInfo().def);
        if (this->getInfo().hp -= damage) return false;// throw
 	}
     return false;
@@ -61,7 +61,7 @@ bool Enemy::be_visit(Troll& troll, Type type){ // default
 bool Enemy::be_visit(Goblin& goblin, Type type){ // default
 	if (type == MOVE) return false;
 	if (type == ATTACK) {
-       int damage = Character::getDamage(goblin.getInfo().atk, this->getInfo().def);
+       int damage = getDamage(goblin.getInfo().atk, this->getInfo().def);
        if (this->getInfo().hp -= damage) return false;// throw
 	}
     return false;

@@ -8,5 +8,9 @@ void clearScreen();
 
 int getRandom(int min, int max);
 
+int getDamage(int, int);
+
+
 bool compare(std::shared_ptr<Object> ob1,std::shared_ptr<Object> ob2);
+
 #endif

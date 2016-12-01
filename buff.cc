@@ -14,6 +14,10 @@ int getRandom(int min, int max){
 	return rn;
 }
 
+int getDamage(int atk, int def) {
+	return ((100 * atk) / (100 + def));
+}
+
 bool compare(shared_ptr<Object> ob1, shared_ptr<Object> ob2){
 	if (ob1->getPos().posy < ob2->getPos().posy) {
 		return true;
