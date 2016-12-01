@@ -8,5 +8,5 @@ Info& Character::getInfo(){
 }
 
 int Character::getDamage(int atk, int def) {
-	return ((100 / (100 + def)) * atk );
+	return ((100 * atk) / (100 + def));
 }
