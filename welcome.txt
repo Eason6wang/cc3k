@@ -20,6 +20,6 @@
 |       ?: ???                                                                |
 |       ?: ???                                                                |
 |                                                                             |
-|   WIN THE GAME TO UNLOCK NEW CHARACTER              ©Aaron Daniel Eason     |
+|   WIN THE GAME TO UNLOCK NEW CHARACTER               Aaron Daniel Eason     |
 |                                                          CS246 Nov 2016     |
 |-----------------------------------------------------------------------------|
