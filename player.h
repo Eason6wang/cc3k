@@ -29,6 +29,7 @@ class Wound_Def;
 class Player: public Character{
   	PlayerInfo playerInfo;
   public: 
+	Info& getInfo () override;
     PlayerInfo& getPlayerInfo();
     Player(int hp, int atk, int def, int row, int col, Style style);
     //Player(Player &);

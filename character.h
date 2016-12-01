@@ -10,7 +10,7 @@ class Character: public Object{
     Info information;
 	public:
 	Character(int hp, int atk, int def, int row, int col, Style style);
-    Info& getInfo();
+    virtual Info& getInfo();
 	virtual ~Character() = default;
 //    virtual PlayerInfo getPlayerInfo() = 0;
 };

@@ -3,16 +3,19 @@
 #include <iostream>
 #include <string>
 #include "floor1.h"
+#include "display.h"
 
 class Object;
 
 class GameController{
+	Display display;
 	Floor floor;
 	public:
-	//GameController();
+	GameController();
 	//~GameController();
-
-	void play(std::string file = "plainfloor.txt");
+	void startGame(std::string file = "plainfloor.txt");
+	void wasdPlay(std::string file);
+	void play(std::string file);
 };
 
 #endif

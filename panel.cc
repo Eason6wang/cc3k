@@ -21,7 +21,7 @@ void Panel::notify(Subject &whoNotify) {
 //Panel::~Panel();
 
 
-ostream &operator<<(std::ostream &out, const Panel &panel){
+ostream &operator<<(ostream &out, const Panel &panel){
 	string line1 = "Race : " 
 		+ panel.race + " Gold: " 
 		+ to_string (panel.gold);
@@ -33,4 +33,20 @@ ostream &operator<<(std::ostream &out, const Panel &panel){
 	out << "Def: " << panel.def << endl;
 	out << "Action: " << panel.action << endl;
 	return out;
+}
+
+string Panel::outPut(){
+	ostringstream ss;
+	string line1 = "Race : " 
+		+ race + " Gold: " 
+		+ to_string (gold);
+	line1.resize (69, ' ');
+	line1 += "Floor " + to_string (floor);
+	ss << line1 << endl;
+	ss << "HP: " << hp << endl;
+	ss << "Atk: " << atk << endl;
+	ss << "Def: " << def << endl;
+	ss << "Action: " << action << endl;
+	string rs = ss.str();
+	return rs;
 }

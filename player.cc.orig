@@ -24,7 +24,11 @@
 using namespace std;
 
 Player::Player(int hp, int atk, int def, int row, int col, Style style):
+<<<<<<< HEAD
+Character{hp, atk, def, row, col, style}, playerInfo{0, 0, ""}{}
+=======
 Character{hp, atk, def, row, col, style}, playerInfo{0, 1, nullptr, ""}{}
+>>>>>>> 4d953b8aa4fe0dae035bc951ed8e682ca2af8db2
 
 void Player::levelUp(){
   playerInfo.level++;

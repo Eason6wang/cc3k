@@ -44,24 +44,24 @@
 #include "dragon_hoard.h"
 
 #include "buff.h"
-#include "display.h"
-#include "visitexcept.h"
 	using namespace std;
 
 class Enemy;
 
 
-void Floor::clearFloor(){
+	void Floor::clearFloor(){
 		cout << "enter clear" << endl;
+		if (w != nullptr) {
 			thePlayer->levelUp(); //player add a method levelUp.
-			theDisplay.w = nullptr;
-			theDisplay.p = nullptr;
+			w = nullptr;
+			p = nullptr;
 			board.clear();
+		}
 		cout << "out clear" << endl;
 	}
 		
 
-Floor::Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{false} {}
+	Floor::Floor(Display& display): height{25}, width{79}, stop{false} {}
 		
 	/*Floor::floor_attack() {
 		if (floorVisit(
@@ -71,11 +71,11 @@ Floor::Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{
 
 	void Floor::init(string file){ // set up the board according to the given floor in the file.
 		cout << "enter init" << endl;
-		//clearFloor();
+		clearFloor();
 	//	height = 25;
 	//	width = 79;
-		theDisplay.w = make_shared<Window>(file);
-	//	p = make_shared<Panel>(nullptr);
+		w = make_shared<Window>(file);
+		p = make_shared<Panel>(nullptr);
 		ifstream f {file};
 		string line;
 		shared_ptr<Object> o;
@@ -129,7 +129,7 @@ Floor::Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{
 	//            if (j + 1 < width) {
 	//                board[i][j]->attach(board[i][j+1]);
 	//            }
-				o->attach(theDisplay.w);
+				o->attach(w);
 				arr.emplace_back(o);
 			}
 			board.emplace_back(arr);
@@ -193,7 +193,7 @@ Floor::Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{
 
 		//selectplayer.
 		while (true){
-	 //put this part in to display later.
+		 //put this part in to display later.
 			cout << "Choose your player: (s, d, v, g, t)" << endl;
 			char player_select;
 			cin >> player_select;
@@ -219,12 +219,12 @@ Floor::Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{
 			break;
 		}
 		this->thePlayer = thePlayer;
-		theDisplay.p = make_shared<Panel>(thePlayer); //create a panel here
-		thePlayer->attach(theDisplay.p); //attach panel to each player.
+		p = make_shared<Panel>(thePlayer); //create a panel here
+		thePlayer->attach(this->p); //attach panel to each player.
 		thePlayer->notifyObservers();
 	   // thePlayer->getPos().last = *(theChamber[n].c[pos]); //重新核实一下
 	//	*(theChamber[n].c[pos]) = thePlayer;
-		theDisplay.w->notify(*thePlayer);
+		w->notify(*thePlayer);
 		theChamber[n].c.erase(theChamber[n].c.begin() + pos);
 	}
 
@@ -237,9 +237,9 @@ Floor::Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{
 		//o->setAttributes(position.posy, position.posx, STAIR, false, nullptr);
 		//theStair = o;
 		*(theChamber[n].c[pos]) = o;
-		theDisplay.w->notify(*(*theChamber[n].c[pos]));
+		w->notify(*(*theChamber[n].c[pos]));
 		theChamber[n].c.erase(theChamber[n].c.begin() + pos);
-		cout << "setStair works fine" << endl;
+		cout <g< "setStair works fine" << endl;
 	}
 
 	//void Floor::setPotion(){ //generate potion
@@ -299,7 +299,7 @@ Floor::Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{
 		//o->setCoordinate(position.posy, position.posx);
 		//theTreasure.emplace_back(o);
 		*(theChamber[n].c[pos]) = o;
-		theDisplay.w->notify(*(*theChamber[n].c[pos]));
+		w->notify(*(*theChamber[n].c[pos]));
 		theChamber[n].c.erase(theChamber[n].c.begin() + pos);
 	}
 
@@ -351,7 +351,7 @@ Floor::Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{
 		
 		theEnemy.emplace_back(o);
 		*(theChamber[n].c[pos]) = o;
-		theDisplay.w->notify(*(*theChamber[n].c[pos]));
+		w->notify(*(*theChamber[n].c[pos]));
 		theChamber[n].c.erase(theChamber[n].c.begin() + pos);
 	}
 
@@ -388,44 +388,21 @@ Floor::Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{
 			target_c = c-1;
 		}
 		cout << "row :" << target_r << "col: " << target_c << endl;
-		bool isSuccess;
-		try{
-		   isSuccess = 
-				thePlayer->visit(*board[target_r][target_c], type); //catch throw
-		}
-		catch (VisitExcept& exc) {
-			isSuccess = true;
-			if (exc.style == STAIR){
-				clearFloor();
-				init();
-			} else {
-				if (exc.style == SMALL_HOARD) {
-					board[target_r][target_c] = make_shared<Small_Hoard>(target_c, target_r);
-				} else if (exc.style == NORMAL_HOARD){
-					board[target_r][target_c] = make_shared<Normal_Hoard>(target_c, target_r);
-				} else {
-
-//merchant dragon drop 
-				}
-			}
-		}
-		if (!isSuccess) { //catch throw
-				cout << "false" << endl;
+		if (!thePlayer->visit(*board[target_r][target_c], type)) { //catch throw
+			cout << "false" << endl;
 		} else {
 			if (type == MOVE){
 				cout << "true" << endl;
 				thePlayer->getPos().posx = target_c;
 				thePlayer->getPos().posy = target_r;
-			//	theDisplay.w->notify(*thePlayer);
-			//	theDisplay.p->notify(*thePlayer);
-				//	cout << *this;
+				w->notify(*thePlayer);
+				p->notify(*thePlayer);
+			//	cout << *this;
 			} else if (type == ATTACK) {
-			//	theDisplay.p->notify(*thePlayer);
+				p->notify(*thePlayer);
 			} else {
 				cout << "PICKUP condition" << endl;
 			}
-			theDisplay.w->notify(*thePlayer);
-			theDisplay.p->notify(*thePlayer);
 		}
 		//		if (type == MOVE) {
          
@@ -462,12 +439,11 @@ Floor::Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{
 					cout << "enemy move false" << endl;
 				}
 			} else {
-				theDisplay.p->notify(*thePlayer);
+				p->notify(*thePlayer);
 			}
 		}
 	}
-	theDisplay.display();
-	thePlayer->getPlayerInfo().action = "";
+	cout << *this;
 cout << "enemy random move complete" << endl;
 }
 
@@ -527,8 +503,8 @@ bool Floor::enemyMove(int n, vector<bool>& possibility) {
 		swap(theEnemy[n]->getPos().posx, board[target_r][target_c]->getPos().posx);
 		swap(theEnemy[n]->getPos().posy, board[target_r][target_c]->getPos().posy);
 		swap(board[r][c], board[target_r][target_c]);
-		theDisplay.w->notify(*theEnemy[n]);
-		theDisplay.w->notify(*board[r][c]);
+		w->notify(*theEnemy[n]);
+		w->notify(*board[r][c]);
 	  	return true;
 	} else if (!(possibility[1] &&  possibility[2] &&  possibility[3] &&
 		   	possibility[4] && possibility[5] && possibility[6] &&
@@ -543,18 +519,19 @@ bool Floor::enemyMove(int n, vector<bool>& possibility) {
 }
 
 ostream &operator<<(ostream &out, const Floor &f){
-	out << *f.theDisplay.w; //this is window.
-	out << *f.theDisplay.p; //this is plane.
+	out << *f.w; //this is window.
+	out << *f.p; //this is plane.
 	return out;
 }
 
 string Floor::outPut(){
 	ostringstream ss;
-	ss << theDisplay.w; //this is window.
-	ss << theDisplay.p; //this is plane.
+	ss << w; //this is window.
+	ss << p; //this is plane.
 	string rs = ss.str();
 	return rs;
 }
+
 
 
 

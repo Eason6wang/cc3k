@@ -6,8 +6,7 @@
 class Restore_Health final:public Potion {
 	public:
 	Info modify () override;
-	Restore_Health (int posx, int posy, Style style,
-                    std::shared_ptr<Potion> potion);
+	Restore_Health (int posx, int posy);
 };
 
 #endif
