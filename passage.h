@@ -24,14 +24,14 @@ class Passage final:public Cell {
 	bool be_visit (Vampire &player, Type type) override;
 	bool be_visit (Troll &player, Type type) override;
 	bool be_visit (Goblin &player, Type type) override;
-	bool be_visit (Human &enemy, Type type) override;
+/*	bool be_visit (Human &enemy, Type type) override;
 	bool be_visit (Dwarf &enemy, Type type) override;
 	bool be_visit (Halfling &enemy, Type type) override;
 	bool be_visit (Elf &enemy, Type type) override;
 	bool be_visit (Orc &enemy, Type type) override;
 //	bool be_visit (Dragon &enemy, Type type) override;
 //	bool be_visit (Merchant &enemy, Type type) override;
-
+*/
 
 };
 
