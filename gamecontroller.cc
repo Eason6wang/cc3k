@@ -179,6 +179,7 @@ void GameController::wasdPlay(string file){
 		catch (bool restart) {
 			if (restart) {
 				shared_ptr<Window> endWindow = make_shared<Window>("endwindow.txt");
+				clear();
 				mvaddstr(0,0,endWindow->outPut().c_str());//use display.
 			} else {
 				endwin();
