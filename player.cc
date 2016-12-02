@@ -27,6 +27,7 @@ Player::Player(int hp, int atk, int def, int row, int col, Style style):
 Character{hp, atk, def, row, col, style}, playerInfo{0, 1, nullptr, ""}{}
 
 void Player::levelUp(){
+    playerInfo.potion = nullptr;
   playerInfo.level++;
 }
 
@@ -35,7 +36,9 @@ Info& Player::getInfo () {
     if(!getPlayerInfo().potion){
       return Character::getInfo();
     } else {
-	return getPlayerInfo().potion->modify();
+	auto &modifyInfo = getPlayerInfo().potion->modify();
+	Character::getInfo().hp = modifyInfo.hp;
+	return modifyInfo;
     }
 }
 

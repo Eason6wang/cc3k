@@ -23,7 +23,7 @@ Info &Potion::modify(){
     return info;
 }
 
-Potion * &Potion::getPotion(){
+shared_ptr<Potion> &Potion::getPotion(){
     return potion;
 }
 
