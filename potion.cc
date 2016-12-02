@@ -9,56 +9,73 @@
 #include "vampire.h"
 #include "goblin.h"
 #include "visitexcept.h"
+#include "buff.h"
+#include "style.h"
+#include "type.h"
 
 using namespace std;
 
-Potion::Potion (int posx, int posy, Style style, shared_ptr<Potion> potion)
-	:Item{posx, posy, style},potion{potion} {}
+Potion::Potion (int posx, int posy, Style style)
+	:Item{posx, posy, style} {}
+
+
+Info &Potion::modify(){
+    return info;
+}
+
+Potion * &Potion::getPotion(){
+    return potion;
+}
 
 bool Potion::be_visit (Shade &player, Type type) {
-		if (type == PICKUP) {
+/*		if (type == PICKUP) {
 			player.getPlayerInfo().potion = 
 				std::make_shared<Potion> (0,0,getPos().style,player.getPlayerInfo().potion);
 			throw VisitExcept {"pickup_potion", 0};
 		} else return false;
+		*/
+	return be_visit_by(*this, player, type, getPos().style);
 }	
+
 bool Potion::be_visit (Drow &player, Type type) {
-		if (type == PICKUP) {
+	/*	if (type == PICKUP) {
 			player.getPlayerInfo().potion = 
 				std::make_shared<Potion> (0,0,getPos().style,player.getPlayerInfo().potion);
 			throw VisitExcept {"pickup_potion", 0};
 		} else return false;
+		*/
+	return be_visit_by(*this, player, type, getPos().style);
+
 }	
+
 bool Potion::be_visit (Troll &player, Type type) {
-		if (type == PICKUP) {
+/*		if (type == PICKUP) {
 			player.getPlayerInfo().potion = 
 				std::make_shared<Potion> (0,0,getPos().style,player.getPlayerInfo().potion);
 			throw VisitExcept {"pickup_potion", 0};
 		} else return false;
+		*/
+return be_visit_by(*this, player, type, getPos().style);
+
 }	
+
 bool Potion::be_visit (Vampire&player, Type type) {
-		if (type == PICKUP) {
+/*		if (type == PICKUP) {
 			player.getPlayerInfo().potion = 
 				std::make_shared<Potion> (0,0,getPos().style,player.getPlayerInfo().potion);
 			throw VisitExcept {"pickup_potion", 0};
 		} else return false;
+		*/
+return be_visit_by(*this, player, type, getPos().style);
+
 }	
 bool Potion::be_visit (Goblin &player, Type type) {
-		if (type == PICKUP) {
+		/*if (type == PICKUP) {
 			player.getPlayerInfo().potion = 
 				std::make_shared<Potion> (0,0,getPos().style,player.getPlayerInfo().potion);
 			throw VisitExcept {"pickup_potion", 0};
 		} else return false;
+*/
+return be_visit_by(*this, player, type, getPos().style);
 
 }
-Info Potion::modify () {
-	return Info {0,0,0};
-}
-/*bool Potion::be_visit (Player &player, Type type) {
-	if (type == MOVE) {
-	player.potion = shared_ptr<Potion> (0, 0,
-		   	potion->getinfo().style, potion);
-	return true;
-	}
-	if (type == ATTACK) throw attack_exception{};
-}*/

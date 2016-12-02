@@ -5,7 +5,6 @@
 
 class Boost_Def final:public Potion {
 	public:
-	Info modify () override;
 	Boost_Def (int posx, int posy);
 };
 

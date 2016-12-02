@@ -13,6 +13,6 @@ Info& Drow::getInfo () {
     if(!getPlayerInfo().potion){
       return Character::getInfo();
     } else {
-	return Character::getInfo() + getPlayerInfo().potion->modify() * 1.5;
+	return getPlayerInfo().potion->modify() * 1.5;
     }
 }

@@ -30,11 +30,12 @@ void Player::levelUp(){
   playerInfo.level++;
 }
 
+
 Info& Player::getInfo () {
     if(!getPlayerInfo().potion){
       return Character::getInfo();
     } else {
-	return Character::getInfo() + getPlayerInfo().potion->modify();
+	return getPlayerInfo().potion->modify();
     }
 }
 

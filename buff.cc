@@ -8,7 +8,7 @@
 #include "type.h"
 #include "style.h"
 #include "visitexcept.h"
-
+#include "potion.h"
 
 using namespace std;
 void clearScreen(){
@@ -47,6 +47,10 @@ bool compare(shared_ptr<Object> ob1, shared_ptr<Object> ob2){
 //template
 
 // dragon attack is different
+bool be_pick_up(Enemy &enemy, Player &player, Style style){ return false; }
+bool be_pick_up(Player &player, Enemy &enemy, Style style){ return false; }
+bool be_attack(Item &item, Player &player){ return false;}
+
 
 bool be_attack(Player &player, Enemy &enemy){
     int extraDamage = 1;
@@ -100,5 +104,112 @@ bool be_attack(Enemy &enemy, Player &player){
     }
 }
 
+//for potion
+
+bool be_pick_up(Potion &potion,Player &player, Style style) {
+    int changeHp = 0;
+    int changeAtk = 0;
+    int changeDef = 0;
+    if(style == RESTORE_HEALTH){
+	changeHp = 10;
+    } else if (style == BOOST_ATK){
+	changeAtk = 5;
+    } else if (style == BOOST_DEF){
+	changeDef = 5;
+    } else if(style == POISON_HEALTH){
+	changeHp = -10;
+    } else if(style == WOUND_ATK){
+	changeAtk = -5;
+    } else if(style == WOUND_DEF){
+	changeDef = -5;
+    }
+    int &playerhp = player.getInfo().hp;
+    int playeratk = player.getInfo().atk;
+    int playerdef = player.getInfo().def;
+    Potion * &playerPotion = player.getPlayerInfo().potion;
+    playerhp += changeHp;	
+    potion.modify().hp = playerhp;
+    potion.modify().atk = playeratk + changeAtk;
+    potion.modify().def = playerdef + changeDef;
+    potion.getPotion() = playerPotion;
+    playerPotion = &potion;
+    string newAction = "PC uses " + getString(potion.getPos().style) + ". ";     
+    player.getPlayerInfo().action += newAction;
+    throw VisitExcept {"pickup_potion", 0};
+}
 
 
+
+
+
+
+
+
+
+/*
+bool be_pick_up(Boost_Atk &potion,PlayerType &player) {
+    int &playerhp = player.getInfo().hp;
+    int playeratk = player.getInfo().atk;
+    int playerdef = player.getInfo().def;
+    potion.modify().hp = playerhp;
+    potion.modify().atk = playeratk + 5;
+    potion.modify().def = playerdef;
+    potion.potion = player.potion;
+    player.potion = this;
+    string newAction = "PC uses " + getString(potion.getPos().style) + ". ";     
+    player.getPlayerInfo().action += newAction;
+
+    throw VisitExcept {"pickup_potion", 0};
+}
+
+bool be_pick_up(Boost_Def &potion,PlayerType &player) {
+    int &playerhp = player.getInfo().hp;
+    int playeratk = player.getInfo().atk;
+    int playerdef = player.getInfo().def;
+    potion.modify().hp = playerhp;
+    potion.modify().atk = playeratk;
+    potion.modify().def = playerdef + 5;
+    potion.potion = player.potion;
+    player.potion = this;
+    throw VisitExcept {"pickup_potion", 0};
+}
+
+
+bool be_pick_up(Poison_Health &potion,PlayerType &player) {
+    int &playerhp = player.getInfo().hp;
+    int playeratk = player.getInfo().atk;
+    int playerdef = player.getInfo().def;
+    playerhp -= 5;
+    potion.modify().hp = playerhp;
+    potion.modify().atk = playeratk;
+    potion.modify().def = playerdef;
+    potion.potion = player.potion;
+    player.potion = this;
+    throw VisitExcept {"pickup_potion", 0};
+}
+
+bool be_pick_up(Wound_Atk &potion,PlayerType &player) {
+    int &playerhp = player.getInfo().hp;
+    int playeratk = player.getInfo().atk;
+    int playerdef = player.getInfo().def;
+    potion.modify().hp = playerhp;
+    potion.modify().atk = playeratk - 5;
+    potion.modify().def = playerdef;
+    potion.potion = player.potion;
+    player.potion = this;
+    throw VisitExcept {"pickup_potion", 0};
+}
+
+bool be_pick_up(Wound_Def &potion,PlayerType &player) {
+    int &playerhp = player.getInfo().hp;
+    int playeratk = player.getInfo().atk;
+    int playerdef = player.getInfo().def;
+    potion.modify().hp = playerhp;
+    potion.modify().atk = playeratk;
+    potion.modify().def = playerdef - 5;
+    potion.potion = player.potion;
+    player.potion = this;
+    throw VisitExcept {"pickup_potion", 0};
+}
+
+*/

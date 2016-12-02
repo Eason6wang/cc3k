@@ -4,11 +4,13 @@
 #include <iostream>
 #include <memory>
 #include "type.h"
+#include "style.h"
 class VisitExcept;
-
+class Potion;
 class Object;
 class Player;
 class Enemy;
+class Item;
 
 void clearScreen();
 
@@ -22,23 +24,26 @@ bool compare(std::shared_ptr<Object> ob1,std::shared_ptr<Object> ob2);
 
 //template
 template<typename Bevisit , typename Visit , typename Type>
-bool be_visit_by(Bevisit & v1, Visit & v2, Type t){
+bool be_visit_by(Bevisit & v1, Visit & v2, Type t, Style style = SPACE){
     if(t == ATTACK){
 	return be_attack(v1, v2);
     }
+    if(t == PICKUP){
+	return be_pick_up(v1, v2, style);
+    }
+//move
     return false;
 }
 
-template<typename PlayerType>
-bool be_visit_health_potion (PlayerType player, Type type, int num) {
-	if (type == PICKUP) {
-		player.getInfo().hp += num;
-		throw VisitExcept {"pickup_potion", 0};
-	} else return false;
-}
 
 
 bool be_attack(Player &player, Enemy &enemy);
 
 bool be_attack(Enemy &enemy, Player &player);  
+
+bool be_pick_up(Potion &potion, Player &player, Style style);
+
+bool be_pick_up(Enemy &enemy, Player &player, Style style);
+bool be_pick_up(Player &player, Enemy &enemy, Style style);
+bool be_attack(Item &item, Player &player);
 #endif
