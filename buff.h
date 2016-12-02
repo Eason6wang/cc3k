@@ -19,7 +19,9 @@ int getDamage(int, int);
 
 bool compare(std::shared_ptr<Object> ob1,std::shared_ptr<Object> ob2);
 
+int distance(std::shared_ptr<Object> ob1, std::shared_ptr<Object> ob2);
 
+//void normal_enemy_move();
 //template
 template<typename Bevisit , typename Visit , typename Type>
 bool be_visit_by(Bevisit & v1, Visit & v2, Type t){

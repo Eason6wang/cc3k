@@ -206,9 +206,9 @@ void Floor::selectPlayer(bool isWasd){
 
 void Floor::setPlayer(){ // generate player.
 	theDisplay.p = make_shared<Panel>(thePlayer); //create a panel here
-	thePlayer->attach(theDisplay.p); //attach panel to each player.
-	thePlayer->notifyObservers();
+	thePlayer->attach(theDisplay.p); //attach panel to each player
 	theDisplay.w->notify(*thePlayer);
+	theDisplay.p->notify(*thePlayer);
 	//cout << "out set player" << endl;
 }
 

@@ -13,11 +13,11 @@ class Subject {
     std::vector<std::shared_ptr<Observer> > observers;
  public:
     void attach(std::shared_ptr<Observer>);
-    void notifyObservers();
+//    void notifyObservers();
     virtual Pos& getPos() = 0;
     //virtual PlayerInfo getPlayerInfo();
     //virtual Info getInfo() = 0;
-    virtual ~Subject();
+    virtual ~Subject() = default;
 };
 
 #endif
