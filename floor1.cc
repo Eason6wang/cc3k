@@ -51,6 +51,7 @@
 #include "display.h"
 #include "visitexcept.h"
 	using namespace std;
+#include "curses.h"
 
 class Enemy;
 
@@ -72,7 +73,7 @@ void Floor::clearFloor(){
 Floor::Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{false} {}
 		
 
-	void Floor::init(string file){ // set up the board according to the given floor in the file.
+	void Floor::init(bool isWasd, string file){ // set up the board according to the given floor in the file.
 		cout << "enter init" << endl;
 		clearFloor();
 		theDisplay.w = make_shared<Window>(file);
@@ -152,7 +153,7 @@ Floor::Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{
 			theChamber.emplace_back(cham);
 		}
 		if (!thePlayer) {
-			selectPlayer();
+			selectPlayer(isWasd);
 		}
 		spawnAction();
 	cout << "out init" << endl;
@@ -171,7 +172,7 @@ void Floor::spawnAction(){
 }
 
 		
-void Floor::selectPlayer(){
+void Floor::selectPlayer(bool isWasd){
 	int n = getRandom(0,4);
 	int pos = getRandom(0,theChamber[n].c.size() - 1);
 	Pos position = (*theChamber[n].c[pos])->getPos(); 
@@ -179,7 +180,11 @@ void Floor::selectPlayer(){
 	 //put this part in to display later.
 		cout << "Choose your player: (s, d, v, g, t)" << endl;
 		char player_select;
-		cin >> player_select;
+		if (isWasd) {
+			player_select = getch();
+		} else {
+			cin >> player_select;
+		}
 		if (player_select == 's'){
 			thePlayer = make_shared<Shade>(position.posx, position.posy); //the hp atk .. is assigned in ctor.
 		} else if (player_select == 'd') {
@@ -360,7 +365,7 @@ void Floor::setPlayer(){ // generate player.
 		theChamber[n].c.erase(theChamber[n].c.begin() + pos);
 	}
 
-	void Floor::floorVisit(string s, Type type){
+	void Floor::floorVisit(string s, Type type, bool isWasd){
 		cout << "enter floorvisit" << endl;
 		int r = thePlayer->getPos().posy;
 		cout << "here!!" << endl;
@@ -402,7 +407,7 @@ void Floor::setPlayer(){ // generate player.
 			cout << "here!!!!!" << endl;
 			isSuccess = true;
 			if (exc.state == "stair"){
-				init();
+				init(isWasd);
 				// reduce the gabage
 			} else if (exc.state == "pickup_potion"){
 			    cout << "alkdjhfalkufhawlefkh" << endl;
@@ -580,9 +585,10 @@ ostream &operator<<(ostream &out, const Floor &f){
 }
 
 string Floor::outPut(){
+	cout << "out" << endl;
 	ostringstream ss;
-	ss << theDisplay.w; //this is window.
-	ss << theDisplay.p; //this is plane.
+	ss << *theDisplay.w; //this is window.
+	ss << *theDisplay.p; //this is plane.
 	string rs = ss.str();
 	return rs;
 }
