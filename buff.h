@@ -4,9 +4,16 @@
 #include <iostream>
 #include <memory>
 #include "type.h"
+<<<<<<< HEAD
 #include "style.h"
 class VisitExcept;
 class Potion;
+=======
+#include "treasure.h"
+class VisitExcept;
+
+
+>>>>>>> be49fa4081771e22ffc102513bb4b16f0ac02bba
 class Object;
 class Player;
 class Enemy;
@@ -16,12 +23,16 @@ void clearScreen();
 
 int getRandom(int min, int max);
 
+std::string messageOut(std::string message);
+
 int getDamage(int, int);
 
 
 bool compare(std::shared_ptr<Object> ob1,std::shared_ptr<Object> ob2);
 
+int distance(std::shared_ptr<Object> ob1, std::shared_ptr<Object> ob2);
 
+//void normal_enemy_move();
 //template
 template<typename Bevisit , typename Visit , typename Type>
 bool be_visit_by(Bevisit & v1, Visit & v2, Type t, Style style = SPACE){
@@ -34,7 +45,6 @@ bool be_visit_by(Bevisit & v1, Visit & v2, Type t, Style style = SPACE){
 //move
     return false;
 }
-
 
 
 bool be_attack(Player &player, Enemy &enemy);

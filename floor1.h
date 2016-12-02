@@ -35,7 +35,7 @@ class Floor{
 	public:	
 	Floor(Display& display);
 	void floorVisit(std::string s, Type type, bool isWasd);
-	void clearFloor();
+	void clearFloor(bool cleanPlayer);
 	//~Floor();
 	
 	///void floor_move();

@@ -9,8 +9,8 @@
 |          |||            |||                  ||       ||    |||             |
 |            ||||||         ||||||      |||||||         ||      |||           |
 |                                                                             |
-|                      Press "c" to play using command                        |
-|                        Press "e" to play using wasd                         |
+|                      Your are in standard version                           |
+|                   Press 'r' to restart and choose version                   |
 |                                                                             |
 |       s: Shade   (High Score)                                               |
 |       d: Drow    (Hight HP)                                                 |

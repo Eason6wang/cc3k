@@ -17,6 +17,10 @@ void clearScreen(){
 	}
 }
 
+string messageOut(string message){
+	string s = "\n" + message + "\n";
+}
+
 int getRandom(int min, int max){
 	int n = max - min + 1;
 	int rn = rand() % n + min;
@@ -43,7 +47,87 @@ bool compare(shared_ptr<Object> ob1, shared_ptr<Object> ob2){
 	}
 }
 
+int distance(std::shared_ptr<Object> ob1, std::shared_ptr<Object> ob2){
+	Pos p1 = ob1->getPos();
+	Pos p2 = ob2->getPos();
+	int ri = abs(p1.posx - p2.posx) + abs(p1.posy - p2.posy);
+	return ri;
+}
 
+/*void normal_enemy_move(){
+	for (int i = 0; i < theEnemy.size(); i++) {
+		int r = theEnemy[i]->getPos().posy;
+		int c = theEnemy[i]->getPos().posx;
+		int player_r = thePlayer->getPos().posy;
+		int player_c = thePlayer->getPos().posx;
+		bool playeraround;
+		if (abs(player_r - r) <= 1 && abs(player_c - c) <= 1){
+			try	{
+				//cout << "player is attacked" << endl;
+				if (theEnemy[i]->visit(*thePlayer, ATTACK)) playeraround = true;
+			}
+			catch(VisitExcept & exc){
+				if (exc.state == "deadplayer"){
+					//cout << "player is dead!!!!!!!!!!!!!!" << endl;
+					playeraround = true;
+					throw true;
+				}
+			}
+		}
+		if (!playeraround){
+			vector<bool> possibility;
+			for (int j = 0; j < 8; j++){
+				possibility.emplace_back(false);
+			}
+			if (enemyMove(i, possibility)){
+				
+			} else {
+				//cout << "enemy move false" << endl;
+			}
+		} else {
+			theDisplay.p->notify(*thePlayer);
+		}
+	}
+}
+
+
+void smart_enemy_move(){
+	for (int i = 0; i < theEnemy.size(); i++) {
+			int r = theEnemy[i]->getPos().posy;
+			int c = theEnemy[i]->getPos().posx;
+			int player_r = thePlayer->getPos().posy;	
+			int player_c = thePlayer->getPos().posx;
+				bool playeraround;
+				if (abs(player_r - r) <= 1 && abs(player_c - c) <= 1){
+					try	{
+					//cout << "player is attacked" << endl;
+						if (theEnemy[i]->visit(*thePlayer, ATTACK)) playeraround = true;
+					}
+					catch(VisitExcept & exc){
+						if (exc.state == "deadplayer"){
+						//cout << "player is dead!!!!!!!!!!!!!!" << endl;
+							playeraround = true;
+							throw true;
+						}
+					}
+				}
+				if (!playeraround){
+					vector<bool> possibility;
+					for (int j = 0; j < 8; j++){
+						possibility.emplace_back(false);
+					}
+					if (enemyMove(i, possibility)){
+				
+					} else {
+						//cout << "enemy move false" << endl;
+					}
+				} else {
+					theDisplay.p->notify(*thePlayer);
+				}
+			}
+		}
+
+*/
 //template
 
 // dragon attack is different

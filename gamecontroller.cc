@@ -1,4 +1,5 @@
 #include <iostream>
+#include "buff.h"
 #include <sstream>
 #include <curses.h>
 #include <memory>
@@ -13,7 +14,7 @@
 using namespace std;
 
 GameController::GameController():display{make_shared<Window>("welcome.txt"), make_shared<Panel>(nullptr)}, floor{display}{
-	display.display(display.w);
+//	display.display(display.w);
 }
 
 void GameController::startGame(string file){
@@ -33,8 +34,8 @@ void GameController::play(string file){
 	//cin >> bonus;
 	//switch 
 	cout << "enter the play()" << endl;
-	//Window theWindow {"welcome.txt"};
-	//cout << theWindow;
+	shared_ptr<Window> theWindow = make_shared<Window>("normal_version.txt");
+	display.display(theWindow);
 	
 	floor.init(false, file);
 /*	floor.setPlayer();
@@ -64,9 +65,8 @@ void GameController::play(string file){
 			} else if (cmd == "f") {
 				floor.pause();
 			} else if (cmd == "r") {
-			//	floor.clearFloor();
+				floor.clearFloor(true);
 				floor.init(false,file); //remember to generate enemies again
-			//	display.display();
 			} else if (cmd == "q") {
 				throw false;
 			} else {
@@ -91,9 +91,11 @@ void GameController::wasdPlay(string file){
 	initscr();
 	//Window theWindow {"welcome.txt"};
 	//addstr(theWindow.outPut().c_str());
+	shared_ptr<Window> theWindow = make_shared<Window>("dlc_version.txt");
+	mvaddstr(0,0,theWindow->outPut().c_str());//use display.
 	floor.init(true,file);
 	//string themap = floor.outPut();
-    mvaddstr(10,0,floor.outPut().c_str());//use display.
+    mvaddstr(0,0,floor.outPut().c_str());//use display.
 //    mvaddstr(0,0,themap.c_str());//use display.
     //mvaddstr(10,0,display.w->outPut().c_str());//use display.
    // mvaddstr(10,0,display.p->outPut().c_str());//use display.
@@ -147,9 +149,10 @@ void GameController::wasdPlay(string file){
 			} else if (key == 'f' || key == 'F') {
 				floor.pause();
 			} else if (key == 'r' || key == 'R') {
+				floor.clearFloor(true);
 				floor.init(true, file); //remember to generate enemies again
 			} else if (key == 'q' || key == 'Q') {
-				throw Quit{};
+				throw false;
 			} else {
 				switch (key){
 					case 'w':
@@ -170,17 +173,21 @@ void GameController::wasdPlay(string file){
 						break;
 				}
 			}
-			mvaddstr(10,0,floor.outPut().c_str());//use display.
-			refresh();
+			mvaddstr(0,0,floor.outPut().c_str());//use display.
 		}
+		//	refresh();
 		catch (bool restart) {
 			if (restart) {
 				shared_ptr<Window> endWindow = make_shared<Window>("endwindow.txt");
-				addstr(display.w->outPut().c_str());//use display.
+				clear();
+				mvaddstr(0,0,endWindow->outPut().c_str());//use display.
 			} else {
+				endwin();
 				throw;
 			}
 		}
+	//	mvaddstr(0,0,floor.outPut().c_str());//use display.
+		refresh();		
 	}
 }
 
