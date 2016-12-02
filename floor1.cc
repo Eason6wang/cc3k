@@ -240,6 +240,7 @@ Floor::Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{
 	}
 
 	void Floor::setPotion(){ //generate potion
+
 		cout << "set potion" << endl;
 		int n = getRandom(0, 4);
 		int pos = getRandom(0, theChamber[n].c.size() - 1);
@@ -393,23 +394,27 @@ Floor::Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{
 				thePlayer->visit(*board[target_r][target_c], type); //catch throw
 		}
 		catch (VisitExcept& exc) {
+			cout << "here!!!!!" << endl;
 			isSuccess = true;
-			if (exc.style == STAIR){
-				clearFloor();
+			if (exc.state == "stair"){
 				init();
 				// reduce the gabage
 			} else {
-				if (exc.style == SMALL_HOARD) {
+				if (exc.state == "small_hoard") {
 					board[target_r][target_c] = make_shared<Small_Hoard>(target_c, target_r);
-				} else if (exc.style == NORMAL_HOARD){
+				} else if (exc.state == "normal_hoard"){
 					board[target_r][target_c] = make_shared<Normal_Hoard>(target_c, target_r);
+				} else if (exc.state == "pickup_gold"){
+					board[target_r][target_c] = make_shared<Tile>(target_r,target_r);
+					//aaron have to return visitExcept with "string"
+					//throw;
 				} else {
 
 //merchant dragon drop 
 				}
 			}
 		}
-		if (!isSuccess) { //catch throw
+		if (!isSuccess) {
 				cout << "false" << endl;
 		} else {
 			if (type == MOVE){
@@ -425,6 +430,7 @@ Floor::Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{
 				cout << "PICKUP condition" << endl;
 			}
 			theDisplay.w->notify(*thePlayer);
+			theDisplay.w->notify(*board[target_r][target_c]);
 			theDisplay.p->notify(*thePlayer);
 		}
 		//		if (type == MOVE) {
@@ -454,10 +460,12 @@ Floor::Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{
 					cout << "player is attacked" << endl;
 					if (theEnemy[i]->visit(*thePlayer, ATTACK)) playeraround = true;
 				}
-				catch(bool dead){
-					cout << "player is dead!!!!!!!!!!!!!!" << endl;
-					playeraround = true;
-					throw;
+				catch(VisitExcept & exc){
+					if (exc.state == "deadplayer"){
+						cout << "player is dead!!!!!!!!!!!!!!" << endl;
+						playeraround = true;
+						throw true;
+					}
 				}
 			}
 			if (!playeraround){
