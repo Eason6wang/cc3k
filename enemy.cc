@@ -14,7 +14,7 @@ Enemy::Enemy(int hp, int atk, int def, int row, int col, Style style):
   Character{hp, atk, def, row, col, style} {}
 
 bool Enemy::be_visit(Shade& player, Type type){ // default
-    if (type == MOVE) return false;
+   /* if (type == MOVE) return false;
     if(type == ATTACK){
 		cout << "shade be attacked" << endl;
   	int damage = getDamage(player.getInfo().atk, this->getInfo().def);
@@ -31,7 +31,11 @@ bool Enemy::be_visit(Shade& player, Type type){ // default
 	} 
     }
 	return false;
+	*/
+  return  be_visit_by(*this, player, type);
 }
+
+
 
 //below has not been changed
 bool Enemy::be_visit(Drow& drow, Type type){ // default

@@ -399,7 +399,12 @@ Floor::Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{
 			if (exc.state == "stair"){
 				init();
 				// reduce the gabage
-			} else {
+			} else
+			// enemy is dead
+		  	 {
+			     //delete enemy
+			     auto deadEnemy = find(theEnemy.begin(),theEnemy.end(),board[target_r][target_c]);
+			     theEnemy.erase(deadEnemy);
 				if (exc.state == "small_hoard") {
 					board[target_r][target_c] = make_shared<Small_Hoard>(target_c, target_r);
 				} else if (exc.state == "normal_hoard"){
@@ -409,6 +414,7 @@ Floor::Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{
 					//aaron have to return visitExcept with "string"
 					//throw;
 				} else {
+
 
 //merchant dragon drop 
 				}

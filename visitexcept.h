@@ -1,7 +1,7 @@
 #include "style.h"
-
+#include <string>
 
 struct VisitExcept{
-    Style style;
+    std::string state;
     int num;
 };
