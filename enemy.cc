@@ -45,8 +45,8 @@ bool Enemy::be_visit(Drow& player, Type type){ // default
        if (this->getInfo().hp -= damage) return false;// throw
 	}
     return false;*/
-return  be_visit_by(*this, player, type);
 
+return  be_visit_by(*this, player, type);
 }
 bool Enemy::be_visit(Vampire& player, Type type){ // default
 /*	if (type == MOVE) return false;
@@ -57,6 +57,7 @@ bool Enemy::be_visit(Vampire& player, Type type){ // default
     return false;*/
 
 
+return  be_visit_by(*this, player, type);
 }
 bool Enemy::be_visit(Troll& player, Type type){ // default
 /*	if (type == MOVE) return false;

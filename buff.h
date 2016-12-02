@@ -39,7 +39,9 @@ bool be_visit_by(Bevisit & v1, Visit & v2, Type t, Style style = SPACE){
     if(t == PICKUP){
 	return be_pick_up(v1, v2, style);
     }
-//move
+    if(t == MOVE){
+	return be_pick_up(v1, v2, style);
+    }
     return false;
 }
 
@@ -49,7 +51,7 @@ bool be_attack(Player &player, Enemy &enemy);
 bool be_attack(Enemy &enemy, Player &player);  
 
 bool be_pick_up(Potion &potion, Player &player, Style style);
-
+bool be_pick_up(Treasure &treasure, Player &player, Style style);
 bool be_pick_up(Enemy &enemy, Player &player, Style style);
 bool be_pick_up(Player &player, Enemy &enemy, Style style);
 bool be_attack(Item &item, Player &player);

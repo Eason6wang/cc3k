@@ -131,9 +131,15 @@ void smart_enemy_move(){
 //template
 
 // dragon attack is different
-bool be_pick_up(Enemy &enemy, Player &player, Style style){ return false; }
-bool be_pick_up(Player &player, Enemy &enemy, Style style){ return false; }
-bool be_attack(Item &item, Player &player){ return false;}
+
+
+bool be_attack(Item &item, Player &player){ 
+    string newAction = "PC cannot attack an Item. ";     
+    player.getPlayerInfo().action += newAction;
+    return false;
+}
+
+
 
 
 bool be_attack(Player &player, Enemy &enemy){
@@ -211,9 +217,8 @@ bool be_pick_up(Potion &potion,Player &player, Style style) {
     int playeratk = player.getInfo().atk;
     int playerdef = player.getInfo().def;
     shared_ptr<Potion> &playerPotion = player.getPlayerInfo().potion;
-    playerhp += changeHp;
     shared_ptr<Potion> newpotion = make_shared<Potion>(0, 0, SPACE);
-    newpotion->modify().hp = playerhp;
+    newpotion->modify().hp = playerhp + changeHp;
     newpotion->modify().atk = playeratk + changeAtk;
     newpotion->modify().def = playerdef + changeDef;
     newpotion->getPotion() = playerPotion;
@@ -223,9 +228,29 @@ bool be_pick_up(Potion &potion,Player &player, Style style) {
     throw VisitExcept {"pickup_potion", 0};
 }
 
+bool be_pick_up(Enemy &enemy, Player &player, Style style){
+    string newAction = "PC cannot pick up or go over an enemy. ";     
+    player.getPlayerInfo().action += newAction;
+    return false; 
+}
+
+bool be_pick_up(Player &player, Enemy &enemy, Style style){ 
+    return false; 
+}
 
 
 
+// for gold
+
+bool be_pick_up(Treasure &treasure,Player &player, Style style) {
+    	string newAction = "PC picks up a " + getString(treasure.getPos().style) + ". ";     
+    	player.getPlayerInfo().action += newAction;
+  	player.getPlayerInfo().gold += treasure.getGold();
+	throw VisitExcept{"pickup_gold", 0};
+}
+
+
+//bool be_pick_up()
 
 
 
