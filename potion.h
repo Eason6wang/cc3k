@@ -14,10 +14,10 @@ class Player;
 class Potion :public Item {
 	protected:
 	Info info;
-	Potion *potion;
+	std::shared_ptr<Potion> potion;
 	public:
 	Info &modify ();
-	Potion * & getPotion();
+	std::shared_ptr<Potion> & getPotion();
 	Potion (int row, int col, Style style);
 	virtual bool be_visit(Shade &player, Type type);
 	virtual bool be_visit(Vampire&player, Type type);
