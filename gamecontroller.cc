@@ -34,7 +34,8 @@ void GameController::play(string file){
 	cout << "enter the play()" << endl;
 	//Window theWindow {"welcome.txt"};
 	//cout << theWindow;
-	floor.init(file);
+	
+	floor.init(false, file);
 /*	floor.setPlayer();
 	floor.setStair();
 	for (int i = 0; i < 10; i++){
@@ -55,21 +56,21 @@ void GameController::play(string file){
 			string direction;
 		   	if (cmd == "u") {
                 cin >> direction;
-				floor.floorVisit(direction, PICKUP);
+				floor.floorVisit(direction, PICKUP, false);
 			} else if (cmd == "a") {
                 cin >> direction;
-				floor.floorVisit(direction, ATTACK);
+				floor.floorVisit(direction, ATTACK, false);
 			} else if (cmd == "f") {
 				floor.pause();
 			} else if (cmd == "r") {
 			//	floor.clearFloor();
-				floor.init(file); //remember to generate enemies again
+				floor.init(false,file); //remember to generate enemies again
 			//	display.display();
 			} else if (cmd == "q") {
 				throw false;
 			} else {
 				cout << "move !!!!" << endl;
-				floor.floorVisit(cmd, MOVE);
+				floor.floorVisit(cmd, MOVE, false);
 			}
 			display.display();
 		}
@@ -77,11 +78,6 @@ void GameController::play(string file){
 			if (restart) {
 				shared_ptr<Window> endWindow = make_shared<Window>("endwindow.txt");
 				display.display(endWindow);
-				//char res;
-				//cin >> res;
-				//if (res == 'r'){
-				//	floor.clearFloor();
-				//	floor.init(file);
 			} else {
 				throw;
 			}
@@ -94,8 +90,10 @@ void GameController::wasdPlay(string file){
 	initscr();
 	//Window theWindow {"welcome.txt"};
 	//addstr(theWindow.outPut().c_str());
-	floor.init(file);
-    addstr(floor.outPut().c_str());//use display.
+	floor.init(true,file);
+	string themap = floor.outPut();
+   // addstr(floor.outPut().c_str());//use display.
+    mvaddstr(0,0,themap.c_str());//use display.
 
 	//the floor is generated 	
 	char key;
@@ -103,77 +101,83 @@ void GameController::wasdPlay(string file){
 		try {
 			key = getch();
 			char direction;
-		   	if (key == 'U' || key == 'u') {
+		   	if (key == 'J' || key == 'j') {
                 direction = getch();
 				switch (direction){
 					case 'w':
 					case 'W':
-						floor.floorVisit("no", PICKUP);
+						floor.floorVisit("no", PICKUP, true);
 						break;
 					case 's':
 					case 'S':
-						floor.floorVisit("so", PICKUP);
+						floor.floorVisit("so", PICKUP, true);
 						break;
 					case 'a':
 					case 'A':
-						floor.floorVisit("we", PICKUP);
+						floor.floorVisit("we", PICKUP, true);
 						break;
 					case 'd':
 					case 'D':
-						floor.floorVisit("ea", PICKUP);
+						floor.floorVisit("ea", PICKUP, true);
 						break;
 				}
-			} else if (key == 'A' || key == 'a') {
+			} else if (key == 'K' || key == 'k') {
 			  	direction = getch();
 				switch (direction){
 					case 'w':
 					case 'W':
-						floor.floorVisit("no", ATTACK);
+						floor.floorVisit("no", ATTACK, true);
 						break;
 					case 's':
 					case 'S':
-						floor.floorVisit("so", ATTACK);
+						floor.floorVisit("so", ATTACK, true);
 						break;
 					case 'a':
 					case 'A':
-						floor.floorVisit("we", ATTACK);
+						floor.floorVisit("we", ATTACK, true);
 						break;
 					case 'd':
 					case 'D':
-						floor.floorVisit("ea", ATTACK);
+						floor.floorVisit("ea", ATTACK, true);
 						break;
 				}
 			} else if (key == 'f' || key == 'F') {
 				floor.pause();
 			} else if (key == 'r' || key == 'R') {
-				floor.init(file); //remember to generate enemies again
+				floor.init(true, file); //remember to generate enemies again
 			} else if (key == 'q' || key == 'Q') {
 				throw Quit{};
 			} else {
 				switch (key){
 					case 'w':
 					case 'W':
-						floor.floorVisit("no", MOVE);
+						floor.floorVisit("no", MOVE, true);
 						break;
 					case 's':
 					case 'S':
-						floor.floorVisit("so", MOVE);
+						floor.floorVisit("so", MOVE, true);
 						break;
 					case 'a':
 					case 'A':
-						floor.floorVisit("we", MOVE);
+						floor.floorVisit("we", MOVE, true);
 						break;
 					case 'd':
 					case 'D':
-						floor.floorVisit("ea", MOVE);
+						floor.floorVisit("ea", MOVE, true);
 						break;
 				}
 			}
+			mvaddstr(0,0,floor.outPut().c_str());//use display.
+			refresh();
 		}
-		catch (Quit& q) {
-        cout << "quit" << endl;
+		catch (bool restart) {
+			if (restart) {
+				shared_ptr<Window> endWindow = make_shared<Window>("endwindow.txt");
+				addstr(display.w->outPut().c_str());//use display.
+			} else {
+				throw;
+			}
 		}
-		refresh();
 	}
 }
 
