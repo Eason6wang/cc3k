@@ -410,7 +410,6 @@ void Floor::setPlayer(){ // generate player.
 				init(isWasd);
 				// reduce the gabage
 			} else if (exc.state == "pickup_potion"){
-			    cout << "alkdjhfalkufhawlefkh" << endl;
 					board[target_r][target_c] = make_shared<Tile>(target_c,target_r);
 					//aaron have to return visitExcept with "string"
 					//throw;		
