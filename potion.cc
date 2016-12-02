@@ -8,6 +8,7 @@
 #include "troll.h"
 #include "vampire.h"
 #include "goblin.h"
+#include "visitexcept.h"
 
 using namespace std;
 
@@ -18,35 +19,35 @@ bool Potion::be_visit (Shade &player, Type type) {
 		if (type == PICKUP) {
 			player.getPlayerInfo().potion = 
 				std::make_shared<Potion> (0,0,getPos().style,player.getPlayerInfo().potion);
-			return true;
+			throw VisitExcept {"pickup_potion", 0};
 		} else return false;
 }	
 bool Potion::be_visit (Drow &player, Type type) {
 		if (type == PICKUP) {
 			player.getPlayerInfo().potion = 
 				std::make_shared<Potion> (0,0,getPos().style,player.getPlayerInfo().potion);
-			return true;
+			throw VisitExcept {"pickup_potion", 0};
 		} else return false;
 }	
 bool Potion::be_visit (Troll &player, Type type) {
 		if (type == PICKUP) {
 			player.getPlayerInfo().potion = 
 				std::make_shared<Potion> (0,0,getPos().style,player.getPlayerInfo().potion);
-			return true;
+			throw VisitExcept {"pickup_potion", 0};
 		} else return false;
 }	
 bool Potion::be_visit (Vampire&player, Type type) {
 		if (type == PICKUP) {
 			player.getPlayerInfo().potion = 
 				std::make_shared<Potion> (0,0,getPos().style,player.getPlayerInfo().potion);
-			return true;
+			throw VisitExcept {"pickup_potion", 0};
 		} else return false;
 }	
 bool Potion::be_visit (Goblin &player, Type type) {
 		if (type == PICKUP) {
 			player.getPlayerInfo().potion = 
 				std::make_shared<Potion> (0,0,getPos().style,player.getPlayerInfo().potion);
-			return true;
+			throw VisitExcept {"pickup_potion", 0};
 		} else return false;
 }	
 Info Potion::modify(){
