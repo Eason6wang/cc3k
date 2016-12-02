@@ -17,6 +17,10 @@ void clearScreen(){
 	}
 }
 
+string messageOut(string message){
+	string s = "\n" + message + "\n";
+}
+
 int getRandom(int min, int max){
 	int n = max - min + 1;
 	int rn = rand() % n + min;

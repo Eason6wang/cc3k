@@ -14,6 +14,8 @@ void clearScreen();
 
 int getRandom(int min, int max);
 
+std::string messageOut(std::string message);
+
 int getDamage(int, int);
 
 

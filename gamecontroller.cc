@@ -1,4 +1,5 @@
 #include <iostream>
+#include "buff.h"
 #include <sstream>
 #include <curses.h>
 #include <memory>
@@ -13,7 +14,7 @@
 using namespace std;
 
 GameController::GameController():display{make_shared<Window>("welcome.txt"), make_shared<Panel>(nullptr)}, floor{display}{
-	display.display(display.w);
+//	display.display(display.w);
 }
 
 void GameController::startGame(string file){
@@ -33,8 +34,8 @@ void GameController::play(string file){
 	//cin >> bonus;
 	//switch 
 	cout << "enter the play()" << endl;
-	//Window theWindow {"welcome.txt"};
-	//cout << theWindow;
+	shared_ptr<Window> theWindow = make_shared<Window>("normal_version.txt");
+	display.display(theWindow);
 	
 	floor.init(false, file);
 /*	floor.setPlayer();
@@ -90,6 +91,8 @@ void GameController::wasdPlay(string file){
 	initscr();
 	//Window theWindow {"welcome.txt"};
 	//addstr(theWindow.outPut().c_str());
+	shared_ptr<Window> theWindow = make_shared<Window>("dlc_version.txt");
+	mvaddstr(0,0,theWindow->outPut().c_str());//use display.
 	floor.init(true,file);
 	//string themap = floor.outPut();
     mvaddstr(0,0,floor.outPut().c_str());//use display.
@@ -170,8 +173,8 @@ void GameController::wasdPlay(string file){
 						break;
 				}
 			}
+			mvaddstr(0,0,floor.outPut().c_str());//use display.
 		}
-		//	mvaddstr(0,0,floor.outPut().c_str());//use display.
 		//	refresh();
 		catch (bool restart) {
 			if (restart) {
@@ -182,7 +185,7 @@ void GameController::wasdPlay(string file){
 				throw;
 			}
 		}
-		mvaddstr(0,0,floor.outPut().c_str());//use display.
+	//	mvaddstr(0,0,floor.outPut().c_str());//use display.
 		refresh();		
 	}
 }
