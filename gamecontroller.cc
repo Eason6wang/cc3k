@@ -64,13 +64,14 @@ void GameController::play(string file){
 			} else if (cmd == "r") {
 			//	floor.clearFloor();
 				floor.init(file); //remember to generate enemies again
-				display.display();
+			//	display.display();
 			} else if (cmd == "q") {
 				throw false;
 			} else {
 				cout << "move !!!!" << endl;
 				floor.floorVisit(cmd, MOVE);
 			}
+			display.display();
 		}
 		catch (bool restart) {
 			if (restart) {

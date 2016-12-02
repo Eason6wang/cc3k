@@ -59,11 +59,13 @@ void Floor::clearFloor(){
 		cout << "enter clear" << endl;
 	if (thePlayer) {	
 		thePlayer->levelUp(); //player add a method levelUp.
+	} else {
+		thePlayer = nullptr;
 	}
-			board.clear();
-			theEnemy.clear();
-			theChamber.clear();
-		cout << "out clear" << endl;
+	board.clear();
+	theEnemy.clear();
+	theChamber.clear();
+	cout << "out clear" << endl;
 	}
 		
 
@@ -149,19 +151,62 @@ Floor::Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{
 			cout << cham.c.size() << endl;
 			theChamber.emplace_back(cham);
 		}
-		setPlayer();
-		setStair();
-		for (int i = 0; i < 10; i++){
-			setPotion();
-			setTreasure();
+		if (!thePlayer) {
+			selectPlayer();
 		}
-		
-		for (int j = 0; j < 20; j++){
-			setEnemy();
-		}
-		cout << theEnemy.size() << endl;
+		spawnAction();
 	cout << "out init" << endl;
 	}
+
+void Floor::spawnAction(){
+	setPlayer();
+	setStair();
+	for (int i = 0; i < 10; i++){
+		setPotion();
+		setTreasure();
+	}
+	for (int j = 0; j < 20; j++){
+		setEnemy();
+	}
+}
+
+		
+void Floor::selectPlayer(){
+	int n = getRandom(0,4);
+	int pos = getRandom(0,theChamber[n].c.size() - 1);
+	Pos position = (*theChamber[n].c[pos])->getPos(); 
+	while (true){
+	 //put this part in to display later.
+		cout << "Choose your player: (s, d, v, g, t)" << endl;
+		char player_select;
+		cin >> player_select;
+		if (player_select == 's'){
+			thePlayer = make_shared<Shade>(position.posx, position.posy); //the hp atk .. is assigned in ctor.
+		} else if (player_select == 'd') {
+			thePlayer = make_shared<Drow>(position.posx, position.posy);
+		} else if (player_select == 'v') {
+			thePlayer = make_shared<Vampire>(position.posx, position.posy);
+		} else if (player_select == 'g') {
+			thePlayer = make_shared<Goblin>(position.posx, position.posy);
+		} else if (player_select == 't') {
+			thePlayer = make_shared<Troll>(position.posx, position.posy);  //add auto ???
+		} else {
+			thePlayer = make_shared<Shade>(position.posx, position.posy);
+			continue;
+		}
+		break;
+	}
+	theChamber[n].c.erase(theChamber[n].c.begin() + pos);
+}
+
+void Floor::setPlayer(){ // generate player.
+	theDisplay.p = make_shared<Panel>(thePlayer); //create a panel here
+	thePlayer->attach(theDisplay.p); //attach panel to each player.
+	thePlayer->notifyObservers();
+	theDisplay.w->notify(*thePlayer);
+	cout << "out set player" << endl;
+}
+
 
 	void Floor::setChamber(int r, int c, vector<shared_ptr<Object>*>& arr) {
 		//cout << "setChamber" << board[r][c]->getPos().isRead << endl;
@@ -183,46 +228,6 @@ Floor::Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{
 	}
 		
 
-	void Floor::setPlayer(){ // generate player.
-		int n = getRandom(0,4);
-		int pos = getRandom(0,theChamber[n].c.size() - 1);
-		Pos position = (*theChamber[n].c[pos])->getPos(); //object 的pos 里头要加一个field tmp
-		//shared_ptr<Player> thePlayer;
-
-		//selectplayer.
-		while (true){
-	 //put this part in to display later.
-			cout << "Choose your player: (s, d, v, g, t)" << endl;
-			char player_select;
-			cin >> player_select;
-			if (player_select == 's'){
-				thePlayer = make_shared<Shade>(position.posx, position.posy); //the hp atk .. is assigned in ctor.
-			} else if (player_select == 'd') {
-				thePlayer = make_shared<Drow>(position.posx, position.posy);
-			} else if (player_select == 'v') {
-				thePlayer = make_shared<Vampire>(position.posx, position.posy);
-			} else if (player_select == 'g') {
-				thePlayer = make_shared<Goblin>(position.posx, position.posy);
-			} else if (player_select == 't') {
-				thePlayer = make_shared<Troll>(position.posx, position.posy);  //add auto ???
-			} else {
-				thePlayer = make_shared<Shade>(position.posx, position.posy);
-				continue;
-			}
-			break;
-		}
-	//	this->thePlayer = thePlayer;
-		theDisplay.p = make_shared<Panel>(thePlayer); //create a panel here
-		cout << "panel" << endl;
-		thePlayer->attach(theDisplay.p); //attach panel to each player.
-		cout << "after select" << endl;
-		thePlayer->notifyObservers();
-		cout << "after select" << endl;
-		theDisplay.w->notify(*thePlayer);
-		
-		cout << "out set player" << endl;
-		theChamber[n].c.erase(theChamber[n].c.begin() + pos);
-	}
 
 	void Floor::setStair(){ //generate stairway.
 		cout << "set Stair()" << endl;
@@ -489,7 +494,7 @@ Floor::Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{
 			}
 		}
 	}
-	theDisplay.display();
+	//theDisplay.display();
 	thePlayer->getPlayerInfo().action = "";
 cout << "enemy random move complete" << endl;
 }
