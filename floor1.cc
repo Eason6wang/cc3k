@@ -57,7 +57,7 @@ class Enemy;
 
 
 void Floor::clearFloor(){
-		cout << "enter clear" << endl;
+	//	cout << "enter clear" << endl;
 	if (thePlayer) {	
 		thePlayer->levelUp(); //player add a method levelUp.
 	} else {
@@ -66,7 +66,7 @@ void Floor::clearFloor(){
 	board.clear();
 	theEnemy.clear();
 	theChamber.clear();
-	cout << "out clear" << endl;
+//	cout << "out clear" << endl;
 	}
 		
 
@@ -74,7 +74,7 @@ Floor::Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{
 		
 
 	void Floor::init(bool isWasd, string file){ // set up the board according to the given floor in the file.
-		cout << "enter init" << endl;
+		//cout << "enter init" << endl;
 		clearFloor();
 		theDisplay.w = make_shared<Window>(file);
 	//	p = make_shared<Panel>(nullptr);
@@ -136,10 +136,10 @@ Floor::Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{
 			}
 			board.emplace_back(arr);
 		}
-		cout << "befor chamber" << endl;
+		//cout << "befor chamber" << endl;
 		//detect chamber;
 		for (int t = 0; t < 5; t++) {
-			cout << " here " << t<< endl;
+			//cout << " here " << t<< endl;
 			int row,col;
 			do {
 				row = getRandom(0, height - 1);
@@ -149,14 +149,14 @@ Floor::Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{
 			} while (board[row][col]->getPos().style != TILE || (board[row][col]->getPos().isRead)); //check if it is read
 			Chamber cham;
 			setChamber(row, col, cham.c);
-			cout << cham.c.size() << endl;
+		//	cout << cham.c.size() << endl;
 			theChamber.emplace_back(cham);
 		}
 		if (!thePlayer) {
 			selectPlayer(isWasd);
 		}
 		spawnAction();
-	cout << "out init" << endl;
+	//cout << "out init" << endl;
 	}
 
 void Floor::spawnAction(){
@@ -209,7 +209,7 @@ void Floor::setPlayer(){ // generate player.
 	thePlayer->attach(theDisplay.p); //attach panel to each player.
 	thePlayer->notifyObservers();
 	theDisplay.w->notify(*thePlayer);
-	cout << "out set player" << endl;
+	//cout << "out set player" << endl;
 }
 
 
@@ -235,7 +235,7 @@ void Floor::setPlayer(){ // generate player.
 
 
 	void Floor::setStair(){ //generate stairway.
-		cout << "set Stair()" << endl;
+		//cout << "set Stair()" << endl;
 		int n = getRandom(0,4);
 		int pos = getRandom(0, theChamber[n].c.size() - 1);
 		Pos position = (*theChamber[n].c[pos])->getPos();
@@ -246,12 +246,12 @@ void Floor::setPlayer(){ // generate player.
 		*(theChamber[n].c[pos]) = o;
 		theDisplay.w->notify(*(*theChamber[n].c[pos]));
 		theChamber[n].c.erase(theChamber[n].c.begin() + pos);
-		cout << "setStair works fine" << endl;
+		//cout << "setStair works fine" << endl;
 	}
 
 	void Floor::setPotion(){ //generate potion
 
-		cout << "set potion" << endl;
+		//cout << "set potion" << endl;
 		int n = getRandom(0, 4);
 		int pos = getRandom(0, theChamber[n].c.size() - 1);
 		int p = getRandom(1,6);
@@ -281,7 +281,7 @@ void Floor::setPlayer(){ // generate player.
 		*(theChamber[n].c[pos]) = o; // put this object in to the board.
 		theDisplay.w->notify(*(*theChamber[n].c[pos]));
 		theChamber[n].c.erase(theChamber[n].c.begin() + pos);
-		cout << "setPotion complete" << endl;
+		//cout << "setPotion complete" << endl;
 	}
 
 	void Floor::setTreasure(){ //generate gold.
@@ -366,12 +366,12 @@ void Floor::setPlayer(){ // generate player.
 	}
 
 	void Floor::floorVisit(string s, Type type, bool isWasd){
-		cout << "enter floorvisit" << endl;
+		//cout << "enter floorvisit" << endl;
 		int r = thePlayer->getPos().posy;
-		cout << "here!!" << endl;
+	//	cout << "here!!" << endl;
 		int c = thePlayer->getPos().posx;
 		int target_r, target_c;
-		cout << "here " << endl;
+	//	cout << "here " << endl;
 		if (s == "no") {
 			target_r = r-1;
 			target_c = c;
@@ -397,14 +397,14 @@ void Floor::setPlayer(){ // generate player.
 			target_r = r+1;
 			target_c = c-1;
 		}
-		cout << "row :" << target_r << "col: " << target_c << endl;
+		//cout << "row :" << target_r << "col: " << target_c << endl;
 		bool isSuccess;
 		try{
 		   isSuccess = 
 				thePlayer->visit(*board[target_r][target_c], type); //catch throw
 		}
 		catch (VisitExcept& exc) {
-			cout << "here!!!!!" << endl;
+			//cout << "here!!!!!" << endl;
 			isSuccess = true;
 			if (exc.state == "stair"){
 				init(isWasd);
@@ -431,10 +431,10 @@ void Floor::setPlayer(){ // generate player.
 			}
 		}
 		if (!isSuccess) {
-				cout << "false" << endl;
+				//cout << "false" << endl;
 		} else {
 			if (type == MOVE){
-				cout << "true" << endl;
+				//cout << "true" << endl;
 				thePlayer->getPos().posx = target_c;
 				thePlayer->getPos().posy = target_r;
 			//	theDisplay.w->notify(*thePlayer);
@@ -443,7 +443,7 @@ void Floor::setPlayer(){ // generate player.
 			} else if (type == ATTACK) {
 			//	theDisplay.p->notify(*thePlayer);
 			} else {
-				cout << "PICKUP condition" << endl;
+				//cout << "PICKUP condition" << endl;
 			}
 			theDisplay.w->notify(*thePlayer);
 			theDisplay.w->notify(*board[target_r][target_c]);
@@ -462,7 +462,7 @@ void Floor::setPlayer(){ // generate player.
 //	for (auto o: theEnemy){
 	//   	cout << getString(o->getPos().style) << endl;
    //	}
-	cout << "enemy random move start" << endl;
+//	cout << "enemy random move start" << endl;
 	if (!stop) {
 		for (int i = 0; i < theEnemy.size(); i++) {
 			int r = theEnemy[i]->getPos().posy;
@@ -473,12 +473,12 @@ void Floor::setPlayer(){ // generate player.
 			if (abs(player_r - r) <= 1 && abs(player_c - c) <= 1){
 				try
 				{
-					cout << "player is attacked" << endl;
+					//cout << "player is attacked" << endl;
 					if (theEnemy[i]->visit(*thePlayer, ATTACK)) playeraround = true;
 				}
 				catch(VisitExcept & exc){
 					if (exc.state == "deadplayer"){
-						cout << "player is dead!!!!!!!!!!!!!!" << endl;
+						//cout << "player is dead!!!!!!!!!!!!!!" << endl;
 						playeraround = true;
 						throw true;
 					}
@@ -492,7 +492,7 @@ void Floor::setPlayer(){ // generate player.
 				if (enemyMove(i, possibility)){
 				
 				} else {
-					cout << "enemy move false" << endl;
+					//cout << "enemy move false" << endl;
 				}
 			} else {
 				theDisplay.p->notify(*thePlayer);
@@ -501,7 +501,7 @@ void Floor::setPlayer(){ // generate player.
 	}
 	//theDisplay.display();
 	thePlayer->getPlayerInfo().action = "";
-cout << "enemy random move complete" << endl;
+//cout << "enemy random move complete" << endl;
 }
 
 void Floor::pause(){
@@ -569,7 +569,7 @@ bool Floor::enemyMove(int n, vector<bool>& possibility) {
 		enemyMove(n, possibility);
 	} else {
 	//	cout << getString(theEnemy[n]->getPos().style) << endl;
-		cout << "someone is stucked" << endl;
+//		cout << "someone is stucked" << endl;
 		return false;
 	}
     return false; //still need to check here.
@@ -582,11 +582,8 @@ ostream &operator<<(ostream &out, const Floor &f){
 }
 
 string Floor::outPut(){
-	cout << "out" << endl;
-	ostringstream ss;
-	ss << *theDisplay.w; //this is window.
-	ss << *theDisplay.p; //this is plane.
-	string rs = ss.str();
+	string rs = theDisplay.w->outPut() +
+		theDisplay.p->outPut();
 	return rs;
 }
 

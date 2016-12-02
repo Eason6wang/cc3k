@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include <curses.h>
 #include <memory>
 #include <string>
@@ -91,9 +92,11 @@ void GameController::wasdPlay(string file){
 	//Window theWindow {"welcome.txt"};
 	//addstr(theWindow.outPut().c_str());
 	floor.init(true,file);
-	string themap = floor.outPut();
-   // addstr(floor.outPut().c_str());//use display.
-    mvaddstr(0,0,themap.c_str());//use display.
+	//string themap = floor.outPut();
+    mvaddstr(10,0,floor.outPut().c_str());//use display.
+//    mvaddstr(0,0,themap.c_str());//use display.
+    //mvaddstr(10,0,display.w->outPut().c_str());//use display.
+   // mvaddstr(10,0,display.p->outPut().c_str());//use display.
 
 	//the floor is generated 	
 	char key;
@@ -101,7 +104,7 @@ void GameController::wasdPlay(string file){
 		try {
 			key = getch();
 			char direction;
-		   	if (key == 'J' || key == 'j') {
+		   	if (key == 'K' || key == 'k') {
                 direction = getch();
 				switch (direction){
 					case 'w':
@@ -121,7 +124,7 @@ void GameController::wasdPlay(string file){
 						floor.floorVisit("ea", PICKUP, true);
 						break;
 				}
-			} else if (key == 'K' || key == 'k') {
+			} else if (key == 'J' || key == 'j') {
 			  	direction = getch();
 				switch (direction){
 					case 'w':
@@ -167,7 +170,7 @@ void GameController::wasdPlay(string file){
 						break;
 				}
 			}
-			mvaddstr(0,0,floor.outPut().c_str());//use display.
+			mvaddstr(10,0,floor.outPut().c_str());//use display.
 			refresh();
 		}
 		catch (bool restart) {
