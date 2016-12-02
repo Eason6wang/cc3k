@@ -4,6 +4,7 @@
 #include <iostream>
 #include <memory>
 #include "type.h"
+class VisitExcept;
 
 class Object;
 class Player;
@@ -26,6 +27,14 @@ bool be_visit_by(Bevisit & v1, Visit & v2, Type t){
 	return be_attack(v1, v2);
     }
     return false;
+}
+
+template<typename PlayerType>
+bool be_visit_health_potion (PlayerType player, Type type, int num) {
+	if (type == PICKUP) {
+		player.getInfo().hp += num;
+		throw VisitExcept {"pickup_potion", 0};
+	} else return false;
 }
 
 
