@@ -404,6 +404,13 @@ void Floor::setPlayer(){ // generate player.
 			if (exc.state == "stair"){
 				init();
 				// reduce the gabage
+			} else if (exc.state == "pickup_potion"){
+			    cout << "alkdjhfalkufhawlefkh" << endl;
+					board[target_r][target_c] = make_shared<Tile>(target_c,target_r);
+					//aaron have to return visitExcept with "string"
+					//throw;		
+			//	theDisplay.w->notify(*board[target_r][target_c]);
+
 			} else
 			// enemy is dead
 		  	 {
@@ -414,10 +421,6 @@ void Floor::setPlayer(){ // generate player.
 					board[target_r][target_c] = make_shared<Small_Hoard>(target_c, target_r);
 				} else if (exc.state == "normal_hoard"){
 					board[target_r][target_c] = make_shared<Normal_Hoard>(target_c, target_r);
-				} else if (exc.state == "pickup_gold"){
-					board[target_r][target_c] = make_shared<Tile>(target_r,target_r);
-					//aaron have to return visitExcept with "string"
-					//throw;
 				} else {
 
 
@@ -440,10 +443,10 @@ void Floor::setPlayer(){ // generate player.
 			} else {
 				cout << "PICKUP condition" << endl;
 			}
+		}
 			theDisplay.w->notify(*thePlayer);
 			theDisplay.w->notify(*board[target_r][target_c]);
 			theDisplay.p->notify(*thePlayer);
-		}
 		//		if (type == MOVE) {
          
 //   board[r][c] = thePlayer->getPos().last;

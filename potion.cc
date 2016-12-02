@@ -49,9 +49,10 @@ bool Potion::be_visit (Goblin &player, Type type) {
 				std::make_shared<Potion> (0,0,getPos().style,player.getPlayerInfo().potion);
 			throw VisitExcept {"pickup_potion", 0};
 		} else return false;
-}	
-Info Potion::modify(){
-	return Info{}; 
+
+}
+Info Potion::modify () {
+	return Info {0,0,0};
 }
 /*bool Potion::be_visit (Player &player, Type type) {
 	if (type == MOVE) {

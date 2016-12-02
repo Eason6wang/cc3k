@@ -79,6 +79,8 @@ bool be_attack(Enemy &enemy, Player &player){
        if(randomnum == 1){
           enemyHp -= damage;
        }
+    } else {
+	enemyHp -= damage;
     }
     std::string newAction;
     if(enemyHp > 0){
