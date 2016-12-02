@@ -13,11 +13,11 @@ class Treasure :public Item {
 	public:
 	int getGold ();
 	Treasure (int pos, int posy, Style style, int gold);
-	bool be_visit(Shade &player, Type type);
-	bool be_visit(Vampire&player, Type type);
-	bool be_visit(Drow&player, Type type);
-	bool be_visit(Troll&player, Type type);
-	bool be_visit(Goblin &player, Type type);
+	virtual bool be_visit(Shade &player, Type type);
+	virtual bool be_visit(Vampire&player, Type type);
+	virtual bool be_visit(Drow&player, Type type);
+	virtual bool be_visit(Troll&player, Type type);
+	virtual bool be_visit(Goblin &player, Type type);
 	virtual ~Treasure () = default;
 };
 

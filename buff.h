@@ -4,16 +4,13 @@
 #include <iostream>
 #include <memory>
 #include "type.h"
-<<<<<<< HEAD
 #include "style.h"
 class VisitExcept;
 class Potion;
-=======
 #include "treasure.h"
 class VisitExcept;
 
 
->>>>>>> be49fa4081771e22ffc102513bb4b16f0ac02bba
 class Object;
 class Player;
 class Enemy;
