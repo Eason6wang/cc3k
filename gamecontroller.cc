@@ -64,9 +64,8 @@ void GameController::play(string file){
 			} else if (cmd == "f") {
 				floor.pause();
 			} else if (cmd == "r") {
-			//	floor.clearFloor();
+				floor.clearFloor(true);
 				floor.init(false,file); //remember to generate enemies again
-			//	display.display();
 			} else if (cmd == "q") {
 				throw false;
 			} else {
@@ -147,6 +146,7 @@ void GameController::wasdPlay(string file){
 			} else if (key == 'f' || key == 'F') {
 				floor.pause();
 			} else if (key == 'r' || key == 'R') {
+				floor.clearFloor(true);
 				floor.init(true, file); //remember to generate enemies again
 			} else if (key == 'q' || key == 'Q') {
 				throw false;

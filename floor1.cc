@@ -56,18 +56,18 @@
 class Enemy;
 
 
-void Floor::clearFloor(){
+void Floor::clearFloor(bool cleanPlayer){
 	//	cout << "enter clear" << endl;
-	if (thePlayer) {	
-		thePlayer->levelUp(); //player add a method levelUp.
-	} else {
+	if (cleanPlayer){
 		thePlayer = nullptr;
+	} else {
+		thePlayer->levelUp();
 	}
 	board.clear();
 	theEnemy.clear();
 	theChamber.clear();
 //	cout << "out clear" << endl;
-	}
+}
 		
 
 Floor::Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{false} {}
@@ -75,7 +75,6 @@ Floor::Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{
 
 	void Floor::init(bool isWasd, string file){ // set up the board according to the given floor in the file.
 		//cout << "enter init" << endl;
-		clearFloor();
 		theDisplay.w = make_shared<Window>(file);
 	//	p = make_shared<Panel>(nullptr);
 		ifstream f {file};
@@ -178,11 +177,12 @@ void Floor::selectPlayer(bool isWasd){
 	Pos position = (*theChamber[n].c[pos])->getPos(); 
 	while (true){
 	 //put this part in to display later.
-		cout << "Choose your player: (s, d, v, g, t)" << endl;
 		char player_select;
 		if (isWasd) {
+			printw("Choose your player: s(Shade), d(Drow), v(Vampire),  g(Goblin), t(Troll) ");
 			player_select = getch();
 		} else {
+			cout << "Choose your player: (s, d, v, g, t)" << endl;
 			cin >> player_select;
 		}
 		if (player_select == 's'){
@@ -407,6 +407,7 @@ void Floor::setPlayer(){ // generate player.
 			//cout << "here!!!!!" << endl;
 			isSuccess = true;
 			if (exc.state == "stair"){
+				clearFloor(false);
 				init(isWasd);
 				// reduce the gabage
 			} else if (exc.state == "pickup_potion"){
@@ -443,68 +444,65 @@ void Floor::setPlayer(){ // generate player.
 			//	theDisplay.p->notify(*thePlayer);
 				//	cout << *this;
 			} else if (type == ATTACK) {
-			//	theDisplay.p->notify(*thePlayer);
+				theDisplay.p->notify(*thePlayer);
 			} else {
 				//cout << "PICKUP condition" << endl;
 			}
 		}
-			theDisplay.w->notify(*thePlayer);
-			theDisplay.w->notify(*board[target_r][target_c]);
-			theDisplay.p->notify(*thePlayer);
-		//		if (type == MOVE) {
-         
-//   board[r][c] = thePlayer->getPos().last;
-	//		thePlayer->getPos().last = board[target_r][target_c];
-  //          board[target_r][target_c] = thePlayer;
-	//	}
-         //       cin >> cmd;
-	//}
+		theDisplay.w->notify(*thePlayer);
+		theDisplay.w->notify(*board[target_r][target_c]);
+		theDisplay.p->notify(*thePlayer);
+
 	//enemy random move.
-	sort(theEnemy.begin(), theEnemy.end(), compare);
+		sort(theEnemy.begin(), theEnemy.end(), compare);
 //	for (auto o: theEnemy){
 	//   	cout << getString(o->getPos().style) << endl;
    //	}
 //	cout << "enemy random move start" << endl;
-	if (!stop) {
-		for (int i = 0; i < theEnemy.size(); i++) {
-			int r = theEnemy[i]->getPos().posy;
-			int c = theEnemy[i]->getPos().posx;
-			int player_r = thePlayer->getPos().posy;
-			int player_c = thePlayer->getPos().posx;
-			bool playeraround;
-			if (abs(player_r - r) <= 1 && abs(player_c - c) <= 1){
-				try
-				{
+		if (!stop) {
+			for (int i = 0; i < theEnemy.size(); i++) {
+				int r = theEnemy[i]->getPos().posy;
+				int c = theEnemy[i]->getPos().posx;
+				int player_r = thePlayer->getPos().posy;
+				int player_c = thePlayer->getPos().posx;
+				bool playeraround;
+				if (abs(player_r - r) <= 1 && abs(player_c - c) <= 1){
+					try	{
 					//cout << "player is attacked" << endl;
-					if (theEnemy[i]->visit(*thePlayer, ATTACK)) playeraround = true;
-				}
-				catch(VisitExcept & exc){
-					if (exc.state == "deadplayer"){
+						if (theEnemy[i]->visit(*thePlayer, ATTACK)) playeraround = true;
+					}
+					catch(VisitExcept & exc){
+						if (exc.state == "deadplayer"){
 						//cout << "player is dead!!!!!!!!!!!!!!" << endl;
-						playeraround = true;
-						throw true;
+							playeraround = true;
+							throw true;
+						}
 					}
 				}
-			}
-			if (!playeraround){
-				vector<bool> possibility;
-				for (int j = 0; j < 8; j++){
-					possibility.emplace_back(false);
-				}
-				if (enemyMove(i, possibility)){
+				if (!playeraround){
+					vector<bool> possibility;
+					for (int j = 0; j < 8; j++){
+						possibility.emplace_back(false);
+					}
+					if (enemyMove(i, possibility)){
 				
+					} else {
+						//cout << "enemy move false" << endl;
+					}
 				} else {
-					//cout << "enemy move false" << endl;
+					theDisplay.p->notify(*thePlayer);
 				}
-			} else {
-				theDisplay.p->notify(*thePlayer);
 			}
 		}
+	//	theDisplay.w->notify(*thePlayer);
+	//	theDisplay.w->notify(*board[target_r][target_c]);
+//		theDisplay.p->notify(*thePlayer);
+		//		
+		//theDisplay.display();
+		thePlayer->getPlayerInfo().action = "";
+	//cout << "enemy random move complete" << endl;
 	}
-	//theDisplay.display();
-	thePlayer->getPlayerInfo().action = "";
-//cout << "enemy random move complete" << endl;
-}
+
 
 void Floor::pause(){
 	if (stop) stop = true;

@@ -15,7 +15,7 @@ Window::Window(string file): width{79}, height{25} {
 		}
 		theDisplay.emplace_back(arr);
 	}
-	cout << "window ctor works fine" << endl;
+	//cout << "window ctor works fine" << endl;
 }	
 	
 		
