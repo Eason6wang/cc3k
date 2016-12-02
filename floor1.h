@@ -42,6 +42,8 @@ class Floor{
 	///void floor_attack();
     void init(std::string file = "plainfloor.txt"); // set up the board according to the given floor in the file.
     void setChamber(int r, int c, std::vector<std::shared_ptr<Object>*>& arr);
+	void spawnAction();
+	void selectPlayer();
 	void setPlayer(); // generate player.
 	void setStair(); //generate stairway.
 	void setPotion(); //generate potion
