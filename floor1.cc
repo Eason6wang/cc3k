@@ -415,10 +415,10 @@ void Floor::setPlayer(){ // generate player.
 					//aaron have to return visitExcept with "string"
 					//throw;		
 			//	theDisplay.w->notify(*board[target_r][target_c]);
-
-			} else
-			// enemy is dead
-		  	 {
+			} else if (exc.state == "pickup_gold"){
+					board[target_r][target_c] = make_shared<Tile>(target_c,target_r);
+			} else {
+			// enemy is dead {
 			     //delete enemy
 			     auto deadEnemy = find(theEnemy.begin(),theEnemy.end(),board[target_r][target_c]);
 			     theEnemy.erase(deadEnemy);
