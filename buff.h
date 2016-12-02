@@ -4,7 +4,9 @@
 #include <iostream>
 #include <memory>
 #include "type.h"
+#include "treasure.h"
 class VisitExcept;
+
 
 class Object;
 class Player;
@@ -38,7 +40,6 @@ bool be_visit_health_potion (PlayerType player, Type type, int num) {
 		throw VisitExcept {"pickup_potion", 0};
 	} else return false;
 }
-
 
 bool be_attack(Player &player, Enemy &enemy);
 

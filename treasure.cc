@@ -4,41 +4,36 @@
 #include "vampire.h"
 #include "troll.h"
 #include "goblin.h"
+#include "buff.h"
+#include "visitexcept.h"
 
 Treasure::Treasure (int row, int col, Style style, int gold) 
 		:Item{row, col, style}, gold{gold} {}
 
 int Treasure::getGold () { return gold; }
 
-bool Treasure::be_visit (Shade &player, Type type) {
+template<typename PlayerType, typename TreasureType>
+bool be_visit_treasure (PlayerType &player, TreasureType &t, Type type) {
 		if (type == MOVE) {
-			player.getPlayerInfo().gold += getGold();
-			return true;
+			player.getPlayerInfo().gold += t.getGold();
+			throw VisitExcept{"pickup_gold"};
 		} else return false;
+}	
+
+bool Treasure::be_visit (Shade &player, Type type) {
+	return be_visit_treasure (player,*this, type);
 }	
 bool Treasure::be_visit (Drow &player, Type type) {
-		if (type == MOVE) {
-			player.getPlayerInfo().gold += getGold();
-			return true;
-		} else return false;
+	return be_visit_treasure (player,*this, type);
 }	
 bool Treasure::be_visit (Troll &player, Type type) {
-		if (type == MOVE) {
-			player.getPlayerInfo().gold += getGold();
-			return true;
-		} else return false;
+	return be_visit_treasure (player,*this, type);
 }	
 bool Treasure::be_visit (Vampire&player, Type type) {
-		if (type == MOVE) {
-			player.getPlayerInfo().gold += getGold();
-			return true;
-		} else return false;
+	return be_visit_treasure (player,*this, type);
 }	
 bool Treasure::be_visit (Goblin &player, Type type) {
-		if (type == MOVE) {
-			player.getPlayerInfo().gold += getGold();
-			return true;
-		} else return false;
+	return be_visit_treasure (player,*this, type);
 }	
 
 /*bool Treasure::be_visit (Shade &player, Type type) {
