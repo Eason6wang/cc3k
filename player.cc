@@ -31,11 +31,11 @@ void Player::levelUp(){
 }
 
 Info& Player::getInfo () {
-	if(!getPlayerInfo().potion){
+    if(!getPlayerInfo().potion){
       return Character::getInfo();
-	} else {
+    } else {
 	return Character::getInfo() + getPlayerInfo().potion->modify();
-	}
+    }
 }
 
 PlayerInfo& Player::getPlayerInfo(){
@@ -45,7 +45,7 @@ PlayerInfo& Player::getPlayerInfo(){
 
 
 bool Player::be_visit(Human& enemy, Type type){
-    if (type == MOVE) return false;
+/*    if (type == MOVE) return false;
     if(type == ATTACK){
   	int damage = getDamage(enemy.getInfo().atk, this->getInfo().def);
   	this->getInfo().hp -= damage;
@@ -59,10 +59,12 @@ bool Player::be_visit(Human& enemy, Type type){
 	} 
   }
 	return false;
+	*/
+  return be_visit_by(*this, enemy, type);
 }
 
 bool Player::be_visit(Orc& enemy, Type type){
-	if (type == MOVE) return false;
+	/*if (type == MOVE) return false;
     if(type == ATTACK){
   	int damage = getDamage(enemy.getInfo().atk, this->getInfo().def);
   	this->getInfo().hp -= damage;
@@ -76,9 +78,13 @@ bool Player::be_visit(Orc& enemy, Type type){
 	} 
   }
 	return false;
+	*/
+
+ return be_visit_by(*this, enemy, type);
+
 }
 bool Player::be_visit(Dwarf& enemy, Type type){
-	if (type == MOVE) return false;
+/*	if (type == MOVE) return false;
     if(type == ATTACK){
   	int damage = getDamage(enemy.getInfo().atk, this->getInfo().def);
   	this->getInfo().hp -= damage;
@@ -92,10 +98,13 @@ bool Player::be_visit(Dwarf& enemy, Type type){
 	} 
  
   }
-	return false;
+	return false;*/
+ return be_visit_by(*this, enemy, type);
+
+
 }
 bool Player::be_visit(Halfling& enemy, Type type){
-	if (type == MOVE) return false;
+/*	if (type == MOVE) return false;
     if(type == ATTACK){
   	int damage = getDamage(enemy.getInfo().atk, this->getInfo().def);
   	this->getInfo().hp -= damage;
@@ -110,9 +119,12 @@ bool Player::be_visit(Halfling& enemy, Type type){
  
   }
 	return false;
+	*/
+ return be_visit_by(*this, enemy, type);
+
 }
 bool Player::be_visit(Elf& enemy, Type type){
-	if (type == MOVE) return false;
+	/*if (type == MOVE) return false;
     if(type == ATTACK){
   	int damage = getDamage(enemy.getInfo().atk, this->getInfo().def);
   	this->getInfo().hp -= damage;
@@ -126,6 +138,10 @@ bool Player::be_visit(Elf& enemy, Type type){
 	} 
   }
 	return false;
+	*/
+
+ return be_visit_by(*this, enemy, type);
+
 }
 
 /*

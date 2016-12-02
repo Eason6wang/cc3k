@@ -7,7 +7,7 @@ class Drow: public Player{
   public: 
    	Drow(int row, int col);
     bool visit(Object&, Type t);
-
+    Info & getInfo() override;
 /*	bool be_visit(Restore_Health& , Type t) override;
 	bool be_visit(Boost_Atk& , Type t) override;
 	bool be_visit(Boost_Def& , Type t) override;

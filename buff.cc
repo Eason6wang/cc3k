@@ -46,10 +46,13 @@ bool compare(shared_ptr<Object> ob1, shared_ptr<Object> ob2){
 
 //template
 
-
+// dragon attack is different
 
 bool be_attack(Player &player, Enemy &enemy){
-    int damage = getDamage(enemy.getInfo().atk, player.getInfo().def);
+    int extraDamage = 1;
+    if(player.getPos().style == GOBLIN && enemy.getPos().style == ORC)//orc case
+	 extraDamage = 1.5;
+    int damage = extraDamage * getDamage(enemy.getInfo().atk, player.getInfo().def);
     player.getInfo().hp -= damage;
     std::string newAction = getString(enemy.getPos().style) + 
            " deals (" + std::to_string(damage) + ") damage to PC. ";
@@ -62,22 +65,38 @@ bool be_attack(Player &player, Enemy &enemy){
 }
 
 bool be_attack(Enemy &enemy, Player &player){  
-  int damage = getDamage(player.getInfo().atk, enemy.getInfo().def);
     int &enemyHp = enemy.getInfo().hp;
-    enemyHp -= damage;
+    int &playerHp = player.getInfo().hp;
+    string enemyType =  getString(enemy.getPos().style); 
+    string playerType = getString(player.getPos().style);
+    if(enemyType == "dwarf" && playerType == "vampire") playerHp -= 10; //dwarf case
+	  // vampire here has already gained 5 hp
+    int extraDamage = 1;
+    if(enemyType == "elf" && playerType != "drow") extraDamage = 2;//elf case
+    int damage = extraDamage * getDamage(player.getInfo().atk, enemy.getInfo().def);
+    int randomnum =  getRandom(1, 2);
+    if(enemyType == "halfling"){ //halfling case
+       if(randomnum == 1){
+          enemyHp -= damage;
+       }
+    }
     std::string newAction;
     if(enemyHp > 0){
        newAction = "PC deals (" + std::to_string(damage) + ") damage to "
-             + getString(enemy.getPos().style) + "(" + std::to_string(enemyHp)  + "). ";
+             + enemyType + "(" + std::to_string(enemyHp)  + "). ";
     } else {
-	newAction = "PC kills " + getString(enemy.getPos().style)  + ". ";
+	newAction = "PC kills " + enemyType  + ". ";
     }
     player.getPlayerInfo().action += newAction;
     if(enemyHp <= 0){
- 	int gold = getRandom(1, 2);
-	 gold == 1 ?  throw VisitExcept{"small_hoard",1}:
+	if(playerType == "goblin") player.getPlayerInfo().gold += 5;//goblin case
+	if(enemyType == "human") throw VisitExcept{"normal_hoard", 2};// human case
+	 randomnum == 1 ?  throw VisitExcept{"small_hoard",1}:    // normal case
 	              throw VisitExcept{"normal_hoard",1};
     } else {
 	return true;
     }
 }
+
+
+

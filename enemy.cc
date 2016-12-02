@@ -38,80 +38,47 @@ bool Enemy::be_visit(Shade& player, Type type){ // default
 
 
 //below has not been changed
-bool Enemy::be_visit(Drow& drow, Type type){ // default
-	if (type == MOVE) return false;
+bool Enemy::be_visit(Drow& player, Type type){ // default
+/*	if (type == MOVE) return false;
 	if (type == ATTACK) {
        int damage = getDamage(drow.getInfo().atk, this->getInfo().def);
        if (this->getInfo().hp -= damage) return false;// throw
 	}
-    return false;
+    return false;*/
+return  be_visit_by(*this, player, type);
+
 }
-bool Enemy::be_visit(Vampire& vampire, Type type){ // default
-	if (type == MOVE) return false;
+bool Enemy::be_visit(Vampire& player, Type type){ // default
+/*	if (type == MOVE) return false;
 	if (type == ATTACK) {
        int damage = getDamage(vampire.getInfo().atk, this->getInfo().def);
        if (this->getInfo().hp -= damage) return false;// throw
 	}
-    return false;
+    return false;*/
+
+
 }
-bool Enemy::be_visit(Troll& troll, Type type){ // default
-	if (type == MOVE) return false;
+bool Enemy::be_visit(Troll& player, Type type){ // default
+/*	if (type == MOVE) return false;
 	if (type == ATTACK) {
        int damage = getDamage(troll.getInfo().atk, this->getInfo().def);
        if (this->getInfo().hp -= damage) return false;// throw
 	}
-    return false;
+    return false;*/
+return  be_visit_by(*this, player, type);
+
+
 }
-bool Enemy::be_visit(Goblin& goblin, Type type){ // default
-	if (type == MOVE) return false;
+bool Enemy::be_visit(Goblin& player, Type type){ // default
+/*	if (type == MOVE) return false;
 	if (type == ATTACK) {
        int damage = getDamage(goblin.getInfo().atk, this->getInfo().def);
        if (this->getInfo().hp -= damage) return false;// throw
 	}
-    return false;
-}
-/*bool Enemy::visit (Object &object, Type type) {
-	object.be_visit (*this, type);
-}
-*/
+    return false;*/
 
-/*bool Enemy::be_visit(Player& player, Type type){ // default
-	if (type == MOVE) return false;
-	if (type == ATTACK) {
-       int damage = getDamage(player.getInfo().atk, enemy.getInfo().def);
-       if (this->getInfo().hp -= damage) return false;// throw
-	}
-    return false;
-}
-*/
+return  be_visit_by(*this, player, type);
 
-//
-//
-//bool be_visit(Drow& player, Type t){
-//  int damage = getDamage(player.getInfo().atk, info.def);
-//  info.hp -= damage;
-//  return false;
-//}
-//
-//
-//bool be_visit(Vampire& player, Type t){
-//  int damage = getDamage(player.getInfo().atk, info.def);
-//  info.hp -= damage;
-//  return false;
-//}
-//
-//
-//bool be_visit(Troll& player, Type t){
-//  int damage = getDamage(player.getInfo().atk, info.def);
-//  info.hp -= damage;
-//  return false;
-//}
-//
-//
-//bool be_visit(Goblin& player, Type t){
-//  int damage = getDamage(player.getInfo().atk, info.def);
-//  info.hp -= damage;
-//  return false;
-//}
-//
-//
+}
+
+// Dragon case

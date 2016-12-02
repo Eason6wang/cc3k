@@ -5,7 +5,6 @@ Stair::Stair (int posx, int posy):Cell{posx, posy, STAIR} {}
 
 
 bool Stair::be_visit (Shade& player, Type type){
-	if (type == ATTACK) return false;
 	if (type == MOVE){
 	    throw VisitExcept{"stair",0};
 	}

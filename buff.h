@@ -1,5 +1,5 @@
-//#ifndef _BUFF_H_
-//#define _BUFF_H_
+#ifndef _BUFF_H_
+#define _BUFF_H_
 #include <cstdlib>
 #include <iostream>
 #include <memory>
@@ -32,4 +32,4 @@ bool be_visit_by(Bevisit & v1, Visit & v2, Type t){
 bool be_attack(Player &player, Enemy &enemy);
 
 bool be_attack(Enemy &enemy, Player &player);  
-//#endif
+#endif

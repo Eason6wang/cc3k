@@ -11,6 +11,12 @@ struct Info {
 		def += other.def;
 		return *this;
 	}
+	Info &operator*(const int num){
+	    hp *= num;
+	    atk *= num;
+	    def *= num;
+	    return *this;
+	}
 };
 
 #endif
