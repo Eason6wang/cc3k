@@ -93,7 +93,7 @@ void GameController::wasdPlay(string file){
 	//addstr(theWindow.outPut().c_str());
 	floor.init(true,file);
 	//string themap = floor.outPut();
-    mvaddstr(10,0,floor.outPut().c_str());//use display.
+    mvaddstr(0,0,floor.outPut().c_str());//use display.
 //    mvaddstr(0,0,themap.c_str());//use display.
     //mvaddstr(10,0,display.w->outPut().c_str());//use display.
    // mvaddstr(10,0,display.p->outPut().c_str());//use display.
@@ -149,7 +149,7 @@ void GameController::wasdPlay(string file){
 			} else if (key == 'r' || key == 'R') {
 				floor.init(true, file); //remember to generate enemies again
 			} else if (key == 'q' || key == 'Q') {
-				throw Quit{};
+				throw false;
 			} else {
 				switch (key){
 					case 'w':
@@ -170,17 +170,19 @@ void GameController::wasdPlay(string file){
 						break;
 				}
 			}
-			mvaddstr(10,0,floor.outPut().c_str());//use display.
-			refresh();
 		}
+		//	mvaddstr(0,0,floor.outPut().c_str());//use display.
+		//	refresh();
 		catch (bool restart) {
 			if (restart) {
 				shared_ptr<Window> endWindow = make_shared<Window>("endwindow.txt");
-				addstr(display.w->outPut().c_str());//use display.
+				mvaddstr(0,0,(display.w)->outPut().c_str());//use display.
 			} else {
 				throw;
 			}
 		}
+		mvaddstr(0,0,floor.outPut().c_str());//use display.
+		refresh();		
 	}
 }
 
