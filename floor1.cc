@@ -12,11 +12,15 @@
 #include "vampire.h"
 #include "troll.h"
 #include "goblin.h"
-	//#include "restore_health.h"
-	//#include "boost_atk.h"
-	//#include "boost_def.h"
-	//#include "poison_health.h" //#include "wound_atk.h" //#include "wound_def.h"
-	//#include "cell.h"
+
+#include "restore_health.h"
+#include "boost_atk.h"
+#include "boost_def.h"
+#include "poison_health.h" 
+#include "wound_atk.h" 
+#include "wound_def.h"
+	
+#include "cell.h"
 #include "space.h"
 #include "vertical_wall.h"
 #include "horizontal_wall.h"
@@ -53,27 +57,22 @@ class Enemy;
 
 void Floor::clearFloor(){
 		cout << "enter clear" << endl;
-			thePlayer->levelUp(); //player add a method levelUp.
-			theDisplay.w = nullptr;
-			theDisplay.p = nullptr;
+	if (thePlayer) {	
+		thePlayer->levelUp(); //player add a method levelUp.
+	}
 			board.clear();
+			theEnemy.clear();
+			theChamber.clear();
 		cout << "out clear" << endl;
 	}
 		
 
 Floor::Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{false} {}
 		
-	/*Floor::floor_attack() {
-		if (floorVisit(
-	Floor::floor_move()
-	*/
-	//Floor::~Floor() {} //smart pointer will delete. so try use default.
 
 	void Floor::init(string file){ // set up the board according to the given floor in the file.
 		cout << "enter init" << endl;
-		//clearFloor();
-	//	height = 25;
-	//	width = 79;
+		clearFloor();
 		theDisplay.w = make_shared<Window>(file);
 	//	p = make_shared<Panel>(nullptr);
 		ifstream f {file};
@@ -137,23 +136,23 @@ Floor::Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{
 		cout << "befor chamber" << endl;
 		//detect chamber;
 		for (int t = 0; t < 5; t++) {
-			//cout << " here " << t<< endl;
+			cout << " here " << t<< endl;
 			int row,col;
 			do {
 				row = getRandom(0, height - 1);
 				col = getRandom(0, width - 1);
-				//cout << row <<" " << col << endl;
+			//	cout << row <<" " << col << endl;
 	//			cout << board[row][col]->getPos().posx << " " << row <<" " << col << endl;
 			} while (board[row][col]->getPos().style != TILE || (board[row][col]->getPos().isRead)); //check if it is read
 			Chamber cham;
 			setChamber(row, col, cham.c);
-			//cout << cham.c.size() << endl;
+			cout << cham.c.size() << endl;
 			theChamber.emplace_back(cham);
 		}
 		setPlayer();
 		setStair();
 		for (int i = 0; i < 10; i++){
-	//		f.setPotion();
+			setPotion();
 			setTreasure();
 		}
 		
@@ -188,8 +187,7 @@ Floor::Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{
 		int n = getRandom(0,4);
 		int pos = getRandom(0,theChamber[n].c.size() - 1);
 		Pos position = (*theChamber[n].c[pos])->getPos(); //object 的pos 里头要加一个field tmp
-		//thePlayer->setAttributes(position.posy, position.posx,);
-		shared_ptr<Player> thePlayer;
+		//shared_ptr<Player> thePlayer;
 
 		//selectplayer.
 		while (true){
@@ -199,36 +197,35 @@ Floor::Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{
 			cin >> player_select;
 			if (player_select == 's'){
 				thePlayer = make_shared<Shade>(position.posx, position.posy); //the hp atk .. is assigned in ctor.
-				//thePlayer->setAttributes(position.posy, position.posx, SHADE, false, nullptr);
 			} else if (player_select == 'd') {
 				thePlayer = make_shared<Drow>(position.posx, position.posy);
-				//thePlayer->setAttributes(position.posy, position.posx, DROW, false, nullptr);
 			} else if (player_select == 'v') {
 				thePlayer = make_shared<Vampire>(position.posx, position.posy);
-				//thePlayer->setAttributes(position.posy, position.posx,VAMPIRE, false, nullptr);
 			} else if (player_select == 'g') {
 				thePlayer = make_shared<Goblin>(position.posx, position.posy);
-			   //thePlayer->setAttributes(position.posy, position.posx, GOBLIN, false, nullptr);
 			} else if (player_select == 't') {
 				thePlayer = make_shared<Troll>(position.posx, position.posy);  //add auto ???
-			   // thePlayer->setAttributes(position.posy, position.posx, TROLL, false, nullptr);
 			} else {
 				thePlayer = make_shared<Shade>(position.posx, position.posy);
 				continue;
 			}
 			break;
 		}
-		this->thePlayer = thePlayer;
+	//	this->thePlayer = thePlayer;
 		theDisplay.p = make_shared<Panel>(thePlayer); //create a panel here
+		cout << "panel" << endl;
 		thePlayer->attach(theDisplay.p); //attach panel to each player.
+		cout << "after select" << endl;
 		thePlayer->notifyObservers();
-	   // thePlayer->getPos().last = *(theChamber[n].c[pos]); //重新核实一下
-	//	*(theChamber[n].c[pos]) = thePlayer;
+		cout << "after select" << endl;
 		theDisplay.w->notify(*thePlayer);
+		
+		cout << "out set player" << endl;
 		theChamber[n].c.erase(theChamber[n].c.begin() + pos);
 	}
 
 	void Floor::setStair(){ //generate stairway.
+		cout << "set Stair()" << endl;
 		int n = getRandom(0,4);
 		int pos = getRandom(0, theChamber[n].c.size() - 1);
 		Pos position = (*theChamber[n].c[pos])->getPos();
@@ -242,37 +239,39 @@ Floor::Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{
 		cout << "setStair works fine" << endl;
 	}
 
-	//void Floor::setPotion(){ //generate potion
-	//	int n = getRandom(0, 4);
-	//	int pos = getRandom(0, theChamber[n].c.size() - 1);
-	//	int p = getRandom(1,6);
-	//	shared_ptr<Object> o;
-	//	switch (p){
-	//		case 1: 
-	//			o = make_shared<Restore_Health>(); //ctor should take in x y to set position.
-	//			break;
-	//		case 2:
-	//			o = make_shared<Boost_Atk>();
-	//			break;
-	//		case 3:
-	//			o = make_shared<Boost_Def>();
-	//			break;
-	//		case 4: 
-	//			o = make_shared<Poison_Health>();
-	//			break;
-	//		case 5:
-	//			o = make_shared<Wound_Atk>();
-	//			break;
-	//		case 6:
-	//			o = make_shared<Wound_Def>();
-	//			break;
-	//	}
-	//	Pos position = (*theChamber[n].c[pos])->getPos();
-	//	o->setCoordinate(position.posy, position.posx);
-	//	//thePotion.emplace_back(o);
-	//	*(theChamber[n].c[pos]) = o; // put this object in to the board.
-	//	theChamber[n].c.erase(theChamber[n].c.begin() + pos);
-	//}
+	void Floor::setPotion(){ //generate potion
+		cout << "set potion" << endl;
+		int n = getRandom(0, 4);
+		int pos = getRandom(0, theChamber[n].c.size() - 1);
+		int p = getRandom(1,6);
+		Pos position = (*theChamber[n].c[pos])->getPos();
+		shared_ptr<Object> o;
+		switch (p){
+			case 1: 
+				o = make_shared<Restore_Health>(position.posx, position.posy); //ctor should take in x y to set position.
+				break;
+			case 2:
+				o = make_shared<Boost_Atk>(position.posx, position.posy);
+				break;
+			case 3:
+				o = make_shared<Boost_Def>(position.posx, position.posy);
+				break;
+			case 4: 
+				o = make_shared<Poison_Health>(position.posx, position.posy);
+				break;
+			case 5:
+				o = make_shared<Wound_Atk>(position.posx, position.posy);
+				break;
+			case 6:
+				o = make_shared<Wound_Def>(position.posx, position.posy);
+				break;
+		}
+		//thePotion.emplace_back(o);
+		*(theChamber[n].c[pos]) = o; // put this object in to the board.
+		theDisplay.w->notify(*(*theChamber[n].c[pos]));
+		theChamber[n].c.erase(theChamber[n].c.begin() + pos);
+		cout << "setPotion complete" << endl;
+	}
 
 	void Floor::setTreasure(){ //generate gold.
 		int n = getRandom(0, 4);
@@ -398,6 +397,7 @@ Floor::Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{
 			if (exc.style == STAIR){
 				clearFloor();
 				init();
+				// reduce the gabage
 			} else {
 				if (exc.style == SMALL_HOARD) {
 					board[target_r][target_c] = make_shared<Small_Hoard>(target_c, target_r);
@@ -437,9 +437,9 @@ Floor::Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{
 	//}
 	//enemy random move.
 	sort(theEnemy.begin(), theEnemy.end(), compare);
-	for (auto o: theEnemy){
-	   	cout << getString(o->getPos().style) << endl;
-   	}
+//	for (auto o: theEnemy){
+	//   	cout << getString(o->getPos().style) << endl;
+   //	}
 	cout << "enemy random move start" << endl;
 	if (!stop) {
 		for (int i = 0; i < theEnemy.size(); i++) {
@@ -449,7 +449,16 @@ Floor::Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{
 			int player_c = thePlayer->getPos().posx;
 			bool playeraround;
 			if (abs(player_r - r) <= 1 && abs(player_c - c) <= 1){
-					if (theEnemy[i]->visit(*thePlayer, ATTACK)) playeraround = true;;
+				try
+				{
+					cout << "player is attacked" << endl;
+					if (theEnemy[i]->visit(*thePlayer, ATTACK)) playeraround = true;
+				}
+				catch(bool dead){
+					cout << "player is dead!!!!!!!!!!!!!!" << endl;
+					playeraround = true;
+					throw;
+				}
 			}
 			if (!playeraround){
 				vector<bool> possibility;
@@ -457,7 +466,7 @@ Floor::Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{
 					possibility.emplace_back(false);
 				}
 				if (enemyMove(i, possibility)){
-					cout << i << "enemy success move" << endl;
+				
 				} else {
 					cout << "enemy move false" << endl;
 				}
@@ -535,7 +544,7 @@ bool Floor::enemyMove(int n, vector<bool>& possibility) {
 		   	possibility[7] && possibility[8])) {
 		enemyMove(n, possibility);
 	} else {
-		cout << getString(theEnemy[n]->getPos().style) << endl;
+	//	cout << getString(theEnemy[n]->getPos().style) << endl;
 		cout << "someone is stucked" << endl;
 		return false;
 	}

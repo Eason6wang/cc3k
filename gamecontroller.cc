@@ -62,17 +62,28 @@ void GameController::play(string file){
 			} else if (cmd == "f") {
 				floor.pause();
 			} else if (cmd == "r") {
-				floor.clearFloor();
+			//	floor.clearFloor();
 				floor.init(file); //remember to generate enemies again
+				display.display();
 			} else if (cmd == "q") {
-				throw Quit{};
+				throw false;
 			} else {
 				cout << "move !!!!" << endl;
 				floor.floorVisit(cmd, MOVE);
 			}
 		}
-		catch (Quit& q) {
-            cout << "quit" << endl;
+		catch (bool restart) {
+			if (restart) {
+				shared_ptr<Window> endWindow = make_shared<Window>("endwindow.txt");
+				display.display(endWindow);
+				//char res;
+				//cin >> res;
+				//if (res == 'r'){
+				//	floor.clearFloor();
+				//	floor.init(file);
+			} else {
+				throw;
+			}
         }
     }
 }
