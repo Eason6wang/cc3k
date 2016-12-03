@@ -12,28 +12,21 @@ Treasure::Treasure (int row, int col, Style style, int gold)
 
 int Treasure::getGold () { return gold; }
 
-template<typename PlayerType, typename TreasureType>
-bool be_visit_treasure (PlayerType &player, TreasureType &t, Type type) {
-		if (type == MOVE) {
-			player.getPlayerInfo().gold += t.getGold();
-			throw VisitExcept{"pickup_gold"};
-		} else return false;
-}	
 
 bool Treasure::be_visit (Shade &player, Type type) {
-	return be_visit_treasure (player,*this, type);
+	return be_visit_by (*this, player, type);
 }	
 bool Treasure::be_visit (Drow &player, Type type) {
-	return be_visit_treasure (player,*this, type);
+	return be_visit_by (*this, player, type);
 }	
 bool Treasure::be_visit (Troll &player, Type type) {
-	return be_visit_treasure (player,*this, type);
+	return be_visit_by (*this, player, type);
 }	
 bool Treasure::be_visit (Vampire&player, Type type) {
-	return be_visit_treasure (player,*this, type);
+	return be_visit_by (*this, player, type);
 }	
 bool Treasure::be_visit (Goblin &player, Type type) {
-	return be_visit_treasure (player,*this, type);
+	return be_visit_by (*this, player, type);
 }	
 
 /*bool Treasure::be_visit (Shade &player, Type type) {

@@ -6,7 +6,7 @@ class Potion;
 struct PlayerInfo {
     int gold;
     int level;
-	std::shared_ptr<Potion> potion;
+    std::shared_ptr<Potion> potion;
     std::string action;
 };
 

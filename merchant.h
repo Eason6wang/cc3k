@@ -10,7 +10,6 @@ class Merchant: public Enemy{
 	public:
   	Merchant (int row, int col);
     bool visit (Object &object, Type type);
-	bool be_visit (Shade &shade, Type type);
 /*j	bool visit_object(Type t);
 	bool visit(Object&, Type t);
 	//be_visit

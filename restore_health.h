@@ -10,13 +10,14 @@ class Goblin;
 
 class Restore_Health final:public Potion {
 	public:
-	Info modify () override;
+
 	Restore_Health (int posx, int posy);
-	bool be_visit(Shade& , Type t) override;
+/*	bool be_visit(Shade& , Type t) override;
 	bool be_visit(Drow & , Type t) override;
 	bool be_visit(Vampire& , Type t) override;
 	bool be_visit(Goblin& , Type t) override;
 	bool be_visit(Troll& , Type t) override;
+	i*/
 };
 
 #endif

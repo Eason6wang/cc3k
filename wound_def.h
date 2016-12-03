@@ -5,7 +5,6 @@
 
 class Wound_Def final:public Potion {
 	public:
-	Info modify () override;
 	Wound_Def (int posx, int posy);
 };
 

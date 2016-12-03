@@ -5,7 +5,6 @@
 
 class Boost_Atk final:public Potion {
 	public:
-	Info modify () override;
 	Boost_Atk (int posx, int posy);
 };
 

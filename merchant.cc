@@ -9,14 +9,6 @@ bool Merchant::visit (Object &object, Type type) {
       return object.be_visit (*this, type);
 }
 
-bool Merchant::be_visit(Shade& shade, Type type){ // default
-	if (type == MOVE) return false;
-	if (type == ATTACK) {
-       int damage = getDamage(shade.getInfo().atk, this->getInfo().def);
-       if (this->getInfo().hp -= damage) return false;// throw
-	}
-    return false;
-}
 
 /*
 bool Merchant::visit_object(Type t){

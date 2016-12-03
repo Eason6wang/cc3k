@@ -149,6 +149,9 @@ D_Floor::D_Floor(Display& display): theDisplay{display},height{25}, width{79}, s
 			Chamber cham;
 			setChamber(row, col, cham.c);
 		//	cout << cham.c.size() << endl;
+			for (auto &n: cham.c) {
+				(*n)->getPos().chamber_num = t+1;
+			}
 			theChamber.emplace_back(cham);
 		}
 		if (!thePlayer) {
@@ -359,7 +362,7 @@ void D_Floor::setPlayer(){ // generate player.
 			   // o->setAttributes(position.posy, position.posx, MERCHANT, false, nullptr);
 				break;
 		}
-		o->getPos().chamber_num = n;	
+		o->getPos().chamber_num = n+1;	
 		theEnemy.emplace_back(o);
 		*(theChamber[n].c[pos]) = o;
 		theDisplay.w->notify(*(*theChamber[n].c[pos]));
@@ -438,7 +441,7 @@ void D_Floor::setPlayer(){ // generate player.
 				//cout << "false" << endl;
 		} else {
 			if (type == MOVE){
-				thePlayer->getPos().chamber_num;
+				thePlayer->getPos().chamber_num = board[target_r][target_c]->getPos().chamber_num;
 				//cout << "true" << endl;
 				thePlayer->getPos().posx = target_c;
 				thePlayer->getPos().posy = target_r;

@@ -7,12 +7,7 @@
 #include "goblin.h"
 #include "visitexcept.h"
 
-Info Restore_Health::modify () {
-	if (potion) {
-	return potion->modify();
-	} else return Info{0,0,0};
-}
-
+/*
 bool Restore_Health::be_visit (Shade &player, Type type) {
 	return be_visit_health_potion<Shade> (player, type, 10);
 }
@@ -28,9 +23,8 @@ bool Restore_Health::be_visit (Troll &player, Type type) {
 bool Restore_Health::be_visit (Goblin &player, Type type) {
 	return be_visit_health_potion<Goblin> (player, type, 10);
 }
-
-
-	
+*/	
 
 Restore_Health::Restore_Health (int posx, int posy)
-:Potion{posx, posy, RESTORE_HEALTH, nullptr} {}
+:Potion{posx, posy, RESTORE_HEALTH} {}
+

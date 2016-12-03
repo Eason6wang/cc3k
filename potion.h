@@ -10,14 +10,15 @@ class Drow;
 class Troll;
 class Goblin;
 class Player;
-class Info;
 
 class Potion :public Item {
 	protected:
+	Info info;
 	std::shared_ptr<Potion> potion;
 	public:
-	virtual Info modify ();
-	Potion (int row, int col, Style style, std::shared_ptr<Potion> potion);
+	Info &modify ();
+	std::shared_ptr<Potion> & getPotion();
+	Potion (int row, int col, Style style);
 	virtual bool be_visit(Shade &player, Type type);
 	virtual bool be_visit(Vampire&player, Type type);
 	virtual bool be_visit(Drow&player, Type type);

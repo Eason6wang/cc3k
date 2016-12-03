@@ -6,7 +6,6 @@ class Object;
 
 class Dragon_Hoard final:public Treasure {
 	public:
-	bool be_visit (Shade &shade, Type type) override;
 	Dragon_Hoard (int row, int col);
 };
 

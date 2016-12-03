@@ -8,12 +8,7 @@
 #include "visitexcept.h"
 
 using namespace std;
-
-Info Poison_Health::modify () {
-	if (potion) {
-	return potion->modify();
-	} else return Info{0,0,0};
-}
+/*
 bool Poison_Health::be_visit (Shade &player, Type type) {
 	return be_visit_health_potion (player, type, 10);
 }
@@ -29,7 +24,7 @@ bool Poison_Health::be_visit (Troll &player, Type type) {
 bool Poison_Health::be_visit (Goblin &player, Type type) {
 	return be_visit_health_potion (player, type, 10);
 }
-	
+*/	
 
 Poison_Health::Poison_Health (int posx, int posy)
-:Potion{posx, posy, POISON_HEALTH, nullptr} {}
+:Potion{posx, posy, POISON_HEALTH} {}
