@@ -47,7 +47,6 @@ PlayerInfo& Player::getPlayerInfo(){
 }
 
 
-
 bool Player::be_visit(Human& enemy, Type type){
 /*    if (type == MOVE) return false;
     if(type == ATTACK){

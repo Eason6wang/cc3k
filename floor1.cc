@@ -426,7 +426,21 @@ void Floor::setPlayer(){ // generate player.
 					board[target_r][target_c] = make_shared<Small_Hoard>(target_c, target_r);
 				} else if (exc.state == "normal_hoard"){
 					board[target_r][target_c] = make_shared<Normal_Hoard>(target_c, target_r);
-				} else {
+					int randr, randc;
+					do {
+						randr = getRandom (0, 1)*2 - 1;
+						randc = getRandom (0, 1)*2 - 1;
+					} while (!board[target_r][target_c]->visit(*board[randr][randc], MOVE));
+						swap(board[randr][randc]->getPos().posx, board[target_r][target_c]->getPos().posx);
+						swap(board[randr][randc]->getPos().posy, board[target_r][target_c]->getPos().posy);
+						swap(board[randr][randc], board[target_r][target_c]);
+						theDisplay.w->notify(*board[randr][randc]);
+						theDisplay.w->notify(*board[target_r][target_c]);
+						board[target_r][target_c] = make_shared<Normal_Hoard>(target_c, target_r);
+						theDisplay.w->notify(*board[randr][randc]);
+						theDisplay.w->notify(*board[target_r][target_c]);
+						
+				} else {// merchant_hoard
 
 
 //merchant dragon drop 

@@ -8,6 +8,7 @@ class Shade;
 class Normal_Hoard final:public Treasure {
 	public:
 	Normal_Hoard (int row, int col);
+	bool visit (Object&object, Type type);
 };
 
 #endif 

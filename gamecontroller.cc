@@ -173,6 +173,7 @@ void GameController::wasdPlay(string file){
 						break;
 				}
 			}
+			clear();
 			mvaddstr(0,0,floor.outPut().c_str());//use display.
 		}
 		//	refresh();
