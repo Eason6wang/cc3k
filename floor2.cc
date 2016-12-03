@@ -262,7 +262,7 @@ void D_Floor::setPlayer(){ // generate player.
 		int pos = getRandom(0, theChamber[n].c.size() - 1);
 		int p = getRandom(1,6);
 		Pos position = (*theChamber[n].c[pos])->getPos();
-		shared_ptr<Object> o;
+		shared_ptr<Potion> o;
 		switch (p){
 			case 1: 
 				o = make_shared<Restore_Health>(position.posx, position.posy); //ctor should take in x y to set position.

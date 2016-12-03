@@ -60,7 +60,7 @@ void Window::notify(Subject &whoNotify){
         case POISON_HEALTH:
         case WOUND_ATK:
         case WOUND_DEF:
-			theDisplay[r][c] = 'p';
+			theDisplay[r][c] = 'P';
 			break;
 		case NORMAL_HOARD:
         case SMALL_HOARD:
