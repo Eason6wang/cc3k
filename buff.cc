@@ -9,6 +9,8 @@
 #include "style.h"
 #include "visitexcept.h"
 #include "potion.h"
+#include "merchant.h"
+#include "dragon.h"
 
 using namespace std;
 void clearScreen(){
@@ -217,7 +219,12 @@ bool be_attack(Enemy &enemy, Player &player){
 	     newAction = "Slain H drops 2 piles of gold. " ;
    	     player.getPlayerInfo().action += newAction;
 	     throw VisitExcept{"normal_hoard", 2};// human case
-
+	}
+	if(enemyType == MERCHANT){
+	     throw VisitExcept{"merchant_hoard", 1};// merchant case
+	}
+	if(enemyType == DRAGON){
+	   //dragon case
 	}
 	 randomnum == 1 ?  throw VisitExcept{"small_hoard",1}:    // normal case
 	              throw VisitExcept{"normal_hoard",1};
@@ -277,7 +284,7 @@ bool be_pick_up(Enemy &enemy, Player &player){
     return false; 
 }
 
-bool be_pick_up(Player &player, Enemy &enemy){ 
+bool be_pick_up(Player &player, Enemy &enemy){
     return false; 
 }
 
@@ -290,26 +297,61 @@ bool be_pick_up(Treasure &treasure, Player &player){
 
 // for gold
 
+string direction(Object &bevisit, Object &visit){
+    int x1 = bevisit.getPos().posx;
+    int y1 = bevisit.getPos().posy;
+    int x2 = visit.getPos().posx;
+    int y2 = visit.getPos().posy;
+    if((x1 - x2) == -1 && (y1 - y2) == -1){
+	return "Northwest";
+    }
+    if((x1 - x2) == 0 && (y1 - y2) == -1){
+	return "North";
+    }
+    if((x1 - x2) == 1 && (y1 - y2) == -1){
+	return "Northeast";
+    }
+    if((x1 - x2) == -1 && (y1 - y2) == 0){
+	return "West";
+    }
+    if((x1 - x2) == 1 && (y1 - y2) == 0){
+	return "East";
+    }
+    if((x1 - x2) == -1 && (y1 - y2) == 1){
+	return "Southwest";
+    }
+    if((x1 - x2) == 0 && (y1 - y2) == 1){
+	return "South";
+    }
+    if((x1 - x2) == 1 && (y1 - y2) == 1){
+	return "Southeast";
+    }
+}
+ 
+
 bool be_go_over(Treasure &treasure,Player &player) {
-    	string newAction = "PC picks up a " + getString(treasure.getPos().style) + ". ";     
+    	string newAction = "PC moves " + direction(treasure, player) + 
+	         " and picks up a " + getString(treasure.getPos().style) + ". ";     
     	player.getPlayerInfo().action += newAction;
   	player.getPlayerInfo().gold += treasure.getGold();
 	throw VisitExcept{"pickup_gold", 0};
 }
 
 bool be_go_over(Potion &potion, Player &player){
-    string newAction = "PC cannot go over a Potion. ";     
+    string newAction = "PC moves " + direction(potion,player) +
+                      " and sees an unknown Potion. ";     
     player.getPlayerInfo().action += newAction;
     return false; 
 }
 
 bool be_go_over(Enemy &enemy, Player &player){
-    string newAction = "PC cannot go over an Enemy. ";     
+    string newAction = "PC moves " + direction(enemy, player) + 
+                " and sees a " + getString(enemy.getPos().style) + ". ";     
     player.getPlayerInfo().action += newAction;
     return false; 
 }
 
-bool be_go_over(Player &player, Enemy &enemy){ 
+bool be_go_over(Player &player, Enemy &enemy){
     return false; 
 }
 
