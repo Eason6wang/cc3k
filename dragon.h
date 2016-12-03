@@ -14,7 +14,7 @@ public:
     Dragon(int, int);
 	bool visit(Object&, Type t) override;
 	//be_visit
-	bool be_visit(Shade& , Type t)override;
+//	bool be_visit(Shade& , Type t)override;
 //	bool be_visit(Drow& , Type t)override;
 //	bool be_visit(Vampire& , Type t)override;
 //	bool be_visit(Troll& , Type t)override;

@@ -41,7 +41,7 @@ class Player: public Character{
 	virtual bool be_visit(Halfling& , Type t) override;
 	virtual bool be_visit(Elf& , Type t) override;
 	virtual bool be_visit(Orc& , Type t) override;
-//	virtual bool be_visit(Dragon& , Type t) override;
+	virtual bool be_visit(Dragon& , Type t) override;
 	virtual bool be_visit(Merchant& , Type t) override;
 };
 

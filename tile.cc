@@ -59,20 +59,13 @@ bool Tile::be_visit (Dragon_Hoard &hoard, Type type) {
 	if (type == MOVE) return true;
 	return false;
 }
-/*
 bool Tile::be_visit (Dragon& enemy, Type type){
-	if (type == ATTACK) return false;
 	if (type == MOVE) return true;
     return false;
 }
+
 bool Tile::be_visit (Merchant& enemy, Type type){
-	if (type == ATTACK) return false;
 	if (type == MOVE) return true;
     return false;
 }
 
-
-bool Tile::be_visit(Normal_Hoard& treasure, Type type){
-	return true;
-}
-*/

@@ -40,12 +40,14 @@
 #include "elf.h"
 #include "orc.h"
 #include "merchant.h"
+#include "dragon.h"
 
 #include "item.h"
 #include "treasure.h"
 #include "small_hoard.h"
 #include "normal_hoard.h"
 #include "dragon_hoard.h"
+#include "merchant_hoard.h"
 
 #include "buff.h"
 #include "display.h"
@@ -168,7 +170,7 @@ void D_Floor::spawnAction(){
 		setPotion();
 	}
 	for (int t = 0; t < 10; t++){
-		setTreasure();
+		setTreasure();//if dragon hoard is surround with stationary.
 	}
 	for (int j = 0; j < 20; j++){
 		setEnemy();
@@ -291,32 +293,55 @@ void D_Floor::setPlayer(){ // generate player.
 	}
 
 	void D_Floor::setTreasure(){ //generate gold.
-		int n = getRandom(0, 4);
-		int pos = getRandom(0, theChamber[n].c.size() - 1);
-		Pos position = (*theChamber[n].c[pos])->getPos();
 		int p = getRandom(1,8);
-		shared_ptr<Treasure> o;
-		switch (p){
-			case 1: 
-			case 2:
-			case 3:
-			case 4: 
-			case 5:
-				o = make_shared<Normal_Hoard>(position.posx, position.posy);
-				break;
-			case 6:
-			case 7: 
-				o = make_shared<Small_Hoard>(position.posx, position.posy);
-				break;
-			case 8:
-				o = make_shared<Dragon_Hoard>(position.posx, position.posy); //I expect the ctor of DH spawn a dragon here!!!!
-				break;
-		}
-		//o->setCoordinate(position.posy, position.posx);
-		//theTreasure.emplace_back(o);
-		*(theChamber[n].c[pos]) = o;
-		theDisplay.w->notify(*(*theChamber[n].c[pos]));
-		theChamber[n].c.erase(theChamber[n].c.begin() + pos);
+	//	while (1){
+			int n = getRandom(0, 4);
+			int pos = getRandom(0, theChamber[n].c.size() - 1);
+			Pos position = (*theChamber[n].c[pos])->getPos();
+			shared_ptr<Treasure> o;
+			switch (p){
+				case 1: 
+				case 2:
+				case 3:
+				case 4: 
+				case 5:
+					o = make_shared<Normal_Hoard>(position.posx, position.posy);
+					break;
+				case 6:
+				case 7: 
+					o = make_shared<Small_Hoard>(position.posx, position.posy);
+					break;
+				case 8:
+					auto dragon = make_shared<Dragon>(position.posx, position.posy);
+					int randr, randc;
+//					int gard = 8;
+					do {
+						randr = getRandom (-1, 1) + position.posy;
+						if (randr == 0) {
+							randc = getRandom (0, 1) * 2 -1 + position.posx;
+						} else randc = getRandom (-1, 1) + position.posx;
+			//			if (board[randr][randc]->getPos().isRead == true){//since we use this field for set Chamber, so here should be false. and this is to prevent dragon gets stuck.
+			//				board[randr][randc]->getPos().isRead = false;
+			//				gard--;
+			//				if (gard == 0) break;
+					} while (!dragon->visit(*board[randr][randc], MOVE));
+					dragon->getPos().posx = randc;
+					dragon->getPos().posy = randr;
+				//	if (gard == 0) continue;
+					board[randr][randc] = dragon;
+					theEnemy.emplace_back(dragon);
+					theDisplay.w->notify(*board[randr][randc]);
+
+					o = make_shared<Dragon_Hoard>(position.posx, position.posy); //I expect the ctor of DH spawn a dragon here!!!!
+					auto anotherDragon = make_shared<Dragon>(position.posx, position.posy); //I expect the ctor of DH spawn a dragon here!!!!
+					theEnemy.emplace_back(anotherDragon);
+					break;
+			}
+			*(theChamber[n].c[pos]) = o;
+			theDisplay.w->notify(*(*theChamber[n].c[pos]));
+			theChamber[n].c.erase(theChamber[n].c.begin() + pos);
+	//		break;
+	//	}
 	}
 
 
@@ -430,7 +455,9 @@ void D_Floor::setPlayer(){ // generate player.
 			     theEnemy.erase(deadEnemy);
 				if (exc.state == "small_hoard") {
 					board[target_r][target_c] = make_shared<Small_Hoard>(target_c, target_r);
-				} else if (exc.state == "normal_hoard"){
+				} else if (exc.state == "merchant_hoard"){
+					board[target_r][target_c] = make_shared<Merchant_Hoard>(target_c, target_r);	
+				}else if (exc.state == "normal_hoard"){
 					while (exc.num > 1) {
 					board[target_r][target_c] = make_shared<Normal_Hoard>(target_c, target_r);
 					int randr, randc;
@@ -483,6 +510,7 @@ void D_Floor::setPlayer(){ // generate player.
    //	}
 //	cout << "enemy random move start" << endl;
 		if (!stop) {
+			bool attacked = false;
 			for (int i = 0; i < theEnemy.size(); i++) {
 				int r = theEnemy[i]->getPos().posy;
 				int c = theEnemy[i]->getPos().posx;
@@ -490,9 +518,15 @@ void D_Floor::setPlayer(){ // generate player.
 				int player_c = thePlayer->getPos().posx;
 				bool playeraround = false;
 				if (abs(player_r - r) <= 1 && abs(player_c - c) <= 1){
+					playeraround = true;
 					try	{
 					//cout << "player is attacked" << endl;
-						if (theEnemy[i]->visit(*thePlayer, ATTACK)) playeraround = true;
+						if (!attacked && (theEnemy[i]->getPos().style == DRAGON)){
+							theEnemy[i]->visit(*thePlayer, ATTACK);
+							attacked = true;
+						} else {
+							theEnemy[i]->visit(*thePlayer, ATTACK);
+						}
 					}
 					catch(VisitExcept & exc){
 						if (exc.state == "deadplayer"){
@@ -504,13 +538,8 @@ void D_Floor::setPlayer(){ // generate player.
 				}
 				if (!playeraround){
 					vector<bool> possibility(8, false);
-				//	for (int j = 0; j < 8; j++){
-				//		possibility.emplace_back(false);
-				//	}
-					if (enemyMove(i, possibility)){
-				
-					} else {
-						//cout << "enemy move false" << endl;
+					if ((theEnemy[i]->getPos().style != DRAGON)){
+						enemyMove(i, possibility);
 					}
 				} else {
 					theDisplay.p->notify(*thePlayer);
@@ -528,8 +557,8 @@ void D_Floor::setPlayer(){ // generate player.
 
 
 void D_Floor::pause(){
-	if (stop) stop = true;
-	else stop = false;
+	if (stop) stop = false;
+	else stop = true;
 }
 //
 

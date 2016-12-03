@@ -8,8 +8,8 @@
 #include "halfling.h"
 #include "elf.h"
 #include "orc.h"
-/*#include "dragon.h"
-#include "merchant.h"
+#include "dragon.h"
+/*#include "merchant.h"
 #include "small_hoard.h"
 #include "normal_Hoard.h"
 #include "dragon_hoard.h"
@@ -148,7 +148,10 @@ bool Player::be_visit(Elf& enemy, Type type){
 }
 
 
-//bool Player::be_visit(Dragon& enemy, Type type);
+bool Player::be_visit(Dragon& enemy, Type type){
+ return be_visit_by(*this, enemy, type);
+
+}
 
 bool Player::be_visit(Merchant& enemy, Type type){
 

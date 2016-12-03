@@ -64,7 +64,7 @@ void Window::notify(Subject &whoNotify){
 			break;
 		case NORMAL_HOARD:
         case SMALL_HOARD:
-        case MERCHAND_HOARD:
+        case MERCHANT_HOARD:
         case DRAGON_HOARD:
 			theDisplay[r][c] = 'G';
 			break;

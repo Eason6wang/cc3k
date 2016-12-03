@@ -11,8 +11,8 @@
 #include "visitexcept.h"
 #include "potion.h"
 #include "merchant.h"
-#include "dragon.h"
 #include <utility>
+#include "dragon.h"
 //#include "subject.h"
 
 using namespace std;
@@ -114,6 +114,37 @@ int distance(int r1,int c1, int r2, int c2){
 	int ri = abs(r1 - r2) + abs(c1 - c2);
 	return ri;
 }
+
+
+/*void rectangle(int height, int width){
+	ofstream out{"randomfloor.txt"};
+	for(int i = 0; i < height; i++){
+		if (i == 0 || i == height -1) {
+			for(int t = 0; t < width; t++){
+				if (t == 0|| t == width-1) {
+					out << '|';
+				} else out << '-';
+				out << endl;
+			}
+		} else {
+			for(int j = 0; j < width; j++){
+				if(j == 0 || j == width -1){
+					out << '|';
+				} else out << '.';
+				out << endl;
+			}
+		}
+	}
+	out.close();
+}*/
+
+
+//void randomFloor(){
+
+
+
+//}
+
 
 
 /*bool smart_enemyMove(int n, vector<bool>& possibility) {

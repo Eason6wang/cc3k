@@ -14,35 +14,35 @@ void Dragon_Hoard::notify(Subject &whoNotified){
 
 
 bool Dragon_Hoard::be_visit (Shade &player, Type type) {
-	if(type != MOVE || free){
+	if(type != MOVE || free_pick){
 	  return be_visit_by (*this, player, type);
 	} else {
 	    return false;
 	}
 }	
 bool Dragon_Hoard::be_visit (Drow &player, Type type) {
-	if(type != MOVE || free){
+	if(type != MOVE || free_pick){
 	  return be_visit_by (*this, player, type);
 	} else {
 	    return false;
 	}
 }	
 bool Dragon_Hoard::be_visit (Troll &player, Type type) {
-	if(type != MOVE || free){
+	if(type != MOVE || free_pick){
 	  return be_visit_by (*this, player, type);
 	} else {
 	    return false;
 	}
 }	
 bool Dragon_Hoard::be_visit (Vampire&player, Type type) {
-	if(type != MOVE || free){
+	if(type != MOVE || free_pick){
 	  return be_visit_by (*this, player, type);
 	} else {
 	    return false;
 	}
 }	
 bool Dragon_Hoard::be_visit (Goblin &player, Type type) {
-	if(type != MOVE || free){
+	if(type != MOVE || free_pick){
 	  return be_visit_by (*this, player, type);
 	} else {
 	    return false;

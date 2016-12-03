@@ -8,7 +8,7 @@ Merchant::Merchant(int row, int col):
 bool Merchant::revenge = false;
 
 bool Merchant::visit (Object &object, Type type) {
-    if(revenge){
+	if(type == MOVE || revenge){
       return object.be_visit (*this, type);
     } else {
 	return false;

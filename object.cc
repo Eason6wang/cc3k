@@ -32,7 +32,7 @@ bool Object::be_visit(Dwarf& dwarf, Type type){ return false; }
 bool Object::be_visit(Halfling& halfling, Type type){ return false; }
 bool Object::be_visit(Elf& elf, Type type){ return false; }
 bool Object::be_visit(Orc& orc, Type type){ return false; }
-//bool Object::be_visit(Dragon& dragon, Type type){ return false; }
+bool Object::be_visit(Dragon& dragon, Type type){ return false; }
 bool Object::be_visit(Merchant& merchant, Type type){ return false; }
 bool Object::be_visit(Small_Hoard& small_hoard, Type type){ return false; }
 bool Object::be_visit(Normal_Hoard& normal_hoard, Type type){ return false; }

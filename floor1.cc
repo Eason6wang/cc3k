@@ -40,6 +40,7 @@
 #include "elf.h"
 #include "orc.h"
 #include "merchant.h"
+#include "dragon.h"
 
 #include "item.h"
 #include "treasure.h"
@@ -285,6 +286,57 @@ void N_Floor::setPlayer(){ // generate player.
 	}
 
 	void N_Floor::setTreasure(){ //generate gold.
+		int p = getRandom(1,8);
+		int n = getRandom(0, 4);
+	//	while (1){
+			int pos = getRandom(0, theChamber[n].c.size() - 1);
+			Pos position = (*theChamber[n].c[pos])->getPos();
+			shared_ptr<Treasure> o;
+			switch (p){
+				case 1: 
+				case 2:
+				case 3:
+				case 4: 
+				case 5:
+					o = make_shared<Normal_Hoard>(position.posx, position.posy);
+					break;
+				case 6:
+				case 7: 
+					o = make_shared<Small_Hoard>(position.posx, position.posy);
+					break;
+				case 8:
+					auto dragon = make_shared<Dragon>(position.posx, position.posy);
+					int randr, randc;
+	//				int gard = 8;
+					do {
+						randr = getRandom (-1, 1) + position.posy;
+						if (randr == 0) {
+							randc = getRandom (0, 1) * 2 -1 + position.posx;
+						} else randc = getRandom (-1, 1) + position.posx;
+	//					if (board[randr][randc]->getPos().isRead == true){//since we use this field for set Chamber, so here should be false. and this is to prevent dragon gets stuck.
+	//						board[randr][randc]->getPos().isRead = false;
+	//						gard--;
+	//						if (gard == 0) break;
+	//					}
+						cout << "herewewqoru" << endl;
+					} while (!dragon->visit(*board[randr][randc], MOVE));
+						cout << "2herewewqoru" << endl;
+	//				if (gard == 0) continue;
+					board[randr][randc] = dragon;
+						cout << "3herewewqoru" << endl;
+					theDisplay.w->notify(*board[randr][randc]);
+
+					o = make_shared<Dragon_Hoard>(position.posx, position.posy); //I expect the ctor of DH spawn a dragon here!!!!
+					break;
+			}
+			*(theChamber[n].c[pos]) = o;
+			theDisplay.w->notify(*(*theChamber[n].c[pos]));
+			theChamber[n].c.erase(theChamber[n].c.begin() + pos);
+	//		break;
+	//	}
+	}
+
+/*	void N_Floor::setTreasure(){ //generate gold.
 		int n = getRandom(0, 4);
 		int pos = getRandom(0, theChamber[n].c.size() - 1);
 		Pos position = (*theChamber[n].c[pos])->getPos();
@@ -311,7 +363,7 @@ void N_Floor::setPlayer(){ // generate player.
 		*(theChamber[n].c[pos]) = o;
 		theDisplay.w->notify(*(*theChamber[n].c[pos]));
 		theChamber[n].c.erase(theChamber[n].c.begin() + pos);
-	}
+	}*/
 
 
 	void N_Floor::setEnemy(){ //generate enemy.
