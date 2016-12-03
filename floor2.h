@@ -19,9 +19,9 @@ class D_Floor{
 	std::vector<std::vector<std::shared_ptr<Object>>> board; //the board
 	std::shared_ptr<Player> thePlayer;
 //	std::shared_ptr theStair;
-//	std::vector<std::shared_ptr<Potion>> thePotion;
+//	std::vector<std::shared_ptr<Potion>> theDragon;
 	std::vector<std::shared_ptr<Enemy>> theEnemy;
-//	std::vector<std::shared_ptrTreasure> theTreasure;
+//	std::vector<std::shared_ptrTreasure> D_Hoard;
 	std::vector<Chamber> theChamber; //store the chamber
 //	std::shared_ptr<Object> tmp;
  //   std::shared_ptr<Window> w; //display.

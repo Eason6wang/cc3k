@@ -336,12 +336,11 @@ void D_Floor::setPlayer(){ // generate player.
 					auto anotherDragon = make_shared<Dragon>(position.posx, position.posy); //I expect the ctor of DH spawn a dragon here!!!!
 					theEnemy.emplace_back(anotherDragon);
 					break;
-			}
+					}
 			*(theChamber[n].c[pos]) = o;
 			theDisplay.w->notify(*(*theChamber[n].c[pos]));
 			theChamber[n].c.erase(theChamber[n].c.begin() + pos);
 	//		break;
-	//	}
 	}
 
 
@@ -511,7 +510,7 @@ void D_Floor::setPlayer(){ // generate player.
 //	cout << "enemy random move start" << endl;
 		if (!stop) {
 			bool attacked = false;
-			for (int i = 0; i < theEnemy.size(); i++) {
+			for (int i = 0; i < theEnemy.size(); i++){
 				int r = theEnemy[i]->getPos().posy;
 				int c = theEnemy[i]->getPos().posx;
 				int player_r = thePlayer->getPos().posy;
@@ -521,16 +520,18 @@ void D_Floor::setPlayer(){ // generate player.
 					playeraround = true;
 					try	{
 					//cout << "player is attacked" << endl;
-						if (!attacked && (theEnemy[i]->getPos().style == DRAGON)){
-							theEnemy[i]->visit(*thePlayer, ATTACK);
-							attacked = true;
+						if (theEnemy[i]->getPos().style == DRAGON) {
+							if (!attacked){
+								theEnemy[i]->visit(*thePlayer, ATTACK);
+								attacked = true;
+							}
+								
 						} else {
 							theEnemy[i]->visit(*thePlayer, ATTACK);
 						}
 					}
 					catch(VisitExcept & exc){
 						if (exc.state == "deadplayer"){
-						//cout << "player is dead!!!!!!!!!!!!!!" << endl;
 							playeraround = true;
 							throw true;
 						}
