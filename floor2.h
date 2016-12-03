@@ -1,5 +1,5 @@
-#ifndef _N_FLOOR_H_
-#define _N_FLOOR_H_
+#ifndef _D_FLOOR_H_
+#define _D_FLOOR_H_
 #include <iostream>
 #include <sstream>
 #include <vector>
@@ -15,7 +15,7 @@ class Player;
 class Enemy;
 class Display;
 
-class N_Floor{
+class D_Floor{
 	std::vector<std::vector<std::shared_ptr<Object>>> board; //the board
 	std::shared_ptr<Player> thePlayer;
 //	std::shared_ptr theStair;
@@ -33,10 +33,10 @@ class N_Floor{
 	bool enemyMove(int n, std::vector<bool>& possibility);
 //	int getRandom(int min, int max);
 	public:	
-	N_Floor(Display& display);
+	D_Floor(Display& display);
 	void floorVisit(std::string s, Type type, bool isWasd);
 	void clearFloor(bool cleanPlayer);
-	//~N_Floor();
+	//~D_Floor();
 	
 	///void floor_move();
 	///void floor_attack();
@@ -53,7 +53,7 @@ class N_Floor{
 	void pause();
 	std::string outPut();
 	
-	friend std::ostream &operator<<(std::ostream &out, const N_Floor &f);
+	friend std::ostream &operator<<(std::ostream &out, const D_Floor &f);
 };
 
 #endif

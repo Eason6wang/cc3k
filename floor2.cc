@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <algorithm>
-#include "floor1.h"
+#include "floor2.h"
 #include "type.h"
 #include <cstdlib>
 #include <ctime>
@@ -56,7 +56,7 @@
 class Enemy;
 
 
-void N_Floor::clearFloor(bool cleanPlayer){
+void D_Floor::clearFloor(bool cleanPlayer){
 	//	cout << "enter clear" << endl;
 	if (cleanPlayer){
 		thePlayer = nullptr;
@@ -70,10 +70,10 @@ void N_Floor::clearFloor(bool cleanPlayer){
 }
 		
 
-N_Floor::N_Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{false} {}
+D_Floor::D_Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{false} {}
 		
 
-	void N_Floor::init(bool isWasd, string file){ // set up the board according to the given floor in the file.
+	void D_Floor::init(bool isWasd, string file){ // set up the board according to the given floor in the file.
 		//cout << "enter init" << endl;
 		theDisplay.w = make_shared<Window>(file);
 	//	p = make_shared<Panel>(nullptr);
@@ -149,6 +149,9 @@ N_Floor::N_Floor(Display& display): theDisplay{display},height{25}, width{79}, s
 			Chamber cham;
 			setChamber(row, col, cham.c);
 		//	cout << cham.c.size() << endl;
+			for (auto &n: cham.c) {
+				(*n)->getPos().chamber_num = t+1;
+			}
 			theChamber.emplace_back(cham);
 		}
 		if (!thePlayer) {
@@ -158,7 +161,7 @@ N_Floor::N_Floor(Display& display): theDisplay{display},height{25}, width{79}, s
 	//cout << "out init" << endl;
 	}
 
-void N_Floor::spawnAction(){
+void D_Floor::spawnAction(){
 	setPlayer();
 	setStair();
 	for (int i = 0; i < 10; i++){
@@ -171,7 +174,7 @@ void N_Floor::spawnAction(){
 }
 
 		
-void N_Floor::selectPlayer(bool isWasd){
+void D_Floor::selectPlayer(bool isWasd){
 	int n = getRandom(0,4);
 	int pos = getRandom(0,theChamber[n].c.size() - 1);
 	Pos position = (*theChamber[n].c[pos])->getPos(); 
@@ -201,10 +204,11 @@ void N_Floor::selectPlayer(bool isWasd){
 		}
 		break;
 	}
+	thePlayer->getPos().chamber_num = n; //assign the chamber number to the player.
 	theChamber[n].c.erase(theChamber[n].c.begin() + pos);
 }
 
-void N_Floor::setPlayer(){ // generate player.
+void D_Floor::setPlayer(){ // generate player.
 	theDisplay.p = make_shared<Panel>(thePlayer); //create a panel here
 	thePlayer->attach(theDisplay.p); //attach panel to each player
 	theDisplay.w->notify(*thePlayer);
@@ -213,7 +217,7 @@ void N_Floor::setPlayer(){ // generate player.
 }
 
 
-	void N_Floor::setChamber(int r, int c, vector<shared_ptr<Object>*>& arr) {
+	void D_Floor::setChamber(int r, int c, vector<shared_ptr<Object>*>& arr) {
 		//cout << "setChamber" << board[r][c]->getPos().isRead << endl;
 		//cout << board[r][c]->getPos().style;
 		board[r][c]->flip();
@@ -234,7 +238,7 @@ void N_Floor::setPlayer(){ // generate player.
 		
 
 
-	void N_Floor::setStair(){ //generate stairway.
+	void D_Floor::setStair(){ //generate stairway.
 		//cout << "set Stair()" << endl;
 		int n = getRandom(0,4);
 		int pos = getRandom(0, theChamber[n].c.size() - 1);
@@ -249,7 +253,7 @@ void N_Floor::setPlayer(){ // generate player.
 		//cout << "setStair works fine" << endl;
 	}
 
-	void N_Floor::setPotion(){ //generate potion
+	void D_Floor::setPotion(){ //generate potion
 
 		//cout << "set potion" << endl;
 		int n = getRandom(0, 4);
@@ -284,7 +288,7 @@ void N_Floor::setPlayer(){ // generate player.
 		//cout << "setPotion complete" << endl;
 	}
 
-	void N_Floor::setTreasure(){ //generate gold.
+	void D_Floor::setTreasure(){ //generate gold.
 		int n = getRandom(0, 4);
 		int pos = getRandom(0, theChamber[n].c.size() - 1);
 		Pos position = (*theChamber[n].c[pos])->getPos();
@@ -314,7 +318,7 @@ void N_Floor::setPlayer(){ // generate player.
 	}
 
 
-	void N_Floor::setEnemy(){ //generate enemy.
+	void D_Floor::setEnemy(){ //generate enemy.
 		int n = getRandom(0, 4);
 		int pos = getRandom(0, theChamber[n].c.size() - 1);
 		int p = getRandom(1,18);
@@ -358,14 +362,14 @@ void N_Floor::setPlayer(){ // generate player.
 			   // o->setAttributes(position.posy, position.posx, MERCHANT, false, nullptr);
 				break;
 		}
-		
+		o->getPos().chamber_num = n+1;	
 		theEnemy.emplace_back(o);
 		*(theChamber[n].c[pos]) = o;
 		theDisplay.w->notify(*(*theChamber[n].c[pos]));
 		theChamber[n].c.erase(theChamber[n].c.begin() + pos);
 	}
 
-	void N_Floor::floorVisit(string s, Type type, bool isWasd){
+	void D_Floor::floorVisit(string s, Type type, bool isWasd){
 		//cout << "enter floorvisit" << endl;
 		int r = thePlayer->getPos().posy;
 	//	cout << "here!!" << endl;
@@ -426,21 +430,7 @@ void N_Floor::setPlayer(){ // generate player.
 					board[target_r][target_c] = make_shared<Small_Hoard>(target_c, target_r);
 				} else if (exc.state == "normal_hoard"){
 					board[target_r][target_c] = make_shared<Normal_Hoard>(target_c, target_r);
-					int randr, randc;
-					do {
-						randr = getRandom (0, 1)*2 - 1;
-						randc = getRandom (0, 1)*2 - 1;
-					} while (!board[target_r][target_c]->visit(*board[randr][randc], MOVE));
-						swap(board[randr][randc]->getPos().posx, board[target_r][target_c]->getPos().posx);
-						swap(board[randr][randc]->getPos().posy, board[target_r][target_c]->getPos().posy);
-						swap(board[randr][randc], board[target_r][target_c]);
-						theDisplay.w->notify(*board[randr][randc]);
-						theDisplay.w->notify(*board[target_r][target_c]);
-						board[target_r][target_c] = make_shared<Normal_Hoard>(target_c, target_r);
-						theDisplay.w->notify(*board[randr][randc]);
-						theDisplay.w->notify(*board[target_r][target_c]);
-						
-				} else {// merchant_hoard
+				} else {
 
 
 //merchant dragon drop 
@@ -451,6 +441,7 @@ void N_Floor::setPlayer(){ // generate player.
 				//cout << "false" << endl;
 		} else {
 			if (type == MOVE){
+				thePlayer->getPos().chamber_num = board[target_r][target_c]->getPos().chamber_num;
 				//cout << "true" << endl;
 				thePlayer->getPos().posx = target_c;
 				thePlayer->getPos().posy = target_r;
@@ -518,12 +509,13 @@ void N_Floor::setPlayer(){ // generate player.
 	}
 
 
-void N_Floor::pause(){
+void D_Floor::pause(){
 	if (stop) stop = true;
 	else stop = false;
 }
 //
-bool N_Floor::enemyMove(int n, vector<bool>& possibility) {
+
+bool D_Floor::enemyMove(int n, vector<bool>& possibility) {
 	int r = theEnemy[n]->getPos().posy;
 	int c = theEnemy[n]->getPos().posx;
 	int target_r, target_c;
@@ -561,41 +553,39 @@ bool N_Floor::enemyMove(int n, vector<bool>& possibility) {
 		target_c = c-1;
 		possibility[i] = true;
 	}
-	//can move to that position for some reason).
-//	if (i != 0) {
-    //board[r][c] = theEnemy[n]->getPos().last;
-    //theEnemy[n]->getPos().last == board[target_r][target_c];
-    //board[target_r][target_c] = theEnemy[n];
-//	} else {
-//		return true;
-//	}
-	//this part is to make sure all 8 positions have been checked.
-    if (theEnemy[n]->visit(*board[target_r][target_c], MOVE)){
-		swap(theEnemy[n]->getPos().posx, board[target_r][target_c]->getPos().posx);
-		swap(theEnemy[n]->getPos().posy, board[target_r][target_c]->getPos().posy);
-		swap(board[r][c], board[target_r][target_c]);
-		theDisplay.w->notify(*theEnemy[n]);
-		theDisplay.w->notify(*board[r][c]);
-	  	return true;
-	} else if (!(possibility[1] &&  possibility[2] &&  possibility[3] &&
-		   	possibility[4] && possibility[5] && possibility[6] &&
-		   	possibility[7] && possibility[8])) {
-		enemyMove(n, possibility);
+	Pos playerpos = thePlayer->getPos();
+    if (distance(playerpos.posy, playerpos.posx, target_r, target_c) < 
+			distance(playerpos.posy, playerpos.posx, r,c) || 
+			(thePlayer->getPos().chamber_num != theEnemy[n]->getPos().chamber_num)){ //only trace when in same chamber  move when distance.
+		if (theEnemy[n]->visit(*board[target_r][target_c], MOVE)){
+			swap(theEnemy[n]->getPos().posx, board[target_r][target_c]->getPos().posx);
+			swap(theEnemy[n]->getPos().posy, board[target_r][target_c]->getPos().posy);
+			swap(board[r][c], board[target_r][target_c]);
+			theDisplay.w->notify(*theEnemy[n]);
+			theDisplay.w->notify(*board[r][c]);
+			return true;
+		} else if (!(possibility[1] &&  possibility[2] &&  possibility[3] &&
+			   	possibility[4] && possibility[5] && possibility[6] &&
+			   	possibility[7] && possibility[8])) {
+			enemyMove(n, possibility);
+		} else {
+		//	cout << getString(theEnemy[n]->getPos().style) << endl;
+	//		cout << "someone is stucked" << endl;
+			return false;
+		}
+		 return false; //still need to check here.
 	} else {
-	//	cout << getString(theEnemy[n]->getPos().style) << endl;
-//		cout << "someone is stucked" << endl;
-		return false;
+		enemyMove(n, possibility);
 	}
-    return false; //still need to check here.
 }
 
-ostream &operator<<(ostream &out, const N_Floor &f){
+ostream &operator<<(ostream &out, const D_Floor &f){
 	out << *f.theDisplay.w; //this is window.
 	out << *f.theDisplay.p; //this is plane.
 	return out;
 }
 
-string N_Floor::outPut(){
+string D_Floor::outPut(){
 	string rs = theDisplay.w->outPut() +
 		theDisplay.p->outPut();
 	return rs;
