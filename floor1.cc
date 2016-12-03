@@ -425,20 +425,22 @@ void N_Floor::setPlayer(){ // generate player.
 				if (exc.state == "small_hoard") {
 					board[target_r][target_c] = make_shared<Small_Hoard>(target_c, target_r);
 				} else if (exc.state == "normal_hoard"){
+					while (exc.num > 1) {
 					board[target_r][target_c] = make_shared<Normal_Hoard>(target_c, target_r);
 					int randr, randc;
 					do {
-						randr = getRandom (0, 1)*2 - 1;
-						randc = getRandom (0, 1)*2 - 1;
+						randr = getRandom (-1, 1) + target_r;
+						if (randr == 0) {
+							randc = getRandom (0, 1) * 2 -1 + target_c;
+						} else randc = getRandom (-1, 1) + target_c;
 					} while (!board[target_r][target_c]->visit(*board[randr][randc], MOVE));
 						swap(board[randr][randc]->getPos().posx, board[target_r][target_c]->getPos().posx);
 						swap(board[randr][randc]->getPos().posy, board[target_r][target_c]->getPos().posy);
 						swap(board[randr][randc], board[target_r][target_c]);
 						theDisplay.w->notify(*board[randr][randc]);
-						theDisplay.w->notify(*board[target_r][target_c]);
+						--exc.num;
+					}
 						board[target_r][target_c] = make_shared<Normal_Hoard>(target_c, target_r);
-						theDisplay.w->notify(*board[randr][randc]);
-						theDisplay.w->notify(*board[target_r][target_c]);
 						
 				} else {// merchant_hoard
 

@@ -30,6 +30,10 @@ class Tile final:public Cell {
 	bool be_visit (Halfling &enemy, Type type) override;
 	bool be_visit (Elf &enemy, Type type) override;
 	bool be_visit (Orc &enemy, Type type) override;
+	bool be_visit (Small_Hoard &hoard, Type type) override;
+	bool be_visit (Normal_Hoard &hoard, Type type) override;
+	bool be_visit (Merchant_Hoard &hoard, Type type) override;
+	bool be_visit (Dragon_Hoard &hoard, Type type) override;
 //	bool be_visit (Dragon &enemy, Type type) override;
 //	bool be_visit (Merchant &enemy, Type type) override;
 //	bool be_visit (Normal_Hoard &, Type type) override;

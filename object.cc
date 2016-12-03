@@ -36,8 +36,8 @@ bool Object::be_visit(Orc& orc, Type type){ return false; }
 bool Object::be_visit(Merchant& merchant, Type type){ return false; }
 bool Object::be_visit(Small_Hoard& small_hoard, Type type){ return false; }
 bool Object::be_visit(Normal_Hoard& normal_hoard, Type type){ return false; }
-//bool Object::be_visit(Merchant_Hoard& merchant_hoard, Type type){ return false; }
-//bool Object::be_visit(Dragon_Hoard& dragon_hoard, Type type){ return false; }
+bool Object::be_visit(Merchant_Hoard& merchant_hoard, Type type){ return false; }
+bool Object::be_visit(Dragon_Hoard& dragon_hoard, Type type){ return false; }
 //bool Object::be_visit(Restore_Health& restore_health, Type type){ return false; }
 //bool Object::be_visit(Boost_Atk& boost_atk, Type type){ return false; }
 //bool Object::be_visit(Boost_Def& boost_def, Type type){ return false; }
