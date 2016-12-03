@@ -5,17 +5,17 @@
 #include <memory>
 #include "type.h"
 #include "style.h"
+#include "merchant.h"
 class VisitExcept;
 class Potion;
 #include "treasure.h"
 class VisitExcept;
-
-
+class Merchant;
 class Object;
 class Player;
 class Enemy;
 class Item;
-
+class merchant;
 void clearScreen();
 
 int getRandom(int min, int max);
@@ -28,6 +28,8 @@ int getDamage(int, int);
 bool compare(std::shared_ptr<Object> ob1,std::shared_ptr<Object> ob2);
 
 int distance(int r1, int c1, int r2, int c2);
+
+std::string direction(Object &bevisit, Object &visit);
 
 //void normal_enemy_move();
 //template
@@ -53,9 +55,12 @@ bool be_attack(Enemy &enemy, Player &player);
 bool be_attack(Item &item, Player &player);
 bool be_pick_up(Treasure &treasure, Player &player);
 bool be_pick_up(Potion &potion, Player &player);
+
 bool be_pick_up(Enemy &enemy, Player &player);
 bool be_pick_up(Player &player, Enemy &enemy);
 bool be_go_over(Potion &potion, Player &player);
+
+
 bool be_go_over(Enemy &enemy, Player &player);
 bool be_go_over(Player &player, Enemy &enemy);
 bool be_go_over(Treasure &treasure, Player &player);

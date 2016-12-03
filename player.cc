@@ -143,89 +143,15 @@ bool Player::be_visit(Elf& enemy, Type type){
 	return false;
 	*/
 
+
+ return be_visit_by(*this, enemy, type);
+}
+
+
+//bool Player::be_visit(Dragon& enemy, Type type);
+
+bool Player::be_visit(Merchant& enemy, Type type){
+
  return be_visit_by(*this, enemy, type);
 
 }
-
-/*
-bool Player::be_visit(Dragon& enemy, Type type){
-  if(type == ATTACK){
-  	int damage = getDamage(enemy.getInfo().atk, info.def);
-  	getInfo().hp -= damage;
- 	sstream ss;
- 	ss << damage;
-  	string newAction = enemy.getPos().style + " deals " + ss.str() " damage to " + getPos().style + ". ";
-  	playerInfo.action += newAction;
-	if(getInfo().hp <= 0){
-	  //throw
-	} else {
-	  return false;
-	}
-  }
-}
-
-bool Player::be_visit(Merchant& enemy, Type type){
-  if(type == ATTACK){
-  	int damage = getDamage(enemy.getInfo().atk, info.def);
-  	getInfo().hp -= damage;
- 	sstream ss;
- 	ss << damage;
-  	string newAction = enemy.getPos().style + " deals " + ss.str() " damage to " + getPos().style + ". ";
-  	playerInfo.action += newAction;
-	if(getInfo().hp <= 0){
-	  //throw
-	} else {
-	  return false;
-	}
-  }
-}
-
-// for postion
-bool Player::be_visit(Small_Hoard& , Type t) {
-  playerInfo.gold += treasure
-}
-
-bool Player::be_visit(Normal_Hoard& , Type type){
-  int damage = getDamage(enemy.info.atk, info.def);
-  getInfo().hp -= damage;
-}
- 
-bool Player::be_visit(Merchant_Hoard& , Type type){
-  int damage = getDamage(enemy.info.atk, info.def);
-  getInfo().hp -= damage;
-}
- 
-bool Player::be_visit(Dragon_Hoard& , Type type){
-  int damage = getDamage(enemy.info.atk, info.def);
-  getInfo().hp -= damage;
-}
- 
-bool Player::be_visit(Restore_Health& , Type type){
-  int damage = getDamage(enemy.info.atk, info.def);
-  getInfo().hp -= damage;
-}
- 
-bool Player::be_visit(Boost_Atk& , Type type){
-  int damage = getDamage(enemy.info.atk, info.def);
-  getInfo().hp -= damage;
-}
-
-bool Player::be_visit(Boost_Def& , Type type){
-  int damage = getDamage(enemy.info.atk, info.def);
-  getInfo().hp -= damage;
-}
-
-bool Player::be_visit(Poison_Health& , Type type){
-  int damage = getDamage(enemy.info.atk, info.def);
-  getInfo().hp -= damage;
-}
-
-bool Player::be_visit(Wound_Atk& , Type type){
-  int damage = getDamage(enemy.info.atk, info.def);
-  getInfo().hp -= damage;
-}
- 
-bool Player::be_visit(Wound_Def& , Type type){
-  int damage = getDamage(enemy.info.atk, info.def);
-  getInfo().hp -= damage;
-}*/
