@@ -32,14 +32,16 @@ int distance(std::shared_ptr<Object> ob1, std::shared_ptr<Object> ob2);
 //void normal_enemy_move();
 //template
 template<typename Bevisit , typename Visit , typename Type>
-bool be_visit_by(Bevisit & v1, Visit & v2, Type t, Style style = SPACE){
+bool be_visit_by(Bevisit & v1, Visit & v2, Type t){
     if(t == ATTACK){
 	return be_attack(v1, v2);
     }
     if(t == PICKUP){
-	return be_pick_up(v1, v2, style);
+	return be_pick_up(v1, v2);
     }
-//move
+    if(t == MOVE){
+	return be_go_over(v1, v2);
+    }
     return false;
 }
 
@@ -48,9 +50,14 @@ bool be_attack(Player &player, Enemy &enemy);
 
 bool be_attack(Enemy &enemy, Player &player);  
 
-bool be_pick_up(Potion &potion, Player &player, Style style);
-
-bool be_pick_up(Enemy &enemy, Player &player, Style style);
-bool be_pick_up(Player &player, Enemy &enemy, Style style);
 bool be_attack(Item &item, Player &player);
+bool be_pick_up(Treasure &treasure, Player &player);
+bool be_pick_up(Potion &potion, Player &player);
+bool be_pick_up(Enemy &enemy, Player &player);
+bool be_pick_up(Player &player, Enemy &enemy);
+bool be_go_over(Potion &potion, Player &player);
+bool be_go_over(Enemy &enemy, Player &player);
+bool be_go_over(Player &player, Enemy &enemy);
+bool be_go_over(Treasure &treasure, Player &player);
+
 #endif

@@ -20,6 +20,9 @@ Potion::Potion (int posx, int posy, Style style)
 
 
 Info &Potion::modify(){
+    if(potion){	
+      info.hp = potion->modify().hp;
+    }
     return info;
 }
 
@@ -34,7 +37,7 @@ bool Potion::be_visit (Shade &player, Type type) {
 			throw VisitExcept {"pickup_potion", 0};
 		} else return false;
 		*/
-	return be_visit_by(*this, player, type, getPos().style);
+	return be_visit_by(*this, player, type);
 }	
 
 bool Potion::be_visit (Drow &player, Type type) {
@@ -44,7 +47,7 @@ bool Potion::be_visit (Drow &player, Type type) {
 			throw VisitExcept {"pickup_potion", 0};
 		} else return false;
 		*/
-	return be_visit_by(*this, player, type, getPos().style);
+	return be_visit_by(*this, player, type);
 
 }	
 
@@ -55,7 +58,7 @@ bool Potion::be_visit (Troll &player, Type type) {
 			throw VisitExcept {"pickup_potion", 0};
 		} else return false;
 		*/
-return be_visit_by(*this, player, type, getPos().style);
+return be_visit_by(*this, player, type);
 
 }	
 
@@ -66,7 +69,7 @@ bool Potion::be_visit (Vampire&player, Type type) {
 			throw VisitExcept {"pickup_potion", 0};
 		} else return false;
 		*/
-return be_visit_by(*this, player, type, getPos().style);
+return be_visit_by(*this, player, type);
 
 }	
 bool Potion::be_visit (Goblin &player, Type type) {
@@ -76,6 +79,6 @@ bool Potion::be_visit (Goblin &player, Type type) {
 			throw VisitExcept {"pickup_potion", 0};
 		} else return false;
 */
-return be_visit_by(*this, player, type, getPos().style);
+return be_visit_by(*this, player, type);
 
 }
