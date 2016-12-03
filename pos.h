@@ -8,6 +8,7 @@ struct Pos{
     int posx, posy;
     Style style;
     bool isRead;
+	int chamber_num;
   //  std::shared_ptr<Object> last;
 };
 

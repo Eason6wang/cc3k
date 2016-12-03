@@ -47,87 +47,75 @@ bool compare(shared_ptr<Object> ob1, shared_ptr<Object> ob2){
 	}
 }
 
-int distance(std::shared_ptr<Object> ob1, std::shared_ptr<Object> ob2){
-	Pos p1 = ob1->getPos();
-	Pos p2 = ob2->getPos();
-	int ri = abs(p1.posx - p2.posx) + abs(p1.posy - p2.posy);
+int distance(int r1,int c1, int r2, int c2){
+	int ri = abs(r1 - r2) + abs(c1 - c2);
 	return ri;
 }
 
-/*void normal_enemy_move(){
-	for (int i = 0; i < theEnemy.size(); i++) {
-		int r = theEnemy[i]->getPos().posy;
-		int c = theEnemy[i]->getPos().posx;
-		int player_r = thePlayer->getPos().posy;
-		int player_c = thePlayer->getPos().posx;
-		bool playeraround;
-		if (abs(player_r - r) <= 1 && abs(player_c - c) <= 1){
-			try	{
-				//cout << "player is attacked" << endl;
-				if (theEnemy[i]->visit(*thePlayer, ATTACK)) playeraround = true;
-			}
-			catch(VisitExcept & exc){
-				if (exc.state == "deadplayer"){
-					//cout << "player is dead!!!!!!!!!!!!!!" << endl;
-					playeraround = true;
-					throw true;
-				}
-			}
-		}
-		if (!playeraround){
-			vector<bool> possibility;
-			for (int j = 0; j < 8; j++){
-				possibility.emplace_back(false);
-			}
-			if (enemyMove(i, possibility)){
-				
-			} else {
-				//cout << "enemy move false" << endl;
-			}
-		} else {
-			theDisplay.p->notify(*thePlayer);
-		}
+
+/*bool smart_enemyMove(int n, vector<bool>& possibility) {
+	int r = theEnemy[n]->getPos().posy;
+	int c = theEnemy[n]->getPos().posx;
+	int target_r, target_c;
+	int i = getRandom(1,8); //0 means the enemy don't move this round(don't know if it is necessary).
+	if (i == 1) {
+		target_r = r-1;
+		target_c = c;
+		possibility[i] = true;
+	} else if (i == 2) {
+		target_r = r+1;
+		target_c = c;
+		possibility[i] = true;
+	} else if (i == 3) {
+		target_r = r;
+		target_c = c+1;
+		possibility[i] = true;
+	} else if (i == 4) {
+		target_r = r;
+		target_c = c-1;
+		possibility[i] = true;
+	} else if (i == 5){
+		target_r = r-1;
+		target_c = c+1;
+		possibility[i] = true;
+	} else if (i == 6){
+		target_r = r-1;
+		target_c = c-1;
+		possibility[i] = true;
+	} else if (i == 7){
+		target_r = r+1;
+		target_c = c+1;
+		possibility[i] = true;
+	} else {
+		target_r = r+1;
+		target_c = c-1;
+		possibility[i] = true;
 	}
-}
-
-
-void smart_enemy_move(){
-	for (int i = 0; i < theEnemy.size(); i++) {
-			int r = theEnemy[i]->getPos().posy;
-			int c = theEnemy[i]->getPos().posx;
-			int player_r = thePlayer->getPos().posy;	
-			int player_c = thePlayer->getPos().posx;
-				bool playeraround;
-				if (abs(player_r - r) <= 1 && abs(player_c - c) <= 1){
-					try	{
-					//cout << "player is attacked" << endl;
-						if (theEnemy[i]->visit(*thePlayer, ATTACK)) playeraround = true;
-					}
-					catch(VisitExcept & exc){
-						if (exc.state == "deadplayer"){
-						//cout << "player is dead!!!!!!!!!!!!!!" << endl;
-							playeraround = true;
-							throw true;
-						}
-					}
-				}
-				if (!playeraround){
-					vector<bool> possibility;
-					for (int j = 0; j < 8; j++){
-						possibility.emplace_back(false);
-					}
-					if (enemyMove(i, possibility)){
-				
-					} else {
-						//cout << "enemy move false" << endl;
-					}
-				} else {
-					theDisplay.p->notify(*thePlayer);
-				}
-			}
+    if (distance(player_r, player_c, target_r, target_c) < 
+			distance(player_r, player_c, r,c) || 
+			!theEnemy[n]->getPos().sameChamber){ //only trace when in same chamber  move when distance.
+		if (theEnemy[n]->visit(*board[target_r][target_c], MOVE)){
+			swap(theEnemy[n]->getPos().posx, board[target_r][target_c]->getPos().posx);
+			swap(theEnemy[n]->getPos().posy, board[target_r][target_c]->getPos().posy);
+			swap(board[r][c], board[target_r][target_c]);
+			theDisplay.w->notify(*theEnemy[n]);
+			theDisplay.w->notify(*board[r][c]);
+			return true;
+		} else if (!(possibility[1] &&  possibility[2] &&  possibility[3] &&
+			   	possibility[4] && possibility[5] && possibility[6] &&
+			   	possibility[7] && possibility[8])) {
+			enemyMove(n, possibility);
+		} else {
+		//	cout << getString(theEnemy[n]->getPos().style) << endl;
+	//		cout << "someone is stucked" << endl;
+			return false;
 		}
+		 return false; //still need to check here.
+	} else {
+		enemyMove(n, possibility);
+	}
+}*/
 
-*/
 //template
 
 // dragon attack is different

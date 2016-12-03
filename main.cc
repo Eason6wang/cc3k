@@ -1,14 +1,13 @@
-#include "gamecontroller.h"
+#include "GAME.h"
 
 int main(int argc, char* argv[]) {
     //iosfailure
-    GameController g{};
+    Game g{};
 	try {
-		std::cout << "choose e/c to use wasd/command (this massage will be deleted later)" << std::endl;
-		if (argc == 2) {
-			g.startGame(argv[1]);
+		if (argc == 1){
+			g.selectVersion("plainfloor.txt");
 		} else {
-			g.startGame();
+			g.selectVersion(argv[1]);
 		}
 	}
 	catch (...){
