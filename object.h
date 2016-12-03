@@ -7,7 +7,7 @@
 #include "type.h"
 #include "Headers_Class.h"
 
-class Object: public Subject{
+class Object: public Subject, public Observer{
 	Pos pos;
 public:
 	Pos& getPos();

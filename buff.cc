@@ -13,6 +13,7 @@
 #include "merchant.h"
 #include "dragon.h"
 #include <utility>
+//#include "subject.h"
 
 using namespace std;
 
@@ -254,7 +255,7 @@ bool be_attack(Enemy &enemy, Player &player){
        newAction = "PC deals (" + std::to_string(damage) + ") damage to "
              + getString(enemyType) + "(" + std::to_string(enemyHp)  + "). ";
     } else {
-	newAction = "PC kills " + getString(enemyType)  + ". ";
+	newAction = "PC smashes " + getString(enemyType)  + ". ";
     }
     player.getPlayerInfo().action += newAction;
     if(enemyHp <= 0){
@@ -273,6 +274,7 @@ bool be_attack(Enemy &enemy, Player &player){
 	}
 	if(enemyType == DRAGON){
 	   //dragon case
+	   enemy.notifyObservers();
 	}
 	 randomnum == 1 ?  throw VisitExcept{"small_hoard",1}:    // normal case
 	              throw VisitExcept{"normal_hoard",1};
@@ -384,6 +386,7 @@ bool be_go_over(Treasure &treasure,Player &player) {
   	player.getPlayerInfo().gold += treasure.getGold();
 	throw VisitExcept{"pickup_gold", 0};
 }
+
 
 bool be_go_over(Potion &potion, Player &player){
     string newAction = "PC moves " + direction(potion,player) +

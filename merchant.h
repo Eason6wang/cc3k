@@ -12,8 +12,8 @@ class Goblin;
 
 
 class Merchant: public Enemy{
-    bool revenge = false;
 	public:
+    static bool revenge;
   	Merchant (int row, int col);
         bool visit (Object &object, Type type);
 	bool be_visit(Shade& , Type t);

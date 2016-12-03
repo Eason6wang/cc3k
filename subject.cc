@@ -5,11 +5,11 @@ void Subject::attach(std::shared_ptr<Observer> ob) {
 	observers.emplace_back(ob);
 }
 
-/*void Subject::notifyObservers() {
+void Subject::notifyObservers() {
     for(auto o : observers) {
         o->notify(*this);
     }
-}*/
+}
 
 //    if (t == SubscriptionType::SwitchOnly) {
 //        for(auto o : observers) {

@@ -5,8 +5,10 @@
 
 Dragon::Dragon(int r, int c): Enemy(150,20,20,r,c, DRAGON) {}
 
+
+
 bool Dragon::visit(Object& enemy, Type t){
-  return false;
+	return obj.be_visit(*this, type);
 }
 
 /*
