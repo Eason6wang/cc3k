@@ -1,4 +1,5 @@
 #include "buff.h"
+#include <curses.h>
 #include "object.h"
 #include"player.h"
 #include"enemy.h"
@@ -9,8 +10,67 @@
 #include "style.h"
 #include "visitexcept.h"
 #include "potion.h"
+#include <utility>
 
 using namespace std;
+
+vector<pair<int, int>> findChar(vector<vector<char>> s, char c){
+	vector<pair<int, int>> rv;
+	for(int i = 0; i < s.size(); i++){
+		for (int j = 0; j < s[0].size(); j++){
+			if (s[i][j] == c) {
+				pair<int,int> p = make_pair(i,j);
+				rv.emplace_back(p);
+			}
+		}
+	}
+	return rv;
+}
+
+void colorLayer(vector<pair<int, int>> thechar, char c){
+	for(auto n: thechar) {
+		mvaddch(n.first,n.second,c);
+	}
+}
+
+/*void colorWindow(string s) {
+	start_color();
+	init_pair(1, COLOR_RED, COLOR_BLACK);
+	init_pair(2, COLOR_GREEN, COLOR_BLACK);
+	init_pair(3, COLOR_CYAN, COLOR_BLACK);
+	init_pair(4, COLOR_MAGENTA, COLOR_BLACK);
+	init_pair(5, COLOR_YELLOW, COLOR_BLACK);
+	//init_pair(6, COLOR_BLUE, COLOR_BLACK);
+	vector<int> player = findChar(s,'@');
+	vector<int> gold = findChar(s, 'G');
+	vector<int> potion = findChar(s, 'P');
+	vector<int> stair = findChar(s, '\\');
+	vector<int> door = findChar(s, '+');
+
+	CWidget::mvaddstr(0,0, s.c_str);
+
+	attron(COLOR_PAIR(1));
+	colorLayer(potion, s);
+	attroff(COLOR_PAIR(1));
+
+	attron(COLOR_PAIR(2));
+	colorLayer(door, s);
+	attroff(COLOR_PAIR(2));
+	
+	attron(COLOR_PAIR(3));
+	colorLayer(stair, s);
+	attroff(COLOR_PAIR(3));
+	
+	attron(COLOR_PAIR(4));
+	colorLayer(player, s);
+	attroff(COLOR_PAIR(4));
+	
+	attron(COLOR_PAIR(5));
+	colorLayer(gold, s);
+	attroff(COLOR_PAIR(5));
+}	*/
+
+
 void clearScreen(){
 	for(int i = 0; i < 100; i++){
 		cout << endl;

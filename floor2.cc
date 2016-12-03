@@ -73,99 +73,101 @@ void D_Floor::clearFloor(bool cleanPlayer){
 D_Floor::D_Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{false} {}
 		
 
-	void D_Floor::init(bool isWasd, string file){ // set up the board according to the given floor in the file.
-		//cout << "enter init" << endl;
-		theDisplay.w = make_shared<Window>(file);
-	//	p = make_shared<Panel>(nullptr);
-		ifstream f {file};
-		string line;
-		shared_ptr<Object> o;
-		for (int i = 0; i < height; i++){
-			vector<shared_ptr<Object>> arr;
-			getline(f, line);
-			for (int j = 0; j < width; j++){
-				if (line[j] == '.') {
-					o = make_shared<Tile>(j,i); //这个TILE可以不用输入的。
-					//o->setAttributes(i, j, TILE, false, nullptr);
-				} else if (line[j] == '-') {
-					o = make_shared<Horizontal_Wall>(j,j);
-				   // o->setAttributes(i, j, HORIZONTAL_WALL, false, nullptr);
-				} else if (line[j] == '|') {
-					o = make_shared<Vertical_Wall>(j,i);
-					//o->setAttributes(i, j, VERTICAL_WALL, false, nullptr);
-				} else if (line[j] == '+') {
-					o = make_shared<Door>(j,i);
-					//o->setAttributes(i, j, DOOR, false, nullptr);
-				} else if (line[j] == '#') {
-					o = make_shared<Passage>(j,i);
-					//o->setAttributes(i, j, PASSAGE, false, nullptr);
-				} else {
-					o = make_shared<Space>(j,i);
-				   // o->setAttributes(i, j, SPACE, false, nullptr);
-				}
-				//add more conditions to achieve read another type of floor (all set).
-				
-				//attach the neighbours.
-	//            if (i - 1 >= 0) {
-	//                board[i][j]->attach(board[i-1][j]);
-	//                if (j -1 >= 0){
-	//                    board[i][j]->attach(board[i-1][j-1]);
-	//                }
-	//                if (j +1 < width){
-	//                    board[i][j]->attach(board[i-1][j+1]);
-	//                }
-	//            }
-	//            if (i + 1 < height){
-	//                board[i][j]->attach(board[i+1][j]);
-	//                if (j - 1 >= 0){
-	//                    board[i][j]->attach(board[i+1][j-1]);
-	//                }
-	//                if (j + 1 < width) {
-	//                    board[i][j]->attach(board[i+1][j+1]);
-	//                }
-	//            }
-	//            if (j - 1 >= 0) {
-	//                board[i][j]->attach(board[i][j-1]);
-	//            }
-	//            if (j + 1 < width) {
-	//                board[i][j]->attach(board[i][j+1]);
-	//            }
-				o->attach(theDisplay.w);
-				arr.emplace_back(o);
+void D_Floor::init(bool isWasd, string file){ // set up the board according to the given floor in the file.
+	//cout << "enter init" << endl;
+	theDisplay.w = make_shared<Window>(file);
+//	p = make_shared<Panel>(nullptr);
+	ifstream f {file};
+	string line;
+	shared_ptr<Object> o;
+	for (int i = 0; i < height; i++){
+		vector<shared_ptr<Object>> arr;
+		getline(f, line);
+		for (int j = 0; j < width; j++){
+			if (line[j] == '.') {
+				o = make_shared<Tile>(j,i); //这个TILE可以不用输入的。
+				//o->setAttributes(i, j, TILE, false, nullptr);
+			} else if (line[j] == '-') {
+				o = make_shared<Horizontal_Wall>(j,j);
+			   // o->setAttributes(i, j, HORIZONTAL_WALL, false, nullptr);
+			} else if (line[j] == '|') {
+				o = make_shared<Vertical_Wall>(j,i);
+				//o->setAttributes(i, j, VERTICAL_WALL, false, nullptr);
+			} else if (line[j] == '+') {
+				o = make_shared<Door>(j,i);
+				//o->setAttributes(i, j, DOOR, false, nullptr);
+			} else if (line[j] == '#') {
+				o = make_shared<Passage>(j,i);
+				//o->setAttributes(i, j, PASSAGE, false, nullptr);
+			} else {
+				o = make_shared<Space>(j,i);
+			   // o->setAttributes(i, j, SPACE, false, nullptr);
 			}
-			board.emplace_back(arr);
+			//add more conditions to achieve read another type of floor (all set).
+			
+			//attach the neighbours.
+//            if (i - 1 >= 0) {
+//                board[i][j]->attach(board[i-1][j]);
+//                if (j -1 >= 0){
+//                    board[i][j]->attach(board[i-1][j-1]);
+//                }
+//                if (j +1 < width){
+//                    board[i][j]->attach(board[i-1][j+1]);
+//                }
+//            }
+//            if (i + 1 < height){
+//                board[i][j]->attach(board[i+1][j]);
+//                if (j - 1 >= 0){
+//                    board[i][j]->attach(board[i+1][j-1]);
+//                }
+//                if (j + 1 < width) {
+//                    board[i][j]->attach(board[i+1][j+1]);
+//                }
+//            }
+//            if (j - 1 >= 0) {
+//                board[i][j]->attach(board[i][j-1]);
+//            }
+//            if (j + 1 < width) {
+//                board[i][j]->attach(board[i][j+1]);
+//            }
+			o->attach(theDisplay.w);
+			arr.emplace_back(o);
 		}
-		//cout << "befor chamber" << endl;
-		//detect chamber;
-		for (int t = 0; t < 5; t++) {
-			//cout << " here " << t<< endl;
-			int row,col;
-			do {
-				row = getRandom(0, height - 1);
-				col = getRandom(0, width - 1);
-			//	cout << row <<" " << col << endl;
-	//			cout << board[row][col]->getPos().posx << " " << row <<" " << col << endl;
-			} while (board[row][col]->getPos().style != TILE || (board[row][col]->getPos().isRead)); //check if it is read
-			Chamber cham;
-			setChamber(row, col, cham.c);
-		//	cout << cham.c.size() << endl;
-			for (auto &n: cham.c) {
-				(*n)->getPos().chamber_num = t+1;
-			}
-			theChamber.emplace_back(cham);
-		}
-		if (!thePlayer) {
-			selectPlayer(isWasd);
-		}
-		spawnAction();
-	//cout << "out init" << endl;
+		board.emplace_back(arr);
 	}
+	//cout << "befor chamber" << endl;
+	//detect chamber;
+	for (int t = 0; t < 5; t++) {
+		//cout << " here " << t<< endl;
+		int row,col;
+		do {
+			row = getRandom(0, height - 1);
+			col = getRandom(0, width - 1);
+		//	cout << row <<" " << col << endl;
+//			cout << board[row][col]->getPos().posx << " " << row <<" " << col << endl;
+		} while (board[row][col]->getPos().style != TILE || (board[row][col]->getPos().isRead)); //check if it is read
+		Chamber cham;
+		setChamber(row, col, cham.c);
+	//	cout << cham.c.size() << endl;
+		for (auto &n: cham.c) {
+			(*n)->getPos().chamber_num = t+1;
+		}
+		theChamber.emplace_back(cham);
+	}
+	if (!thePlayer) {
+		selectPlayer(isWasd);
+	}
+	spawnAction();
+//cout << "out init" << endl;
+}
 
 void D_Floor::spawnAction(){
 	setPlayer();
 	setStair();
 	for (int i = 0; i < 10; i++){
 		setPotion();
+	}
+	for (int t = 0; t < 10; t++){
 		setTreasure();
 	}
 	for (int j = 0; j < 20; j++){

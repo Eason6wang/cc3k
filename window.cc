@@ -31,6 +31,7 @@ void Window::notify(Subject &whoNotify){
         case GOBLIN:
 			p.posx = whoNotify.getPos().posx;
 			p.posy = whoNotify.getPos().posy;
+		//	theDisplay[r][c] = '@';
 			break;
 		case HUMAN:
 			theDisplay[r][c] = 'H';
@@ -121,5 +122,17 @@ string Window::outPut(){
 	}
 	string rs = ss.str();
 	return rs;
+}
+
+vector<vector<char>> Window::colorOutPut(){
+	vector<vector<char>> rv = theDisplay;//(theDisplay.size(), vector<char> (theDisplay[0].size()));
+	for(int i = 0; i < theDisplay.size(); i++){
+		for (int j = 0; j < theDisplay[0].size(); j++){
+			if (i == p.posy && j == p.posx){
+				rv[i][j] = '@';
+			} else rv[i][j] == theDisplay[i][j];
+		}
+	}
+	return rv;
 }
 

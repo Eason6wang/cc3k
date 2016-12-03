@@ -13,7 +13,7 @@ class Object;
 class Window: public Observer {
 	std::vector<std::vector<char>> theDisplay;
 	const int width,height;
-	Pos p = Pos{-1, -1, SHADE};
+	Pos p;// = Pos{-1, -1, SHADE};
 
 	public:
     Window(std::string file);
@@ -27,6 +27,7 @@ class Window: public Observer {
     //SubscriptionType subType() const override;
 
 	std::string outPut();
+	std::vector<std::vector<char>> colorOutPut();
 	friend std::ostream &operator<<(std::ostream &out, const Window &w);
 };
 

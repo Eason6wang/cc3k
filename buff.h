@@ -2,12 +2,14 @@
 #define _BUFF_H_
 #include <cstdlib>
 #include <iostream>
+#include <vector>
 #include <memory>
 #include "type.h"
 #include "style.h"
+#include <string>
+#include "treasure.h"
 class VisitExcept;
 class Potion;
-#include "treasure.h"
 class VisitExcept;
 
 
@@ -15,6 +17,12 @@ class Object;
 class Player;
 class Enemy;
 class Item;
+
+std::vector<std::pair<int, int>> findChar(std::vector<std::vector<char>> s, char c);
+
+void colorLayer(std::vector<std::pair<int, int>> thechar, char c);
+
+//void colorWindow(std::string s);
 
 void clearScreen();
 
