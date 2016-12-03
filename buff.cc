@@ -143,12 +143,17 @@ bool be_attack(Item &item, Player &player){
 
 
 bool be_attack(Player &player, Enemy &enemy){
-    int extraDamage = 1;
-    if(player.getPos().style == GOBLIN && enemy.getPos().style == ORC)//orc case
+    string newAction;
+    float extraDamage = 1;
+    if(player.getPos().style == GOBLIN && enemy.getPos().style == ORC){
+	//orc case
 	 extraDamage = 1.5;
+   	 newAction = "Orc does 50% more damage to PC. ";
+    	 player.getPlayerInfo().action += newAction;
+    }
     int damage = extraDamage * getDamage(enemy.getInfo().atk, player.getInfo().def);
     player.getInfo().hp -= damage;
-    std::string newAction = getString(enemy.getPos().style) + 
+    newAction = getString(enemy.getPos().style) + 
            " deals (" + std::to_string(damage) + ") damage to PC. ";
     player.getPlayerInfo().action += newAction;
     if(player.getInfo().hp <= 0){
@@ -161,32 +166,59 @@ bool be_attack(Player &player, Enemy &enemy){
 bool be_attack(Enemy &enemy, Player &player){  
     int &enemyHp = enemy.getInfo().hp;
     int &playerHp = player.getInfo().hp;
-    string enemyType =  getString(enemy.getPos().style); 
-    string playerType = getString(player.getPos().style);
-    if(enemyType == "dwarf" && playerType == "vampire") playerHp -= 10; //dwarf case
-	  // vampire here has already gained 5 hp
+    Style enemyType =  enemy.getPos().style; 
+    Style playerType = player.getPos().style;
+    string newAction;
+    if(enemyType == DWARF && playerType == VAMPIRE){
+	 playerHp -= 5;
+ 	 newAction = "PC drops 5 HP because the Enemy is Dwarf. ";
+    	player.getPlayerInfo().action += newAction;
+	  //dwarf case
+    } else if(playerType == VAMPIRE){
+	 playerHp += 5;
+	  // vampire case 
+	  newAction = "PC gains 5 HP when attacking enemy. " ;
+   	 player.getPlayerInfo().action += newAction;
+
+    }
     int extraDamage = 1;
-    if(enemyType == "elf" && playerType != "drow") extraDamage = 2;//elf case
+    if(enemyType == ELF && playerType != DROW){
+	 extraDamage = 2;//elf case
+	  newAction = "The Enemy(E) gets two attacks. " ;
+   	 player.getPlayerInfo().action += newAction;
+    }
     int damage = extraDamage * getDamage(player.getInfo().atk, enemy.getInfo().def);
     int randomnum =  getRandom(1, 2);
-    if(enemyType == "halfling"){ //halfling case
+    if(enemyType == HALFLING){ //halfling case
        if(randomnum == 1){
           enemyHp -= damage;
+       }else{
+	 newAction = "PC unsuccessfully attack L(" + to_string(enemyHp) +  "). " ;
+   	 player.getPlayerInfo().action += newAction;
+	 return true;
        }
     } else {
 	enemyHp -= damage;
     }
-    std::string newAction;
     if(enemyHp > 0){
        newAction = "PC deals (" + std::to_string(damage) + ") damage to "
-             + enemyType + "(" + std::to_string(enemyHp)  + "). ";
+             + getString(enemyType) + "(" + std::to_string(enemyHp)  + "). ";
     } else {
-	newAction = "PC kills " + enemyType  + ". ";
+	newAction = "PC kills " + getString(enemyType)  + ". ";
     }
     player.getPlayerInfo().action += newAction;
     if(enemyHp <= 0){
-	if(playerType == "goblin") player.getPlayerInfo().gold += 5;//goblin case
-	if(enemyType == "human") throw VisitExcept{"normal_hoard", 2};// human case
+	if(playerType == GOBLIN){
+	     player.getPlayerInfo().gold += 5;//goblin case
+	     newAction = "PC gains 5 gold from the slain enemy. " ;
+   	     player.getPlayerInfo().action += newAction;
+	}
+	if(enemyType == HUMAN){
+	     newAction = "Slain H drops 2 piles of gold. " ;
+   	     player.getPlayerInfo().action += newAction;
+	     throw VisitExcept{"normal_hoard", 2};// human case
+
+	}
 	 randomnum == 1 ?  throw VisitExcept{"small_hoard",1}:    // normal case
 	              throw VisitExcept{"normal_hoard",1};
     } else {
@@ -196,10 +228,11 @@ bool be_attack(Enemy &enemy, Player &player){
 
 //for potion
 
-bool be_pick_up(Potion &potion,Player &player, Style style) {
+bool be_pick_up(Potion &potion,Player &player) {
     int changeHp = 0;
     int changeAtk = 0;
     int changeDef = 0;
+    Style style = potion.getPos().style;
     if(style == RESTORE_HEALTH){
 	changeHp = 10;
     } else if (style == BOOST_ATK){
@@ -213,7 +246,17 @@ bool be_pick_up(Potion &potion,Player &player, Style style) {
     } else if(style == WOUND_DEF){
 	changeDef = -5;
     }
-    int &playerhp = player.getInfo().hp;
+    // drow case
+    string newAction;
+    if(player.getPos().style == DROW){
+	changeHp *= 1.5;
+	changeAtk *= 1.5;
+	changeDef *= 1.5;
+	newAction = "The Potion effect is magnified by 1.5 in Drow. ";
+        player.getPlayerInfo().action += newAction;
+
+    }
+    int playerhp = player.getInfo().hp;
     int playeratk = player.getInfo().atk;
     int playerdef = player.getInfo().def;
     shared_ptr<Potion> &playerPotion = player.getPlayerInfo().potion;
@@ -223,34 +266,54 @@ bool be_pick_up(Potion &potion,Player &player, Style style) {
     newpotion->modify().def = playerdef + changeDef;
     newpotion->getPotion() = playerPotion;
     playerPotion = newpotion;
-    string newAction = "PC uses " + getString(potion.getPos().style) + ". ";     
+    newAction = "PC uses " + getString(potion.getPos().style) + ". ";     
     player.getPlayerInfo().action += newAction;
     throw VisitExcept {"pickup_potion", 0};
 }
 
-bool be_pick_up(Enemy &enemy, Player &player, Style style){
-    string newAction = "PC cannot pick up or go over an enemy. ";     
+bool be_pick_up(Enemy &enemy, Player &player){
+    string newAction = "PC cannot pick up an Enemy. ";     
     player.getPlayerInfo().action += newAction;
     return false; 
 }
 
-bool be_pick_up(Player &player, Enemy &enemy, Style style){ 
+bool be_pick_up(Player &player, Enemy &enemy){ 
+    return false; 
+}
+
+bool be_pick_up(Treasure &treasure, Player &player){
+    string newAction = "It is too far for PC to fetch. ";     
+    player.getPlayerInfo().action += newAction;
     return false; 
 }
 
 
-
 // for gold
 
-bool be_pick_up(Treasure &treasure,Player &player, Style style) {
+bool be_go_over(Treasure &treasure,Player &player) {
     	string newAction = "PC picks up a " + getString(treasure.getPos().style) + ". ";     
     	player.getPlayerInfo().action += newAction;
   	player.getPlayerInfo().gold += treasure.getGold();
 	throw VisitExcept{"pickup_gold", 0};
 }
 
+bool be_go_over(Potion &potion, Player &player){
+    string newAction = "PC cannot go over a Potion. ";     
+    player.getPlayerInfo().action += newAction;
+    return false; 
+}
 
-//bool be_pick_up()
+bool be_go_over(Enemy &enemy, Player &player){
+    string newAction = "PC cannot go over an Enemy. ";     
+    player.getPlayerInfo().action += newAction;
+    return false; 
+}
+
+bool be_go_over(Player &player, Enemy &enemy){ 
+    return false; 
+}
+
+
 
 
 
