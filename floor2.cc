@@ -488,7 +488,7 @@ void D_Floor::setPlayer(){ // generate player.
 				int c = theEnemy[i]->getPos().posx;
 				int player_r = thePlayer->getPos().posy;
 				int player_c = thePlayer->getPos().posx;
-				bool playeraround;
+				bool playeraround = false;
 				if (abs(player_r - r) <= 1 && abs(player_c - c) <= 1){
 					try	{
 					//cout << "player is attacked" << endl;
@@ -503,10 +503,10 @@ void D_Floor::setPlayer(){ // generate player.
 					}
 				}
 				if (!playeraround){
-					vector<bool> possibility;
-					for (int j = 0; j < 8; j++){
-						possibility.emplace_back(false);
-					}
+					vector<bool> possibility(8, false);
+				//	for (int j = 0; j < 8; j++){
+				//		possibility.emplace_back(false);
+				//	}
 					if (enemyMove(i, possibility)){
 				
 					} else {
