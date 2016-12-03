@@ -275,6 +275,7 @@ bool be_attack(Enemy &enemy, Player &player){
 	if(enemyType == DRAGON){
 	   //dragon case
 	   enemy.notifyObservers();
+	   return true;
 	}
 	 randomnum == 1 ?  throw VisitExcept{"small_hoard",1}:    // normal case
 	              throw VisitExcept{"normal_hoard",1};
