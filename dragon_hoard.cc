@@ -17,35 +17,40 @@ bool Dragon_Hoard::be_visit (Shade &player, Type type) {
 	if(type != MOVE || free_pick){
 	  return be_visit_by (*this, player, type);
 	} else {
-	    return false;
+	    player.getPlayerInfo().action = "PC cannot pick up DH when D is alive. ";
+	    return true;
 	}
 }	
 bool Dragon_Hoard::be_visit (Drow &player, Type type) {
 	if(type != MOVE || free_pick){
 	  return be_visit_by (*this, player, type);
 	} else {
-	    return false;
+	    player.getPlayerInfo().action = "PC cannot pick up DH when D is alive. ";
+	    return true;
 	}
 }	
 bool Dragon_Hoard::be_visit (Troll &player, Type type) {
 	if(type != MOVE || free_pick){
 	  return be_visit_by (*this, player, type);
 	} else {
-	    return false;
+	    player.getPlayerInfo().action = "PC cannot pick up DH when D is alive. ";
+	    return true;
 	}
 }	
 bool Dragon_Hoard::be_visit (Vampire&player, Type type) {
 	if(type != MOVE || free_pick){
 	  return be_visit_by (*this, player, type);
 	} else {
-	    return false;
+	    player.getPlayerInfo().action = "PC cannot pick up DH when D is alive. ";
+	    return true;
 	}
 }	
 bool Dragon_Hoard::be_visit (Goblin &player, Type type) {
 	if(type != MOVE || free_pick){
 	  return be_visit_by (*this, player, type);
 	} else {
-	    return false;
+	    player.getPlayerInfo().action = "PC cannot pick up DH when D is alive. ";
+	    return true;
 	}
 }	
 
