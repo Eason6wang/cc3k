@@ -41,19 +41,8 @@ class Player: public Character{
 	virtual bool be_visit(Halfling& , Type t) override;
 	virtual bool be_visit(Elf& , Type t) override;
 	virtual bool be_visit(Orc& , Type t) override;
-/*	virtual bool be_visit(Dragon& , Type t) override;
+//	virtual bool be_visit(Dragon& , Type t) override;
 	virtual bool be_visit(Merchant& , Type t) override;
-	virtual bool be_visit(Small_Hoard& , Type t) override;
-	virtual bool be_visit(Normal_Hoard& , Type t) override;
-	virtual bool be_visit(Merchant_Hoard& , Type t) override;
-	virtual bool be_visit(Dragon_Hoard& , Type t) override;
-	virtual bool be_visit(Restore_Health& , Type t) override;
-	virtual bool be_visit(Boost_Atk& , Type t) override;
-	virtual bool be_visit(Boost_Def& , Type t) override;
-	virtual bool be_visit(Poison_Health& , Type t) override;
-	virtual bool be_visit(Wound_Atk& , Type t) override;
-	virtual bool be_visit(Wound_Def& , Type t) override;
-*/
 };
 
 #endif

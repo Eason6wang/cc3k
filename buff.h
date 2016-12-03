@@ -8,11 +8,12 @@
 #include "style.h"
 #include <string>
 #include "treasure.h"
+#include "merchant.h"
 class VisitExcept;
 class Potion;
+#include "treasure.h"
 class VisitExcept;
-
-
+class Merchant;
 class Object;
 class Player;
 class Enemy;
@@ -61,9 +62,12 @@ bool be_attack(Enemy &enemy, Player &player);
 bool be_attack(Item &item, Player &player);
 bool be_pick_up(Treasure &treasure, Player &player);
 bool be_pick_up(Potion &potion, Player &player);
+
 bool be_pick_up(Enemy &enemy, Player &player);
 bool be_pick_up(Player &player, Enemy &enemy);
 bool be_go_over(Potion &potion, Player &player);
+
+
 bool be_go_over(Enemy &enemy, Player &player);
 bool be_go_over(Player &player, Enemy &enemy);
 bool be_go_over(Treasure &treasure, Player &player);
