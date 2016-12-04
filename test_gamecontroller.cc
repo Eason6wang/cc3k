@@ -37,7 +37,7 @@ void T_GameController::play(string file){
 			} else if (cmd == "f") {
 				t_floor.pause();
 			} else if (cmd == "r") {
-				t_floor.clearFloor(false);
+				t_floor.clearFloor(true);
 				t_floor.init(file); //remember to generate enemies again
 			} else if (cmd == "q") {
 				throw false;
