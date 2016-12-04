@@ -225,17 +225,36 @@ bool be_attack(Item &item, Player &player){
 
 
 bool be_attack(Player &player, Enemy &enemy){
+    int &enemyHp = enemy.getInfo().hp;
+    int &playerHp = player.getInfo().hp;
+    Style enemyType =  enemy.getPos().style; 
+    Style playerType = player.getPos().style;
     string newAction;
     float extraDamage = 1;
-    if(player.getPos().style == GOBLIN && enemy.getPos().style == ORC){
+    if(playerType == GOBLIN && enemyType == ORC){
 	//orc case
 	 extraDamage = 1.5;
-   	 newAction = "Orc does 50% more damage to PC. ";
-    	 player.getPlayerInfo().action += newAction;
+   	 newAction += "Orc does 50% more damage to PC. ";
+    }
+    if(enemyType == WORGEN){//worgen case
+	int rand = getRandom(1, 2);
+	if(rand == 1){
+	    extraDamage = 1.3;
+	}
+    }
+    if(enemyType == BLOODELF){//bloodelf case
+	int rand = getRandom(1, 5);
+	if(rand == 1){
+	    playerHp -= 20;
+	    newAction += "PC is burned(20 damage) by B. ";
+	}
     }
     int damage = extraDamage * getDamage(enemy.getInfo().atk, player.getInfo().def);
-    player.getInfo().hp -= damage;
-    newAction = getString(enemy.getPos().style) + 
+    playerHp -= damage;
+    if(enemyType == WORGEN){//worgen case
+	newAction += "30%/ crit from R. ";
+    }
+    newAction += getString(enemy.getPos().style) + 
            " deals (" + std::to_string(damage) + ") damage to PC. ";
     player.getPlayerInfo().action += newAction;
     if(player.getInfo().hp <= 0){
@@ -253,21 +272,17 @@ bool be_attack(Enemy &enemy, Player &player){
     string newAction;
     if(enemyType == DWARF && playerType == VAMPIRE){
 	 playerHp -= 5;
- 	 newAction = "PC drops 5 HP because the Enemy is Dwarf. ";
-    	player.getPlayerInfo().action += newAction;
+ 	 newAction += "PC drops 5 HP because the Enemy is Dwarf. ";
 	  //dwarf case
     } else if(playerType == VAMPIRE){
 	 playerHp += 5;
 	  // vampire case 
-	  newAction = "PC gains 5 HP when attacking enemy. " ;
-   	 player.getPlayerInfo().action += newAction;
-
+	  newAction += "PC gains 5 HP when attacking enemy. " ;
     }
     int extraDamage = 1;
     if(enemyType == ELF && playerType != DROW){
 	 extraDamage = 2;//elf case
-	  newAction = "The Enemy(E) gets two attacks. " ;
-   	 player.getPlayerInfo().action += newAction;
+	  newAction += "The Enemy(E) gets two attacks. " ;
     }
     int damage = extraDamage * getDamage(player.getInfo().atk, enemy.getInfo().def);
     int randomnum =  getRandom(1, 2);
@@ -275,29 +290,26 @@ bool be_attack(Enemy &enemy, Player &player){
        if(randomnum == 1){
           enemyHp -= damage;
        }else{
-	 newAction = "PC unsuccessfully attack L(" + to_string(enemyHp) +  "). " ;
-   	 player.getPlayerInfo().action += newAction;
+	 newAction += "PC unsuccessfully attack L(" + to_string(enemyHp) +  "). " ;
 	 return true;
        }
     } else {
 	enemyHp -= damage;
     }
     if(enemyHp > 0){
-       newAction = "PC deals (" + std::to_string(damage) + ") damage to "
+       newAction += "PC deals (" + std::to_string(damage) + ") damage to "
              + getString(enemyType) + "(" + std::to_string(enemyHp)  + "). ";
     } else {
-	newAction = "PC smashes " + getString(enemyType)  + ". ";
+	newAction += "PC smashes " + getString(enemyType)  + ". ";
     }
     player.getPlayerInfo().action += newAction;
     if(enemyHp <= 0){
 	if(playerType == GOBLIN){
 	     player.getPlayerInfo().gold += 5;//goblin case
-	     newAction = "PC gains 5 gold from the slain enemy. " ;
-   	     player.getPlayerInfo().action += newAction;
+   	     player.getPlayerInfo().action += "PC gains 5 gold from the slain enemy. " ;
 	}
 	if(enemyType == HUMAN){
-	     newAction = "Slain H drops 2 piles of gold. " ;
-   	     player.getPlayerInfo().action += newAction;
+   	     player.getPlayerInfo().action += "Slain H drops 2 piles of gold. " ;
 	     throw VisitExcept{"normal_hoard", 2};// human case
 	}
 	if(enemyType == MERCHANT){

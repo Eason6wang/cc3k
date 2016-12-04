@@ -2,7 +2,6 @@
 #define __VAMPIRE_H_
 #include "player.h"
 #include "type.h"
-
 class Vampire: public Player{
   public:
   	Vampire(int row, int col); 

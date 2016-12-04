@@ -31,7 +31,15 @@ const std::vector<std::string> name {
     "Door",
     "Tile",
     "Passage",
-    "Stair"
+    "Stair",
+    //new player
+    "NightElf",
+    
+
+    //new enemy
+    "R",
+    "B",
+    "F"
 };
 
 std::string getString (Style style) {
