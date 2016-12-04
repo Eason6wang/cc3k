@@ -34,16 +34,16 @@ class D_Floor{
 //	int getRandom(int min, int max);
 	public:	
 	D_Floor(Display& display);
-	void floorVisit(std::string s, Type type, bool isWasd);
+	void floorVisit(std::string s, Type type);
 	void clearFloor(bool cleanPlayer);
 	//~D_Floor();
 	
 	///void floor_move();
 	///void floor_attack();
-    void init(bool isWasd,std::string file = "plainfloor.txt"); // set up the board according to the given floor in the file.
+    void init(std::string file = "plainfloor.txt"); // set up the board according to the given floor in the file.
     void setChamber(int r, int c, std::vector<std::shared_ptr<Object>*>& arr);
 	void spawnAction();
-	void selectPlayer(bool isWasd);
+	void selectPlayer();
 	void setPlayer(); // generate player.
 	void setStair(); //generate stairway.
 	void setPotion(); //generate potion

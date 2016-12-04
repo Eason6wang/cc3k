@@ -74,7 +74,7 @@ void N_Floor::clearFloor(bool cleanPlayer){
 N_Floor::N_Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{false} {}
 		
 
-	void N_Floor::init(bool isWasd, string file){ // set up the board according to the given floor in the file.
+	void N_Floor::init(string file){ // set up the board according to the given floor in the file.
 		//cout << "enter init" << endl;
 		theDisplay.w = make_shared<Window>(file);
 	//	p = make_shared<Panel>(nullptr);
@@ -153,7 +153,7 @@ N_Floor::N_Floor(Display& display): theDisplay{display},height{25}, width{79}, s
 			theChamber.emplace_back(cham);
 		}
 		if (!thePlayer) {
-			selectPlayer(isWasd);
+			selectPlayer();
 		}
 		spawnAction();
 	//cout << "out init" << endl;
@@ -172,20 +172,15 @@ void N_Floor::spawnAction(){
 }
 
 		
-void N_Floor::selectPlayer(bool isWasd){
+void N_Floor::selectPlayer(){
 	int n = getRandom(0,4);
 	int pos = getRandom(0,theChamber[n].c.size() - 1);
 	Pos position = (*theChamber[n].c[pos])->getPos(); 
 	while (true){
 	 //put this part in to display later.
 		char player_select;
-		if (isWasd) {
-			printw("Choose your player: s(Shade), d(Drow), v(Vampire),  g(Goblin), t(Troll) ");
-			player_select = getch();
-		} else {
 			cout << "Choose your player: (s, d, v, g, t)" << endl;
 			cin >> player_select;
-		}
 		if (player_select == 's'){
 			thePlayer = make_shared<Shade>(position.posx, position.posy); //the hp atk .. is assigned in ctor.
 		} else if (player_select == 'd') {
@@ -417,7 +412,7 @@ void N_Floor::setPlayer(){ // generate player.
 		theChamber[n].c.erase(theChamber[n].c.begin() + pos);
 	}
 
-	void N_Floor::floorVisit(string s, Type type, bool isWasd){
+	void N_Floor::floorVisit(string s, Type type){
 		//cout << "enter floorvisit" << endl;
 		int r = thePlayer->getPos().posy;
 	//	cout << "here!!" << endl;
@@ -460,7 +455,7 @@ void N_Floor::setPlayer(){ // generate player.
 			isSuccess = true;
 			if (exc.state == "stair"){
 				clearFloor(false);
-				init(isWasd);
+				init();
 				// reduce the gabage
 			} else if (exc.state == "pickup_potion"){
 					board[target_r][target_c] = make_shared<Tile>(target_c,target_r);

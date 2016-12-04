@@ -139,7 +139,7 @@ void D_GameController::play(string file){
 	start_color();
 	shared_ptr<Window> theWindow = make_shared<Window>("dlc_version.txt");
 	mvaddstr(0,0,theWindow->outPut().c_str());//use display.
-	d_floor.init(true,file);
+	d_floor.init(file);
     mvaddstr(0,0,d_floor.outPut().c_str());//use display.
 	colorWindow(display.w->colorOutPut());
 	move(31,0);
@@ -153,19 +153,19 @@ void D_GameController::play(string file){
 				switch (direction){
 					case 'w':
 					case 'W':
-						d_floor.floorVisit("no", PICKUP, true);
+						d_floor.floorVisit("no", PICKUP);
 						break;
 					case 's':
 					case 'S':
-						d_floor.floorVisit("so", PICKUP, true);
+						d_floor.floorVisit("so", PICKUP);
 						break;
 					case 'a':
 					case 'A':
-						d_floor.floorVisit("we", PICKUP, true);
+						d_floor.floorVisit("we", PICKUP );
 						break;
 					case 'd':
 					case 'D':
-						d_floor.floorVisit("ea", PICKUP, true);
+						d_floor.floorVisit("ea", PICKUP );
 						break;
 				}
 			} else if (key == 'J' || key == 'j') {
@@ -173,45 +173,45 @@ void D_GameController::play(string file){
 				switch (direction){
 					case 'w':
 					case 'W':
-						d_floor.floorVisit("no", ATTACK, true);
+						d_floor.floorVisit("no", ATTACK );
 						break;
 					case 's':
 					case 'S':
-						d_floor.floorVisit("so", ATTACK, true);
+						d_floor.floorVisit("so", ATTACK );
 						break;
 					case 'a':
 					case 'A':
-						d_floor.floorVisit("we", ATTACK, true);
+						d_floor.floorVisit("we", ATTACK );
 						break;
 					case 'd':
 					case 'D':
-						d_floor.floorVisit("ea", ATTACK, true);
+						d_floor.floorVisit("ea", ATTACK );
 						break;
 				}
 			} else if (key == 'f' || key == 'F') {
 				d_floor.pause();
 			} else if (key == 'r' || key == 'R') {
-				d_floor.clearFloor(true);
-				d_floor.init(true, file); //remember to generate enemies again
+				d_floor.clearFloor(false);
+				d_floor.init(file); //remember to generate enemies again
 			} else if (key == 'q' || key == 'Q') {
 				throw false;
 			} else {
 				switch (key){
 					case 'w':
 					case 'W':
-						d_floor.floorVisit("no", MOVE, true);
+						d_floor.floorVisit("no", MOVE );
 						break;
 					case 's':
 					case 'S':
-						d_floor.floorVisit("so", MOVE, true);
+						d_floor.floorVisit("so", MOVE );
 						break;
 					case 'a':
 					case 'A':
-						d_floor.floorVisit("we", MOVE, true);
+						d_floor.floorVisit("we", MOVE );
 						break;
 					case 'd':
 					case 'D':
-						d_floor.floorVisit("ea", MOVE, true);
+						d_floor.floorVisit("ea", MOVE );
 						break;
 				}
 			}
