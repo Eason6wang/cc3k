@@ -9,6 +9,7 @@ void Game::selectVersion(string file){
 	char version;
 		std::cout << "choose n/d to use normal/dlc (this massage will be deleted later)" << std::endl;
 	cin >> version;
+//	ifstream f {file};
 	if (version == 'n'){
 		n_game.play(file);
 	} else {

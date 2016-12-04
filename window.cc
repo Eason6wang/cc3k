@@ -6,7 +6,7 @@ using namespace std;
 
 Window::Window(string file): width{79}, height{25} {
 	string s;
-    ifstream f {file};
+	ifstream f {file};
 	for (int i = 0; i < height; i++) {
 		getline(f, s);
 		vector<char> arr;

@@ -4,6 +4,7 @@
 #include <sstream>
 #include <vector>
 #include <string>
+#include <fstream>
 #include "observer.h"
 #include "subject.h"
 #include "subscriptions.h"
@@ -13,7 +14,7 @@ class Object;
 class Window: public Observer {
 	std::vector<std::vector<char>> theDisplay;
 	const int width,height;
-	Pos p;// = Pos{-1, -1, SHADE};
+	Pos p;
 
 	public:
     Window(std::string file);
