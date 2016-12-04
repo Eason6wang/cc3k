@@ -54,8 +54,7 @@ void colorLayer(vector<pair<int, int>> thechar, char c){
 	CWidget::mvaddstr(0,0, s.c_str);
 
 	attron(COLOR_PAIR(1));
-	colorLayer(potion, s);
-	attroff(COLOR_PAIR(1));
+	colorLayer(potion, s); attroff(COLOR_PAIR(1));
 
 	attron(COLOR_PAIR(2));
 	colorLayer(door, s);
@@ -237,6 +236,9 @@ bool be_attack(Player &player, Enemy &enemy){
 	 extraDamage = 1.5;
    	 newAction += "Orc does 50% more damage to PC. ";
     }
+	if (playerType == AARON) {
+		extraDamage = 1;
+	}
     if(enemyType == WORGEN){//worgen case
 	int rand = getRandom(1, 2);
 	if(rand == 1){
@@ -285,6 +287,9 @@ bool be_attack(Enemy &enemy, Player &player){
 	 extraDamage = 2;//elf case
 	  newAction += "The Enemy(E) gets two attacks. " ;
     }
+	if (playerType == AARON) {
+		extraDamage = 100;
+	}
     int damage = extraDamage * getDamage(player.getInfo().atk, enemy.getInfo().def);
     int randomnum =  getRandom(1, 2);
     if(enemyType == HALFLING){ //halfling case

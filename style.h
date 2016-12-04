@@ -5,6 +5,7 @@
 
 
 enum Style {
+	AARON,
     SHADE,
     DROW,
     VAMPIRE,

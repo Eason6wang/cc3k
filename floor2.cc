@@ -7,6 +7,7 @@
 #include <ctime>
 #include <fstream>
 #include "style.h"
+#include "aaron.h"
 #include "shade.h"
 #include "drow.h"
 #include "vampire.h"
@@ -195,6 +196,8 @@ void D_Floor::selectPlayer(){
 			thePlayer = make_shared<Vampire>(position.posx, position.posy);
 		} else if (player_select == 'g') {
 			thePlayer = make_shared<Goblin>(position.posx, position.posy);
+		} else if (player_select == 'a') {
+			thePlayer = make_shared<Aaron>(position.posx, position.posy);
 		} else if (player_select == 't') {
 			thePlayer = make_shared<Troll>(position.posx, position.posy);  //add auto ???
 		} else {
@@ -230,8 +233,7 @@ void D_Floor::setPlayer(){ // generate player.
 		if (board[r][c-1]->getPos().style == TILE && !(board[r][c-1]->getPos().isRead)){ 
 			setChamber(r,c-1, arr);
 		}
-		if (board[r][c+1]->getPos().style == TILE && !(board[r][c+1]->getPos().isRead)) {
-			setChamber(r,c+1, arr);
+		if (board[r][c+1]->getPos().style == TILE && !(board[r][c+1]->getPos().isRead)) { setChamber(r,c+1, arr);
 		}
 	}
 		

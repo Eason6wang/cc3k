@@ -14,6 +14,7 @@ class Elf;
 class Orc;
 class Dragon;
 class Merchant;
+class Aaron;
 
 
 class Stair final:public Cell {
@@ -21,6 +22,7 @@ class Stair final:public Cell {
     Stair (int posx, int posy);
         bool be_visit (Shade &player, Type type) override;
 	bool be_visit (Drow &player, Type type) override;
+	bool be_visit (Aaron&player, Type type) override;
 	bool be_visit (Vampire &player, Type type) override;
 	bool be_visit (Troll &player, Type type) override;
 	bool be_visit (Goblin &player, Type type) override;

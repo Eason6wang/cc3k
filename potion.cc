@@ -12,6 +12,7 @@
 #include "buff.h"
 #include "style.h"
 #include "type.h"
+#include "aaron.h"
 
 using namespace std;
 
@@ -30,6 +31,9 @@ shared_ptr<Potion> &Potion::getPotion(){
     return potion;
 }
 
+bool Potion::be_visit (Aaron&player, Type type) {
+	return be_visit_by(*this, player, type);
+}	
 bool Potion::be_visit (Shade &player, Type type) {
 /*		if (type == PICKUP) {
 			player.getPlayerInfo().potion = 
