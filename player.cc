@@ -32,6 +32,10 @@ void Player::levelUp(){
 }
 
 
+bool Player::isvisible(){
+    return visible;
+}
+
 Info& Player::getInfo () {
     if(!getPlayerInfo().potion){
       return Character::getInfo();

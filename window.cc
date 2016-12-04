@@ -80,6 +80,22 @@ void Window::notify(Subject &whoNotify){
 		case TILE:
 			theDisplay[r][c] = '.';
 			break;
+		case NIGHTELF:
+			theDisplay[r][c] = 'N';
+			break;
+		case BLOODELF:
+			theDisplay[r][c] = 'B';
+			break;
+		case WORGEN:
+			theDisplay[r][c] = 'R';
+			break;
+		case FORSAKEN:
+			theDisplay[r][c] = 'F';
+			break;
+
+
+
+
 	}
 }
 
