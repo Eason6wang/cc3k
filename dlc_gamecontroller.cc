@@ -334,7 +334,7 @@ void D_GameController::play(string file){
 			}
 			clear();
 			mvaddstr(0,0,d_floor.outPut().c_str());//use display.
-			if((numOfTurn / 10) % 2  == 1){
+			if((numOfTurn / 20) % 2  == 1){
 			    rawWindow(display.w->colorOutPut());
 			} else {
 			    colorWindow(display.w->colorOutPut());

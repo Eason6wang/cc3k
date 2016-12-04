@@ -47,6 +47,7 @@
 #include "small_hoard.h"
 #include "normal_hoard.h"
 #include "dragon_hoard.h"
+#include "merchant_hoard.h"
 
 #include "buff.h"
 #include "display.h"
@@ -164,7 +165,9 @@ void N_Floor::spawnAction(){
 	setStair();
 	for (int i = 0; i < 10; i++){
 		setPotion();
-		setTreasure();
+	}
+	for (int t = 0; t < 10; t++){
+		setTreasure();//if dragon hoard is surround with stationary.
 	}
 	for (int j = 0; j < 20; j++){
 		setEnemy();
@@ -179,7 +182,7 @@ void N_Floor::selectPlayer(){
 	while (true){
 	 //put this part in to display later.
 		char player_select;
-			cout << "Choose your player: (s, d, v, g, t)" << endl;
+			cout << "Choose your player: s(Shade), d(Drow), v(Vampire), g(Goblin), t(Troll)" << endl;
 			cin >> player_select;
 		if (player_select == 's'){
 			thePlayer = make_shared<Shade>(position.posx, position.posy); //the hp atk .. is assigned in ctor.
@@ -322,13 +325,14 @@ void N_Floor::setPlayer(){ // generate player.
 					theDisplay.w->notify(*board[randr][randc]);
 
 					o = make_shared<Dragon_Hoard>(position.posx, position.posy); //I expect the ctor of DH spawn a dragon here!!!!
+					auto anotherDragon = make_shared<Dragon>(position.posx, position.posy); //I expect the ctor of DH spawn a dragon here!!!!
+					theEnemy.emplace_back(anotherDragon);
 					break;
 			}
 			*(theChamber[n].c[pos]) = o;
 			theDisplay.w->notify(*(*theChamber[n].c[pos]));
 			theChamber[n].c.erase(theChamber[n].c.begin() + pos);
 	//		break;
-	//	}
 	}
 
 /*	void N_Floor::setTreasure(){ //generate gold.
@@ -471,7 +475,9 @@ void N_Floor::setPlayer(){ // generate player.
 			     theEnemy.erase(deadEnemy);
 				if (exc.state == "small_hoard") {
 					board[target_r][target_c] = make_shared<Small_Hoard>(target_c, target_r);
-				} else if (exc.state == "normal_hoard"){
+				} else if (exc.state == "merchant_hoard"){
+					board[target_r][target_c] = make_shared<Merchant_Hoard>(target_c, target_r);	
+				}else if (exc.state == "normal_hoard"){
 					while (exc.num > 1) {
 					board[target_r][target_c] = make_shared<Normal_Hoard>(target_c, target_r);
 					int randr, randc;
@@ -518,21 +524,27 @@ void N_Floor::setPlayer(){ // generate player.
 
 	//enemy random move.
 		sort(theEnemy.begin(), theEnemy.end(), compare);
-//	for (auto o: theEnemy){
-	//   	cout << getString(o->getPos().style) << endl;
-   //	}
-//	cout << "enemy random move start" << endl;
 		if (!stop) {
-			for (int i = 0; i < theEnemy.size(); i++) {
+			bool attacked = false;
+			for (int i = 0; i < theEnemy.size(); i++){
 				int r = theEnemy[i]->getPos().posy;
 				int c = theEnemy[i]->getPos().posx;
 				int player_r = thePlayer->getPos().posy;
 				int player_c = thePlayer->getPos().posx;
 				bool playeraround = false;
 				if (abs(player_r - r) <= 1 && abs(player_c - c) <= 1){
+					playeraround = true;
 					try	{
 					//cout << "player is attacked" << endl;
-						if (theEnemy[i]->visit(*thePlayer, ATTACK)) playeraround = true;
+						if (theEnemy[i]->getPos().style == DRAGON) {
+							if (!attacked){
+								theEnemy[i]->visit(*thePlayer, ATTACK);
+								attacked = true;
+							}
+								
+						} else {
+							theEnemy[i]->visit(*thePlayer, ATTACK);
+						}
 					}
 					catch(VisitExcept & exc){
 						if (exc.state == "deadplayer"){
@@ -543,11 +555,9 @@ void N_Floor::setPlayer(){ // generate player.
 					}
 				}
 				if (!playeraround){
-					vector<bool> possibility(8,false);
-					if (enemyMove(i, possibility)){
-				
-					} else {
-						//cout << "enemy move false" << endl;
+					vector<bool> possibility(8, false);
+					if ((theEnemy[i]->getPos().style != DRAGON)){
+						enemyMove(i, possibility);
 					}
 				} else {
 					theDisplay.p->notify(*thePlayer);
@@ -568,7 +578,7 @@ void N_Floor::pause(){
 	if (stop) stop = false;
 	else stop = true;
 }
-//
+
 bool N_Floor::enemyMove(int n, vector<bool>& possibility) {
 	int r = theEnemy[n]->getPos().posy;
 	int c = theEnemy[n]->getPos().posx;
@@ -628,9 +638,7 @@ bool N_Floor::enemyMove(int n, vector<bool>& possibility) {
 		   	possibility[7] && possibility[8])) {
 		enemyMove(n, possibility);
 	} else {
-	//	cout << getString(theEnemy[n]->getPos().style) << endl;
-//		cout << "someone is stucked" << endl;
-		return false;
+		enemyMove(n, possibility);
 	}
     return false; //still need to check here.
 }
@@ -640,14 +648,4 @@ ostream &operator<<(ostream &out, const N_Floor &f){
 	out << *f.theDisplay.p; //this is plane.
 	return out;
 }
-
-string N_Floor::outPut(){
-	string rs = theDisplay.w->outPut() +
-		theDisplay.p->outPut();
-	return rs;
-}
-
-
-
-
 

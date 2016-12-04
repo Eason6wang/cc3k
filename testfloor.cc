@@ -269,7 +269,9 @@ void T_Floor::init(string file){
 			     theEnemy.erase(deadEnemy);
 				if (exc.state == "small_hoard") {
 					board[target_r][target_c] = make_shared<Small_Hoard>(target_c, target_r);
-				} else if (exc.state == "normal_hoard"){
+				} else if (exc.state == "merchant_hoard"){
+					board[target_r][target_c] = make_shared<Merchant_Hoard>(target_c, target_r);	
+				}else if (exc.state == "normal_hoard"){
 					while (exc.num > 1) {
 					board[target_r][target_c] = make_shared<Normal_Hoard>(target_c, target_r);
 					int randr, randc;
@@ -316,16 +318,26 @@ void T_Floor::init(string file){
 
 		sort(theEnemy.begin(), theEnemy.end(), compare);
 		if (!stop) {
-			for (int i = 0; i < theEnemy.size(); i++) {
+			bool attacked = false;
+			for (int i = 0; i < theEnemy.size(); i++){
 				int r = theEnemy[i]->getPos().posy;
 				int c = theEnemy[i]->getPos().posx;
 				int player_r = thePlayer->getPos().posy;
 				int player_c = thePlayer->getPos().posx;
 				bool playeraround = false;
 				if (abs(player_r - r) <= 1 && abs(player_c - c) <= 1){
+					playeraround = true;
 					try	{
 					//cout << "player is attacked" << endl;
-						if (theEnemy[i]->visit(*thePlayer, ATTACK)) playeraround = true;
+						if (theEnemy[i]->getPos().style == DRAGON) {
+							if (!attacked){
+								theEnemy[i]->visit(*thePlayer, ATTACK);
+								attacked = true;
+							}
+								
+						} else {
+							theEnemy[i]->visit(*thePlayer, ATTACK);
+						}
 					}
 					catch(VisitExcept & exc){
 						if (exc.state == "deadplayer"){
@@ -336,17 +348,20 @@ void T_Floor::init(string file){
 					}
 				}
 				if (!playeraround){
-					vector<bool> possibility(8,false);
-					if (enemyMove(i, possibility)){
-				
-					} else {
-						//cout << "enemy move false" << endl;
+					vector<bool> possibility(8, false);
+					if ((theEnemy[i]->getPos().style != DRAGON)){
+						enemyMove(i, possibility);
 					}
 				} else {
 					theDisplay.p->notify(*thePlayer);
 				}
 			}
 		}
+	//	theDisplay.w->notify(*thePlayer);
+	//	theDisplay.w->notify(*board[target_r][target_c]);
+//		theDisplay.p->notify(*thePlayer);
+		//		
+		//theDisplay.display();
 		thePlayer->getPlayerInfo().action = "";
 	}
 
@@ -406,9 +421,7 @@ bool T_Floor::enemyMove(int n, vector<bool>& possibility) {
 		   	possibility[7] && possibility[8])) {
 		enemyMove(n, possibility);
 	} else {
-	//	cout << getString(theEnemy[n]->getPos().style) << endl;
-//		cout << "someone is stucked" << endl;
-		return false;
+		enemyMove(n, possibility);
 	}
     return false; //still need to check here.
 }

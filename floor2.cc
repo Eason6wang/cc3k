@@ -289,8 +289,8 @@ void D_Floor::setPlayer(){ // generate player.
 
 	void D_Floor::setTreasure(){ //generate gold.
 		int p = getRandom(1,8);
+		int n = getRandom(0, 4);
 	//	while (1){
-			int n = getRandom(0, 4);
 			int pos = getRandom(0, theChamber[n].c.size() - 1);
 			Pos position = (*theChamber[n].c[pos])->getPos();
 			shared_ptr<Treasure> o;
@@ -556,7 +556,6 @@ void D_Floor::pause(){
 	if (stop) stop = false;
 	else stop = true;
 }
-//
 
 bool D_Floor::enemyMove(int n, vector<bool>& possibility) {
 	int r = theEnemy[n]->getPos().posy;
@@ -620,6 +619,7 @@ bool D_Floor::enemyMove(int n, vector<bool>& possibility) {
 	} else {
 		enemyMove(n, possibility);
 	}
+    return false; //still need to check here.
 }
 
 ostream &operator<<(ostream &out, const D_Floor &f){
