@@ -6,6 +6,7 @@
 #include "goblin.h"
 #include "buff.h"
 #include "visitexcept.h"
+#include "aaron.h"
 
 Treasure::Treasure (int row, int col, Style style, int gold) 
 		:Item{row, col, style}, gold{gold} {}
@@ -14,6 +15,9 @@ int Treasure::getGold () { return gold; }
 
 
 bool Treasure::be_visit (Shade &player, Type type) {
+	return be_visit_by (*this, player, type);
+}	
+bool Treasure::be_visit (Aaron &player, Type type) {
 	return be_visit_by (*this, player, type);
 }	
 bool Treasure::be_visit (Drow &player, Type type) {

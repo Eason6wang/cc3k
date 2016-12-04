@@ -15,6 +15,9 @@ void Panel::notify(Subject &whoNotify) {
 	def = player->getInfo().def;
 	race = getString (player->getPos().style);
 	action = player->getPlayerInfo().action;
+	if (whoNotify.getPos().style == AARON) {
+		action = "Aaron is the most powerful man and no one could ever beat him";
+	}
 }
 	
 //Panel::~Panel();

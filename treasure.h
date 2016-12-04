@@ -7,6 +7,7 @@
 #include "vampire.h"
 #include "troll.h"
 #include "goblin.h"
+class Aaron;
 
 class Treasure :public Item {
 	int gold;
@@ -14,6 +15,7 @@ class Treasure :public Item {
 	int getGold ();
 	Treasure (int pos, int posy, Style style, int gold);
 	virtual bool be_visit(Shade &player, Type type);
+	virtual bool be_visit(Aaron&player, Type type);
 	virtual bool be_visit(Vampire&player, Type type);
 	virtual bool be_visit(Drow&player, Type type);
 	virtual bool be_visit(Troll&player, Type type);
