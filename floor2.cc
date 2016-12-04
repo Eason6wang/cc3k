@@ -596,30 +596,66 @@ bool D_Floor::enemyMove(int n, vector<bool>& possibility) {
 		possibility[i] = true;
 	}
 	Pos playerpos = thePlayer->getPos();
-    if (distance(playerpos.posy, playerpos.posx, target_r, target_c) < 
-			distance(playerpos.posy, playerpos.posx, r,c) || 
-			(thePlayer->getPos().chamber_num != theEnemy[n]->getPos().chamber_num)){ //only trace when in same chamber  move when distance.
-		if (theEnemy[n]->visit(*board[target_r][target_c], MOVE)){
-			swap(theEnemy[n]->getPos().posx, board[target_r][target_c]->getPos().posx);
-			swap(theEnemy[n]->getPos().posy, board[target_r][target_c]->getPos().posy);
-			swap(board[r][c], board[target_r][target_c]);
-			theDisplay.w->notify(*theEnemy[n]);
-			theDisplay.w->notify(*board[r][c]);
-			return true;
-		} else if (!(possibility[1] &&  possibility[2] &&  possibility[3] &&
-			   	possibility[4] && possibility[5] && possibility[6] &&
-			   	possibility[7] && possibility[8])) {
-			enemyMove(n, possibility);
+	if (theEnemy[n]->getPos().style != MERCHANT){//here we make merchant chase the player only when it's in revange mode.
+		if (distance(playerpos.posy, playerpos.posx, target_r, target_c) < 
+				distance(playerpos.posy, playerpos.posx, r,c) || 
+				(thePlayer->getPos().chamber_num != theEnemy[n]->getPos().chamber_num)){ //only trace when in same chamber  move when distance.
+			if (theEnemy[n]->visit(*board[target_r][target_c], MOVE)){
+				swap(theEnemy[n]->getPos().posx, board[target_r][target_c]->getPos().posx);
+				swap(theEnemy[n]->getPos().posy, board[target_r][target_c]->getPos().posy);
+				swap(board[r][c], board[target_r][target_c]);
+				theDisplay.w->notify(*theEnemy[n]);
+				theDisplay.w->notify(*board[r][c]);
+				return true;
+			} else if (!(possibility[1] &&  possibility[2] &&  possibility[3] &&
+				   	possibility[4] && possibility[5] && possibility[6] &&
+				   	possibility[7] && possibility[8])) {
+				enemyMove(n, possibility);
+			} else { //in this case the enemy is surrounded by other stuff.
+				return false;
+			}
 		} else {
-		//	cout << getString(theEnemy[n]->getPos().style) << endl;
-	//		cout << "someone is stucked" << endl;
-			return false;
+			enemyMove(n, possibility);
 		}
-		 return false; //still need to check here.
 	} else {
-		enemyMove(n, possibility);
+		if (Merchant::revenge){
+			if (distance(playerpos.posy, playerpos.posx, target_r, target_c) < 
+					distance(playerpos.posy, playerpos.posx, r,c) || 
+					(thePlayer->getPos().chamber_num != theEnemy[n]->getPos().chamber_num)){ //only trace when in same chamber  move when distance.
+				if (theEnemy[n]->visit(*board[target_r][target_c], MOVE)){
+					swap(theEnemy[n]->getPos().posx, board[target_r][target_c]->getPos().posx);
+					swap(theEnemy[n]->getPos().posy, board[target_r][target_c]->getPos().posy);
+					swap(board[r][c], board[target_r][target_c]);
+					theDisplay.w->notify(*theEnemy[n]);
+					theDisplay.w->notify(*board[r][c]);
+					return true;
+				} else if (!(possibility[1] &&  possibility[2] &&  possibility[3] &&
+					   	possibility[4] && possibility[5] && possibility[6] &&
+					   	possibility[7] && possibility[8])) {
+					enemyMove(n, possibility);
+				} else { //in this case the enemy is surrounded by other stuff.
+					return false;
+				}
+			} else {
+				enemyMove(n, possibility);
+			}
+		} else {
+		   if 	(theEnemy[n]->visit(*board[target_r][target_c], MOVE)){
+					swap(theEnemy[n]->getPos().posx, board[target_r][target_c]->getPos().posx);
+					swap(theEnemy[n]->getPos().posy, board[target_r][target_c]->getPos().posy);
+					swap(board[r][c], board[target_r][target_c]);
+					theDisplay.w->notify(*theEnemy[n]);
+					theDisplay.w->notify(*board[r][c]);
+					return true;
+				} else if (!(possibility[1] &&  possibility[2] &&  possibility[3] &&
+					   	possibility[4] && possibility[5] && possibility[6] &&
+					   	possibility[7] && possibility[8])) {
+					enemyMove(n, possibility);
+				} else { //in this case the enemy is surrounded by other stuff.
+				return false;
+				}
+		}
 	}
-    return false; //still need to check here.
 }
 
 ostream &operator<<(ostream &out, const D_Floor &f){
