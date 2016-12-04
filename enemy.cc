@@ -5,6 +5,7 @@
 #include "vampire.h"
 #include "troll.h"
 #include "goblin.h"
+#include "aaron.h"
 #include "buff.h"
 #include "visitexcept.h"
 using namespace std;
@@ -38,6 +39,10 @@ bool Enemy::be_visit(Shade& player, Type type){ // default
 
 
 //below has not been changed
+bool Enemy::be_visit(Aaron& player, Type type){ // default
+return  be_visit_by(*this, player, type);
+}
+
 bool Enemy::be_visit(Drow& player, Type type){ // default
 /*	if (type == MOVE) return false;
 	if (type == ATTACK) {

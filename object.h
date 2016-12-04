@@ -20,6 +20,7 @@ public:
 	virtual bool visit_objects(Type type);
 	virtual bool visit(Object &object, Type type);
 	//be_visit
+	virtual bool be_visit(Aaron& aaron, Type type);
 	virtual bool be_visit(Shade& shade, Type type);
 	virtual bool be_visit(Drow& drow, Type type);
 	virtual bool be_visit(Vampire& vampire, Type type);

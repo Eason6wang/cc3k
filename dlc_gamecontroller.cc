@@ -308,10 +308,10 @@ void D_GameController::play(string file){
 			} else if (key == 'f' || key == 'F') {
 				d_floor.pause();
 			} else if (key == 'r' || key == 'R') {
-				d_floor.clearFloor(false);
+				d_floor.clearFloor(true);
 				d_floor.init(file); //remember to generate enemies again
 			} else if (key == 'q' || key == 'Q') {
-				throw false;
+				throw 'q';
 			} else {
 				switch (key){
 					case 'w':
@@ -334,7 +334,7 @@ void D_GameController::play(string file){
 			}
 			clear();
 			mvaddstr(0,0,d_floor.outPut().c_str());//use display.
-			if((numOfTurn / 10) % 2  == 1){
+			if((numOfTurn / 20) % 2  == 1){
 			    rawWindow(display.w->colorOutPut());
 			} else {
 			    colorWindow(display.w->colorOutPut());
@@ -342,12 +342,15 @@ void D_GameController::play(string file){
 			move(31, 0);
 			numOfTurn++;
 		}
-		//	refresh();
-		catch (bool restart) {
-			if (restart) {
+		catch (char message) {
+			if (message == 'd') {
 				shared_ptr<Window> endWindow = make_shared<Window>("endwindow.txt");
 				clear();
 				mvaddstr(0,0,endWindow->outPut().c_str());//use display.
+			} else if (message == 'w'){
+				shared_ptr<Window> winWindow = make_shared<Window>("win.txt");
+				clear();
+				mvaddstr(0,0,winWindow->outPut().c_str());//use display.
 			} else {
 				endwin();
 				throw;

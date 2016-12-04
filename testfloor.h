@@ -1,5 +1,5 @@
-#ifndef _N_FLOOR_H_
-#define _N_FLOOR_H_
+#ifndef _T_FLOOR_H_
+#define _T_FLOOR_H_
 #include <iostream>
 #include <sstream>
 #include <vector>
@@ -8,6 +8,8 @@
 #include "object.h"
 #include "chamber.h"
 #include "player.h"
+#include <fstream>
+#include <memory>
 
 class Window;
 class Panel;
@@ -16,10 +18,9 @@ class Enemy;
 class Display;
 
 class T_Floor{
-int :
 	std::vector<std::vector<std::shared_ptr<Object>>> board; //the board
 	std::shared_ptr<Player> thePlayer;
-	std::vector<std::shared_ptr<Enemy>> theEnemy;
+	std::vector<std::shared_ptr<Object>> theEnemy;
 	Display& theDisplay;
 	int height;
 	int width;
@@ -29,7 +30,8 @@ int :
 	T_Floor(Display& display);
 	void floorVisit(std::string s, Type type);
 	void clearFloor(bool cleanPlayer);
-    void init(ifstream& file); // set up the board according to the given floor in the file.
+	void initHelper(std::string file);
+    void init(std::string file); // set up the board according to the given floor in the file.
     
 	void pause();
 	std::string outPut();

@@ -7,6 +7,7 @@
 #include <ctime>
 #include <fstream>
 #include "style.h"
+#include "aaron.h"
 #include "shade.h"
 #include "drow.h"
 #include "vampire.h"
@@ -63,6 +64,9 @@ void D_Floor::clearFloor(bool cleanPlayer){
 	if (cleanPlayer){
 		thePlayer = nullptr;
 	} else {
+		if (thePlayer->getPlayerInfo().level == 5){
+			throw 'w';
+		}
 		thePlayer->levelUp();
 	}
 	board.clear();
@@ -195,6 +199,8 @@ void D_Floor::selectPlayer(){
 			thePlayer = make_shared<Vampire>(position.posx, position.posy);
 		} else if (player_select == 'g') {
 			thePlayer = make_shared<Goblin>(position.posx, position.posy);
+		} else if (player_select == 'a') {
+			thePlayer = make_shared<Aaron>(position.posx, position.posy);
 		} else if (player_select == 't') {
 			thePlayer = make_shared<Troll>(position.posx, position.posy);  //add auto ???
 		} else {
@@ -230,8 +236,7 @@ void D_Floor::setPlayer(){ // generate player.
 		if (board[r][c-1]->getPos().style == TILE && !(board[r][c-1]->getPos().isRead)){ 
 			setChamber(r,c-1, arr);
 		}
-		if (board[r][c+1]->getPos().style == TILE && !(board[r][c+1]->getPos().isRead)) {
-			setChamber(r,c+1, arr);
+		if (board[r][c+1]->getPos().style == TILE && !(board[r][c+1]->getPos().isRead)) { setChamber(r,c+1, arr);
 		}
 	}
 		
@@ -289,8 +294,8 @@ void D_Floor::setPlayer(){ // generate player.
 
 	void D_Floor::setTreasure(){ //generate gold.
 		int p = getRandom(1,8);
+		int n = getRandom(0, 4);
 	//	while (1){
-			int n = getRandom(0, 4);
 			int pos = getRandom(0, theChamber[n].c.size() - 1);
 			Pos position = (*theChamber[n].c[pos])->getPos();
 			shared_ptr<Treasure> o;
@@ -528,7 +533,7 @@ void D_Floor::setPlayer(){ // generate player.
 					catch(VisitExcept & exc){
 						if (exc.state == "deadplayer"){
 							playeraround = true;
-							throw true;
+							throw 'd';
 						}
 					}
 				}
@@ -556,7 +561,6 @@ void D_Floor::pause(){
 	if (stop) stop = false;
 	else stop = true;
 }
-//
 
 bool D_Floor::enemyMove(int n, vector<bool>& possibility) {
 	int r = theEnemy[n]->getPos().posy;
@@ -597,28 +601,65 @@ bool D_Floor::enemyMove(int n, vector<bool>& possibility) {
 		possibility[i] = true;
 	}
 	Pos playerpos = thePlayer->getPos();
-    if (distance(playerpos.posy, playerpos.posx, target_r, target_c) < 
-			distance(playerpos.posy, playerpos.posx, r,c) || 
-			(thePlayer->getPos().chamber_num != theEnemy[n]->getPos().chamber_num)){ //only trace when in same chamber  move when distance.
-		if (theEnemy[n]->visit(*board[target_r][target_c], MOVE)){
-			swap(theEnemy[n]->getPos().posx, board[target_r][target_c]->getPos().posx);
-			swap(theEnemy[n]->getPos().posy, board[target_r][target_c]->getPos().posy);
-			swap(board[r][c], board[target_r][target_c]);
-			theDisplay.w->notify(*theEnemy[n]);
-			theDisplay.w->notify(*board[r][c]);
-			return true;
-		} else if (!(possibility[1] &&  possibility[2] &&  possibility[3] &&
-			   	possibility[4] && possibility[5] && possibility[6] &&
-			   	possibility[7] && possibility[8])) {
-			enemyMove(n, possibility);
+	if (theEnemy[n]->getPos().style != MERCHANT){//here we make merchant chase the player only when it's in revange mode.
+		if (distance(playerpos.posy, playerpos.posx, target_r, target_c) < 
+				distance(playerpos.posy, playerpos.posx, r,c) || 
+				(thePlayer->getPos().chamber_num != theEnemy[n]->getPos().chamber_num)){ //only trace when in same chamber  move when distance.
+			if (theEnemy[n]->visit(*board[target_r][target_c], MOVE)){
+				swap(theEnemy[n]->getPos().posx, board[target_r][target_c]->getPos().posx);
+				swap(theEnemy[n]->getPos().posy, board[target_r][target_c]->getPos().posy);
+				swap(board[r][c], board[target_r][target_c]);
+				theDisplay.w->notify(*theEnemy[n]);
+				theDisplay.w->notify(*board[r][c]);
+				return true;
+			} else if (!(possibility[1] &&  possibility[2] &&  possibility[3] &&
+				   	possibility[4] && possibility[5] && possibility[6] &&
+				   	possibility[7] && possibility[8])) {
+				enemyMove(n, possibility);
+			} else { //in this case the enemy is surrounded by other stuff.
+				return false;
+			}
 		} else {
-		//	cout << getString(theEnemy[n]->getPos().style) << endl;
-	//		cout << "someone is stucked" << endl;
-			return false;
+			enemyMove(n, possibility);
 		}
-		 return false; //still need to check here.
 	} else {
-		enemyMove(n, possibility);
+		if (Merchant::revenge){
+			if (distance(playerpos.posy, playerpos.posx, target_r, target_c) < 
+					distance(playerpos.posy, playerpos.posx, r,c) || 
+					(thePlayer->getPos().chamber_num != theEnemy[n]->getPos().chamber_num)){ //only trace when in same chamber  move when distance.
+				if (theEnemy[n]->visit(*board[target_r][target_c], MOVE)){
+					swap(theEnemy[n]->getPos().posx, board[target_r][target_c]->getPos().posx);
+					swap(theEnemy[n]->getPos().posy, board[target_r][target_c]->getPos().posy);
+					swap(board[r][c], board[target_r][target_c]);
+					theDisplay.w->notify(*theEnemy[n]);
+					theDisplay.w->notify(*board[r][c]);
+					return true;
+				} else if (!(possibility[1] &&  possibility[2] &&  possibility[3] &&
+					   	possibility[4] && possibility[5] && possibility[6] &&
+					   	possibility[7] && possibility[8])) {
+					enemyMove(n, possibility);
+				} else { //in this case the enemy is surrounded by other stuff.
+					return false;
+				}
+			} else {
+				enemyMove(n, possibility);
+			}
+		} else {
+		   if 	(theEnemy[n]->visit(*board[target_r][target_c], MOVE)){
+					swap(theEnemy[n]->getPos().posx, board[target_r][target_c]->getPos().posx);
+					swap(theEnemy[n]->getPos().posy, board[target_r][target_c]->getPos().posy);
+					swap(board[r][c], board[target_r][target_c]);
+					theDisplay.w->notify(*theEnemy[n]);
+					theDisplay.w->notify(*board[r][c]);
+					return true;
+				} else if (!(possibility[1] &&  possibility[2] &&  possibility[3] &&
+					   	possibility[4] && possibility[5] && possibility[6] &&
+					   	possibility[7] && possibility[8])) {
+					enemyMove(n, possibility);
+				} else { //in this case the enemy is surrounded by other stuff.
+				return false;
+				}
+		}
 	}
 }
 

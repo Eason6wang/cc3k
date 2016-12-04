@@ -39,7 +39,7 @@ void N_GameController::play(string file){
 			} else if (cmd == "f") {
 				n_floor.pause();
 			} else if (cmd == "r") {
-				n_floor.clearFloor(false);
+				n_floor.clearFloor(true);
 				n_floor.init(file); //remember to generate enemies again
 			} else if (cmd == "q") {
 				throw false;

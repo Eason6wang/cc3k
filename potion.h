@@ -10,6 +10,7 @@ class Drow;
 class Troll;
 class Goblin;
 class Player;
+class Aaron;
 
 class Potion :public Item {
 	protected:
@@ -19,6 +20,7 @@ class Potion :public Item {
 	Info &modify ();
 	std::shared_ptr<Potion> & getPotion();
 	Potion (int row, int col, Style style);
+	virtual bool be_visit(Aaron&player, Type type);
 	virtual bool be_visit(Shade &player, Type type);
 	virtual bool be_visit(Vampire&player, Type type);
 	virtual bool be_visit(Drow&player, Type type);
