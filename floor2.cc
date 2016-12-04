@@ -64,6 +64,9 @@ void D_Floor::clearFloor(bool cleanPlayer){
 	if (cleanPlayer){
 		thePlayer = nullptr;
 	} else {
+		if (thePlayer->getPlayerInfo().level == 5){
+			throw 'w';
+		}
 		thePlayer->levelUp();
 	}
 	board.clear();
@@ -530,7 +533,7 @@ void D_Floor::setPlayer(){ // generate player.
 					catch(VisitExcept & exc){
 						if (exc.state == "deadplayer"){
 							playeraround = true;
-							throw true;
+							throw 'd';
 						}
 					}
 				}

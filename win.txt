@@ -1,6 +1,6 @@
 |-----------------------------------------------------------------------------|
 |                                                                             |
-|             ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ |
+|             XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX |
 |                                                                             |
 |                                                                             |
 |         ||      ||   ||||||   |||    |||  ||   ||   || ||||  ||    ||       |
@@ -10,10 +10,9 @@
 |             ||      ||    ||   ||    ||     |||  |||    ||   ||   |||       |
 |             ||       ||||||     ||||||       ||  ||    ||||  ||    ||       |
 |                                                                             |
-|■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■              |
+|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX              |
 |                                                                             |
-|■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■ ■                                                    |
-|                                                                             |
+|XXXXXXXXXXXXXXXXXXXXXXXXX                                                    |
 |                                                                             |
 |                                                                             |
 |                                                                             |
