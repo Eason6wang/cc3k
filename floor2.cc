@@ -233,8 +233,7 @@ void D_Floor::setPlayer(){ // generate player.
 		if (board[r][c-1]->getPos().style == TILE && !(board[r][c-1]->getPos().isRead)){ 
 			setChamber(r,c-1, arr);
 		}
-		if (board[r][c+1]->getPos().style == TILE && !(board[r][c+1]->getPos().isRead)) {
-			setChamber(r,c+1, arr);
+		if (board[r][c+1]->getPos().style == TILE && !(board[r][c+1]->getPos().isRead)) { setChamber(r,c+1, arr);
 		}
 	}
 		
