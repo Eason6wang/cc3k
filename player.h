@@ -28,11 +28,13 @@ class Wound_Def;
 
 class Player: public Character{
   	PlayerInfo playerInfo;
+	bool visible = true;
   public: 
 	virtual Info& getInfo () override;
     PlayerInfo& getPlayerInfo();
     Player(int hp, int atk, int def, int row, int col, Style style);
     //Player(Player &);
+    virtual bool isvisible();
     void levelUp();
     virtual ~Player() = default;
 

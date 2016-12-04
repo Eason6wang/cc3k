@@ -33,7 +33,16 @@ enum Style {
     DOOR,
     TILE,
     PASSAGE,
-    STAIR
+    STAIR,
+
+    //new race
+    //player
+    NIGHTELF,
+
+    //enemy
+    WORGEN,
+    BLOODELF,
+    FORSAKEN
 };
 
 std::string getString (Style style);
