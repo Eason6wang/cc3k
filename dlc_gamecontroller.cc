@@ -191,7 +191,7 @@ void D_GameController::play(string file){
 			} else if (key == 'f' || key == 'F') {
 				d_floor.pause();
 			} else if (key == 'r' || key == 'R') {
-				d_floor.clearFloor(false);
+				d_floor.clearFloor(true);
 				d_floor.init(file); //remember to generate enemies again
 			} else if (key == 'q' || key == 'Q') {
 				throw false;

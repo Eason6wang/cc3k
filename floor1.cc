@@ -89,7 +89,7 @@ N_Floor::N_Floor(Display& display): theDisplay{display},height{25}, width{79}, s
 					o = make_shared<Tile>(j,i); //这个TILE可以不用输入的。
 					//o->setAttributes(i, j, TILE, false, nullptr);
 				} else if (line[j] == '-') {
-					o = make_shared<Horizontal_Wall>(j,j);
+					o = make_shared<Horizontal_Wall>(j,i);
 				   // o->setAttributes(i, j, HORIZONTAL_WALL, false, nullptr);
 				} else if (line[j] == '|') {
 					o = make_shared<Vertical_Wall>(j,i);
