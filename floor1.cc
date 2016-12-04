@@ -565,8 +565,8 @@ void N_Floor::setPlayer(){ // generate player.
 
 
 void N_Floor::pause(){
-	if (stop) stop = true;
-	else stop = false;
+	if (stop) stop = false;
+	else stop = true;
 }
 //
 bool N_Floor::enemyMove(int n, vector<bool>& possibility) {

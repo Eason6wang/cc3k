@@ -14,7 +14,7 @@ class Object;
 class Window: public Observer {
 	std::vector<std::vector<char>> theDisplay;
 	const int width,height;
-	Pos p;
+	Pos p {-1,-1, SHADE};
 
 	public:
     Window(std::string file);

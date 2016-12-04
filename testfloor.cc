@@ -46,6 +46,7 @@
 #include "treasure.h"
 #include "small_hoard.h"
 #include "normal_hoard.h"
+#include "merchant_hoard.h"
 #include "dragon_hoard.h"
 
 #include "buff.h"
@@ -57,16 +58,15 @@
 class Enemy;
 
 
-void T_Floor::clearFloor(bool cleanPlayer){
+void T_Floor::clearFloor(bool cleanplayer){
 	//	cout << "enter clear" << endl;
-	if (cleanPlayer){
+	if (cleanplayer){
 		thePlayer = nullptr;
 	} else {
 		thePlayer->levelUp();
 	}
 	board.clear();
 	theEnemy.clear();
-	theChamber.clear();
 //	cout << "out clear" << endl;
 }
 		
@@ -74,9 +74,60 @@ void T_Floor::clearFloor(bool cleanPlayer){
 T_Floor::T_Floor(Display& display): theDisplay{display},height{25}, width{79}, stop{false} {}
 		
 
+void T_Floor::initHelper(string file){
+	ifstream given {file};
+
+	ofstream level1 {"level1.txt"};
+	ofstream level2 {"level2.txt"};
+	ofstream level3 {"level3.txt"};
+	ofstream level4 {"level4.txt"};
+	ofstream level5 {"level5.txt"};
+
+	string ss;
+	for(int i = 0; i < height; i++){
+		getline(given,ss);
+		level1 << ss;
+		level1 << endl;
+	}
+	level1.close();
+
+	for(int i = 0; i < height; i++){
+		getline(given,ss);
+		level2 << ss;
+		level2 << endl;
+	}
+	level2.close();
+
+	for(int i = 0; i < height; i++){
+		getline(given,ss);
+		level3 << ss;
+		level3 << endl;
+	}
+	level3.close();
+
+	for(int i = 0; i < height; i++){
+		getline(given,ss);
+		level4 << ss;
+		level4 << endl;
+	}
+	level4.close();
+
+	for(int i = 0; i < height; i++){
+		getline(given,ss);
+		level5 << ss;
+		level5 << endl;
+	}
+	level5.close();
+}
+	
+
+
+
 void T_Floor::init(string file){
 	//theDisplay.w = make_shared<Window>(file);
+	int r,c;
 	string line;
+	theDisplay.w = make_shared<Window>(file);
 	ifstream f {file};
 	shared_ptr<Object> o;
 	for (int i = 0; i < height; i++){
@@ -86,9 +137,11 @@ void T_Floor::init(string file){
 			if (line[j] == '.') {
 				o = make_shared<Tile>(j,i);
 			} else if (line[j] == '-') {
-				o = make_shared<Horizontal_Wall>(j,j);
+				o = make_shared<Horizontal_Wall>(j,i);
 			} else if (line[j] == '|') {
 				o = make_shared<Vertical_Wall>(j,i);
+			} else if (line[j] == '\\') {
+				o = make_shared<Stair>(j,i);
 			} else if (line[j] == '+') {
 				o = make_shared<Door>(j,i);
 			} else if (line[j] == '#') {
@@ -96,17 +149,17 @@ void T_Floor::init(string file){
 			} else if (line[j] == ' ') {
 				o = make_shared<Space>(j,i);
 			} else if (line[j] == '0') {
-				o = make_shared<Restore_Health>(j,j);
+				o = make_shared<Restore_Health>(j,i);
 			} else if (line[j] == '1') {
 				o = make_shared<Boost_Atk>(j,i);
 			} else if (line[j] == '2') {
 				o = make_shared<Boost_Def>(j,i);
 			} else if (line[j] == '3') {
-				o = make_shared<Posion_Health>(j,i);
+				o = make_shared<Poison_Health>(j,i);
 			} else if (line[j] == '4') {
 				o = make_shared<Wound_Atk>(j,i);
 			} else if (line[j] == '5') {
-				o = make_shared<Wound_Def>(j,j);
+				o = make_shared<Wound_Def>(j,i);
 			} else if (line[j] == '6') {
 				o = make_shared<Normal_Hoard>(j,i);
 			} else if (line[j] == '7') {
@@ -117,28 +170,41 @@ void T_Floor::init(string file){
 				o = make_shared<Dragon_Hoard>(j,i);
 			
 			} else if (line[j] == 'H') {
-				o = make_shared<Human>(j,j);
+				o = make_shared<Human>(j,i);
+				theEnemy.emplace_back(o);
 			} else if (line[j] == 'W') {
 				o = make_shared<Dwarf>(j,i);
+				theEnemy.emplace_back(o);
 			} else if (line[j] == 'E') {
 				o = make_shared<Elf>(j,i);
+				theEnemy.emplace_back(o);
 			} else if (line[j] == 'O') {
 				o = make_shared<Orc>(j,i);
+				theEnemy.emplace_back(o);
 			} else if (line[j] == 'M') {
 				o = make_shared<Merchant>(j,i);
+				theEnemy.emplace_back(o);
 			} else if (line[j] == 'D') {
-				o = make_shared<Dragon>(j,j);
+				o = make_shared<Dragon>(j,i);
+				theEnemy.emplace_back(o);
 			} else if (line[j] == 'L') {
 				o = make_shared<Halfling>(j,i);
+				theEnemy.emplace_back(o);
 			} else { //'@'
-				o = make_shared<Shade>(j,i);
-				thePlayer = o;
+				o = make_shared<Tile>(j,i);
+				r = i;
+				c = j;
 			}
 			o->attach(theDisplay.w);
 			arr.emplace_back(o);
+			theDisplay.w->notify(*o);
 		}
 		board.emplace_back(arr);
 	}
+	thePlayer = make_shared<Shade>(c,r);
+	theDisplay.p = make_shared<Panel>(thePlayer);
+	theDisplay.w->notify(*thePlayer);
+	theDisplay.p->notify(*thePlayer);
 }
 
 
@@ -185,7 +251,9 @@ void T_Floor::init(string file){
 			isSuccess = true;
 			if (exc.state == "stair"){
 				clearFloor(false);
-				init();
+				int nextlevel = thePlayer->getPlayerInfo().level + 1;
+				string nextfile = "level" + to_string(nextlevel) + ".txt";
+				init(nextfile);
 				// reduce the gabage
 			} else if (exc.state == "pickup_potion"){
 					board[target_r][target_c] = make_shared<Tile>(target_c,target_r);
@@ -284,8 +352,8 @@ void T_Floor::init(string file){
 
 
 void T_Floor::pause(){
-	if (stop) stop = true;
-	else stop = false;
+	if (stop) stop = false;
+	else stop = true;
 }
 
 bool T_Floor::enemyMove(int n, vector<bool>& possibility) {

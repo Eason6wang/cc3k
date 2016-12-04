@@ -20,10 +20,8 @@ T_GameController::T_GameController():t_floor{display}{}
 void T_GameController::play(string file){
 	srand(time(NULL));
 	cout << "enter the play()" << endl;
-	shared_ptr<Window> theWindow = make_shared<Window>("normal_version.txt");
-	display.display(theWindow);
-	
-	t_floor.init(file);
+	t_floor.initHelper(file);	
+	t_floor.init("level1.txt");
 	display.display();
 	string cmd;
 	while (true) {

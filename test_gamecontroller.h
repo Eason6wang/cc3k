@@ -2,7 +2,7 @@
 #define _T_TGAME_H_
 #include <iostream>
 #include <string>
-#include "floor1.h"
+#include "testfloor.h"
 #include "display.h"
 #include "gamecontroller.h"
 
