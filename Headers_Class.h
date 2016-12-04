@@ -1,7 +1,9 @@
 #ifndef __HEADERS__
 #define __HEADERS__
 
+class Aaron;
 class Shade;
+
 class Drow;
 class Vampire;
 class Troll;

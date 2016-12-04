@@ -22,6 +22,7 @@ void Object::flip () { pos.isRead = true; }
 bool Object::visit_objects(Type type){ return false; }
 bool Object::visit(Object &object, Type type){ return false; }
 //be_visit
+bool Object::be_visit(Aaron& aaron, Type type){ return false; }
 bool Object::be_visit(Shade& shade, Type type){ return false; }
 bool Object::be_visit(Drow& drow, Type type){ return false; }
 bool Object::be_visit(Vampire& vampire, Type type){ return false; }

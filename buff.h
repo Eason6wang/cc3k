@@ -19,6 +19,7 @@ class Player;
 class Enemy;
 class Item;
 class Dragon;
+class Aaron;
 
 std::vector<std::pair<int, int>> findChar(std::vector<std::vector<char>> s, char c);
 

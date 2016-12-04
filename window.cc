@@ -25,6 +25,7 @@ void Window::notify(Subject &whoNotify){
 	int t = whoNotify.getPos().style;
 	switch (t){
         case SHADE:
+		case AARON:
         case DROW:
         case VAMPIRE:
         case TROLL:
