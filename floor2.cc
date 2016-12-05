@@ -67,6 +67,7 @@ void D_Floor::clearFloor(bool cleanPlayer){
 	//	cout << "enter clear" << endl;
 	if (cleanPlayer){
 		thePlayer = nullptr;
+		Merchant::revenge = false;
 	} else {
 		if (thePlayer->getPlayerInfo().level == 5){
 			throw 'w';
@@ -728,7 +729,7 @@ bool D_Floor::enemyMove(int n, vector<bool>& possibility) {
 				} else if (!(possibility[1] &&  possibility[2] &&  possibility[3] &&
 					   	possibility[4] && possibility[5] && possibility[6] &&
 					   	possibility[7] && possibility[8])) {
-					enemyMove(n, possibility);
+			enemyMove(n, possibility);
 				} else { //in this case the enemy is surrounded by other stuff.
 				return false;
 				}
@@ -738,7 +739,7 @@ bool D_Floor::enemyMove(int n, vector<bool>& possibility) {
 
 void D_Floor::windowPreprocessor(string message, int r, int c){
 	ifstream f {message};
-	fstream after {"modified_window.txt"};
+	ofstream after {"modified_window.txt"};
 	string line;
 	for (int i = 0; i < height; i++){
 		getline(f, line);
