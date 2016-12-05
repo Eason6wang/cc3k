@@ -196,7 +196,7 @@ void D_Floor::selectPlayer(){
 	while (true){
 	 //put this part in to display later.
 		char player_select;
-			printw("Choose your player: s(Shade), d(Drow), v(Vampire),  g(Goblin), t(Troll) , a(Aaron), n(Nightelf), e(Eason) ");
+			printw("Choose your player: s(Shade), d(Drow), v(Vampire),  g(Goblin), t(Troll) , n(Nightelf) ");
 		player_select = getch();
 		if (player_select == 's'){
 			thePlayer = make_shared<Shade>(position.posx, position.posy); //the hp atk .. is assigned in ctor.
