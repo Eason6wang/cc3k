@@ -18,7 +18,7 @@ Window::Window(string file): width{79}, height{25} {
 	//cout << "window ctor works fine" << endl;
 }	
 	
-		
+
 void Window::notify(Subject &whoNotify){
 	int r = whoNotify.getPos().posy;
 	int c = whoNotify.getPos().posx;

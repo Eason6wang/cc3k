@@ -49,6 +49,7 @@ class D_Floor{
 	void setPotion(); //generate potion
 	void setTreasure(); //generate gold.
 	void setEnemy(); //generate enemy.
+	void windowPreprocessor(std::string message, int r, int c);
    	void setNewEnemy(); // new enemy 
 	void pause();
 	std::string outPut();
