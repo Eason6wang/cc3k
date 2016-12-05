@@ -244,9 +244,10 @@ bool be_attack(Player &player, Enemy &enemy){
 		extraDamage = 1;
 	}
     if(enemyType == WORGEN){//worgen case
-	int rand = getRandom(1, 2);
+	int rand = getRandom(1, 3);
 	if(rand == 1){
 	    extraDamage = 1.3;
+	    newAction += "30%/ crit from R. ";
 	}
     }
     if(enemyType == BLOODELF){//bloodelf case
@@ -258,9 +259,6 @@ bool be_attack(Player &player, Enemy &enemy){
     }
     int damage = extraDamage * getDamage(enemy.getInfo().atk, player.getInfo().def);
     playerHp -= damage;
-    if(enemyType == WORGEN){//worgen case
-	newAction += "30%/ crit from R. ";
-    }
     newAction += getString(enemy.getPos().style) + 
            " deals (" + std::to_string(damage) + ") damage to PC. ";
     player.getPlayerInfo().action += newAction;
