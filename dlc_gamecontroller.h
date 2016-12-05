@@ -12,4 +12,6 @@ class D_GameController: public GameController{
 	void play(std::string file) override;
 };
 
+
+extern	int numOfTurn; 
 #endif

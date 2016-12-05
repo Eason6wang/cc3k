@@ -6,7 +6,7 @@
 #include "aaron.h"
 
 Merchant::Merchant(int row, int col):
-  Enemy{140, 20, 20, row, col, MERCHANT}{}
+  Enemy{30, 70, 5, row, col, MERCHANT}{}
 
 bool Merchant::revenge = false;
 

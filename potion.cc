@@ -23,8 +23,6 @@ Potion::Potion (int posx, int posy, Style style)
 
 
 Info &Potion::modify(){
-    if(potion){	
-    }
     return info;
 }
 

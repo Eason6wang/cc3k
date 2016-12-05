@@ -11,6 +11,8 @@ class Eason: public Player{
 public:
     Eason(int row, int col);
     bool visit(Object&, Type type);
+	Info &getInfo() override;
+
 };
 
 #endif

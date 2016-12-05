@@ -12,6 +12,7 @@
 #include "window.h"
 #include "panel.h"
 using namespace std;
+int numOfTurn = 1; 
 
 void rawWindow(vector<vector<char>> window) {
 	start_color();
@@ -266,8 +267,8 @@ void D_GameController::play(string file){
 	}
 	d_floor.init(thefile);
     mvaddstr(0,0,d_floor.outPut().c_str());//use display.
-    int numOfTurn = 1; 
 	colorWindow(display.w->colorOutPut());
+	mvprintw(25,33, "Time: night");
 	move(31,0);
 	char key;
 	while (true) {
@@ -346,8 +347,10 @@ void D_GameController::play(string file){
 			mvaddstr(0,0,d_floor.outPut().c_str());//use display.
 			if((numOfTurn / 20) % 2  == 1){
 			    rawWindow(display.w->colorOutPut());
+				mvprintw(25,33, "Time: day");
 			} else {
 			    colorWindow(display.w->colorOutPut());
+				mvprintw(25,33, "Time: night");
 			}
 			move(31, 0);
 			numOfTurn++;

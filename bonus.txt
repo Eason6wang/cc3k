@@ -33,7 +33,9 @@ They are hidden character in this game, but if your insist to try it out, you ca
 Aaron(a) has the most powerful ability as to destroy and built the wall or passage!!!
 We aimed at making this character to be the most creative PC in this game.
 
-Eason(e) has the ability to go through the wall. 
+Eason(e) has the ability to go through the wall and whitespace. however, we have not implemented the case when Eason goes outside of the floor. 
+
+Nightelf(n) has the ability to gain health when night comes.
 
 To be fair, we also implement three other new enemies, Worgen(R), Bloodelf(B), Forsaken(F) with different abilities. (Some abilities are related to day and night)
 

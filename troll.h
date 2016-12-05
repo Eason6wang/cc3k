@@ -8,6 +8,8 @@ class Troll: public Player{
   	Troll(int row, int col); 
      	bool visit(Object&, Type t);
 
+	Info &getInfo() override;
+
 };
 
 #endif

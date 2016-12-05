@@ -29,9 +29,9 @@ class T_Floor{
 	bool enemyMove(int n, std::vector<bool>& possibility);
 	public:	
 	T_Floor(Display& display);
-	void floorVisit(std::string s, Type type);
-	void clearFloor(bool cleanPlayer);
-	void initHelper(std::string file);
+	void floorVisit(std::string s, Type type);// take in a direction string s and an action type to achieve
+	void clearFloor(bool cleanPlayer);// deal with restart and next floor case
+	void initHelper(std::string file); // divide the read in file into 5 floors
         void init(std::string file); // set up the board according to the given floor in the file.
     	void windowPreprocessor(std::string message, int r, int c);
 	void pause();

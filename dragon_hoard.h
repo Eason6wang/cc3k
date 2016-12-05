@@ -12,6 +12,8 @@ class Drow;
 class Vampire;
 class Troll;
 class Goblin;
+class Eason;
+class NightElf;
 
 
 class Object;
@@ -26,5 +28,7 @@ class Dragon_Hoard final:public Treasure {
 	bool  be_visit (Troll &player, Type type) ;
 	bool  be_visit (Vampire&player, Type type) ;
 	bool  be_visit (Goblin &player, Type type);
+	bool  be_visit (Eason &player, Type type);
+	bool  be_visit (NightElf &player, Type type);
 };
 #endif

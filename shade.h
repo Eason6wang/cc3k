@@ -10,6 +10,7 @@ class Shade: public Player{
 public:
     Shade(int row, int col);
     bool visit(Object&, Type type);
+	Info &getInfo() override;
 };
 
 #endif

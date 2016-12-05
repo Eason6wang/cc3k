@@ -28,10 +28,22 @@ void Player::levelUp(){
 
 Info& Player::getInfo () {
     if(!getPlayerInfo().potion){
+		if(Character::getInfo().atk < 0){
+			Character::getInfo().atk = 0;
+		} 
+		if(Character::getInfo().def < 0){
+			Character::getInfo().def = 0;
+		}
       return Character::getInfo();
     } else {
 	auto &modifyInfo = getPlayerInfo().potion->modify();
 	Character::getInfo().hp = modifyInfo.hp;
+	if(modifyInfo.atk < 0){
+		modifyInfo.atk = 0;
+	}
+	if(modifyInfo.def < 0){
+		modifyInfo.def = 0;
+	}
 	return modifyInfo;
     }
 }

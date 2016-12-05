@@ -386,6 +386,7 @@ bool be_pick_up(Potion &potion,Player &player) {
     shared_ptr<Potion> &playerPotion = player.getPlayerInfo().potion;
     shared_ptr<Potion> newpotion = make_shared<Potion>(0, 0, SPACE);
     newpotion->modify().hp = playerhp + changeHp;
+	if(newpotion->modify().hp < 0) newpotion->modify().hp = 0;
     newpotion->modify().atk = playeratk + changeAtk;
     newpotion->modify().def = playerdef + changeDef;
     newpotion->getPotion() = playerPotion;

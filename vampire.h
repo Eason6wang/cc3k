@@ -6,6 +6,7 @@ class Vampire: public Player{
   public:
   	Vampire(int row, int col); 
    	bool visit(Object&, Type t);
+	Info &getInfo() override;
 
 };
 

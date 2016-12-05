@@ -7,6 +7,7 @@ class Goblin: public Player{
   public:
   	Goblin(int row, int col); 
   	bool visit(Object&, Type t);
+	Info &getInfo() override;
 };
 
 #endif

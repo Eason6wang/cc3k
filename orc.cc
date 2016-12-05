@@ -2,7 +2,7 @@
 #include "shade.h"
 
 Orc::Orc(int row, int col):
-  Enemy{140, 20, 20, row, col, ORC}{}
+  Enemy{180, 30, 25, row, col, ORC}{}
 
 bool Orc::visit (Object &object, Type type) {
 	return object.be_visit (*this, type);

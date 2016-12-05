@@ -18,31 +18,23 @@ class Display;
 class D_Floor{
 	std::vector<std::vector<std::shared_ptr<Object>>> board; //the board
 	std::shared_ptr<Player> thePlayer;
-//	std::shared_ptr theStair;
 	std::vector<std::shared_ptr<Dragon>> theDragon;
 	std::vector<std::shared_ptr<Enemy>> theEnemy;
-//	std::vector<std::shared_ptrTreasure> D_Hoard;
 	std::vector<Chamber> theChamber; //store the chamber
-//	std::shared_ptr<Object> tmp;
- //   std::shared_ptr<Window> w; //display.
- //   std::shared_ptr<Panel> p; //planar.
 	Display& theDisplay;
 	int height;
 	int width;
 	bool stop;
 	bool enemyMove(int n, std::vector<bool>& possibility);
-//	int getRandom(int min, int max);
 	public:	
 	D_Floor(Display& display);
-	void floorVisit(std::string s, Type type);
-	void clearFloor(bool cleanPlayer);
-	//~D_Floor();
-	
-	///void floor_move();
-	///void floor_attack();
+	void floorVisit(std::string s, Type type);// take in a direction string s and an action type to achieve
+	// a turn move
+	void clearFloor(bool cleanPlayer);// deal with restart and next floor case
     void init(std::string file = "plainfloor.txt"); // set up the board according to the given floor in the file.
-    void setChamber(int r, int c, std::vector<std::shared_ptr<Object>*>& arr);
-	void spawnAction();
+    void setChamber(int r, int c, std::vector<std::shared_ptr<Object>*>& arr); // automatically read in any
+	// kinds of chamber
+	void spawnAction();// deal with all the spawning actions
 	void selectPlayer();
 	void setPlayer(); // generate player.
 	void setStair(); //generate stairway.

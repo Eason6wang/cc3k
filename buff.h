@@ -30,6 +30,7 @@ class ForSaken;
 // these are useful tools we used in this project
 std::vector<std::pair<int, int>> findChar(std::vector<std::vector<char>> s, char c);
 
+// give the window actual color layer
 void colorLayer(std::vector<std::pair<int, int>> thechar, char c);
 
 //void colorWindow(std::string s);
@@ -41,6 +42,7 @@ void clearScreen();
 // it can randomly generate a number from min to max
 int getRandom(int min, int max);
 
+// use the display window to display a message
 std::string messageOut(std::string message);
 
 

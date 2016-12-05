@@ -498,6 +498,18 @@ void D_Floor::setPlayer(){ // generate player.
 			  	theDragon.erase(deadDragon);
 				board[target_r][target_c] = make_shared<Tile>(target_c, target_r);
 				 //theDisplay.w->notify(*board[target_r][target_c]);
+				}
+			else if (exc.state == "destroy") {
+			board[target_r][target_c] = make_shared<Tile>(target_c, target_r);
+			}
+			else if (exc.state == "destroy2") {
+			board[target_r][target_c] = make_shared<Space>(target_c, target_r);
+			}
+			else if (exc.state == "build") {
+			board[target_r][target_c] = make_shared<Vertical_Wall>(target_c, target_r);
+			}
+			else if (exc.state == "build2") {
+			board[target_r][target_c] = make_shared<Passage>(target_c, target_r);
 			} else {
 			// enemy is dead {
 			     //delete enemy
@@ -505,18 +517,6 @@ void D_Floor::setPlayer(){ // generate player.
 			     theEnemy.erase(deadEnemy);
 				if (exc.state == "small_hoard") {
 					board[target_r][target_c] = make_shared<Tile>(target_c, target_r);
-				}
-					else if (exc.state == "destroy") {
-					board[target_r][target_c] = make_shared<Tile>(target_c, target_r);
-					}
-					else if (exc.state == "destroy2") {
-					board[target_r][target_c] = make_shared<Space>(target_c, target_r);
-					}
-					else if (exc.state == "build") {
-					board[target_r][target_c] = make_shared<Vertical_Wall>(target_c, target_r);
-					}
-					else if (exc.state == "build2") {
-					board[target_r][target_c] = make_shared<Passage>(target_c, target_r);
 				} else if (exc.state == "merchant_hoard"){
 					board[target_r][target_c] = make_shared<Merchant_Hoard>(target_c, target_r);	
 				}else if (exc.state == "normal_hoard"){
