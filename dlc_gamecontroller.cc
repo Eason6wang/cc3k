@@ -258,11 +258,11 @@ void D_GameController::play(string file){
 	mvprintw(25, 0, "Want crazy random floor? [y/n]");
 	char random = getch();
 	generate_map ("pp.txt", 500);
-	string thefile;
-	if (random = 'y'){
+	string thefile = "plainfloor.txt";
+	if (random == 'y'){
 		thefile = "random_floor.txt";
 	} else {
-		thefile = file;
+		thefile == file;
 	}
 	d_floor.init(thefile);
     mvaddstr(0,0,d_floor.outPut().c_str());//use display.
