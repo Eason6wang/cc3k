@@ -3,9 +3,9 @@ Eason
 Daniel
 Aaron 
 
-In our CC3K project, we managed to implement WASD control, Enemy chasing, Add more characters and enemies, colorful display, alternating day and night every 20 moves, and Random Floor Generation.
+In our CC3K project, we managed to complete WASD control, Enemy chasing, Add some more characters and enemies, add colorful display, alternating day and night every 20 moves, and Random Floor Generation.
 
-When you launch the pregram, you would see:
+When you launch the program, you should see:
 
 	choose n/d to use normal/dlc
 
@@ -28,9 +28,9 @@ After you make the selection, you should see the welcome window, and a message t
 
 Press corresponding char to select the character you want. 
 You may have noticed that we add Nightelf as a new character. 
-Actually, we have two more characters for player which are named afer two of our awesome developer Lol
+Actually, we have two more characters for player which are named after two of our awesome developer Lol
 They are hidden character in this game, but if your insist to try it out, you can press 'a' or 'e' to try it. 
-Aaron(a) has the most powerfull ability as to distroy and built the wall or passage!!!
+Aaron(a) has the most powerful ability as to destroy and built the wall or passage!!!
 We aimed at making this character to be the most creative PC in this game.
 
 Eason(e) has the ability to go through the wall. 
