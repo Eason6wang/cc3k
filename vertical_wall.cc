@@ -14,7 +14,10 @@ bool Vertical_Wall::be_visit (Shade& player, Type type){
     return false;
 }
 bool Vertical_Wall::be_visit (Aaron& player, Type type){
-	if (type == ATTACK){
+	if (type == MOVE){
+	    player.getPlayerInfo().action += "PC cannot go through the wall. ";
+	}
+	else if (type == ATTACK){
 		throw VisitExcept{"destroy", 1};
 	}
 	return false;
