@@ -510,6 +510,9 @@ void D_Floor::setPlayer(){ // generate player.
 					else if (exc.state == "destroy") {
 					board[target_r][target_c] = make_shared<Tile>(target_c, target_r);
 					}
+					else if (exc.state == "destroy2") {
+					board[target_r][target_c] = make_shared<Space>(target_c, target_r);
+					}
 					else if (exc.state == "build") {
 					board[target_r][target_c] = make_shared<Vertical_Wall>(target_c, target_r);
 					}

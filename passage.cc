@@ -4,10 +4,17 @@
 #include "bloodelf.h"
 #include "eason.h"
 #include "nightelf.h"
+#include "aaron.h"
+#include "visitexcept.h"
 
 
 Passage::Passage(int posx, int posy):Cell{posx, posy, PASSAGE} {}
 
+bool Passage::be_visit (Aaron& player, Type type){
+	if (type == MOVE) return true;
+	if (type == ATTACK) throw VisitExcept {"destroy2", 1};
+    return false;
+}
 bool Passage::be_visit (Shade& player, Type type){
 	if (type == MOVE) return true;
     return false;
