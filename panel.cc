@@ -5,7 +5,7 @@
 #include <sstream>
 using namespace std;
 
-Panel::Panel(std::shared_ptr<Player> player) :player{player} {}
+Panel::Panel(Player *player) :player{player} {}
 	
 void Panel::notify(Subject &whoNotify) {
 	gold = player->getPlayerInfo().gold;

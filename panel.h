@@ -13,9 +13,9 @@ class Object;
 class Panel final:public Observer {
 	std::string race, action;
 	int gold,floor,hp,atk,def;
-    std::shared_ptr<Player> player;
+    Player *player;
 	public:
-	Panel(std::shared_ptr<Player> player);
+	Panel(Player* player);
     void notify(Subject &whoNotified) override;
 	//SubscriptionType subType() const override;
 

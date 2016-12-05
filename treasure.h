@@ -8,6 +8,8 @@
 #include "troll.h"
 #include "goblin.h"
 class Aaron;
+class Eason;
+class NightElf;
 
 class Treasure :public Item {
 	int gold;
@@ -20,6 +22,8 @@ class Treasure :public Item {
 	virtual bool be_visit(Drow&player, Type type);
 	virtual bool be_visit(Troll&player, Type type);
 	virtual bool be_visit(Goblin &player, Type type);
+	virtual bool be_visit(Eason &player, Type type);
+	virtual bool be_visit(NightElf &player, Type type);
 	virtual ~Treasure () = default;
 };
 

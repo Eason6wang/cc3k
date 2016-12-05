@@ -202,7 +202,7 @@ void T_Floor::init(string file){
 		board.emplace_back(arr);
 	}
 	thePlayer = make_shared<Shade>(c,r);
-	theDisplay.p = make_shared<Panel>(thePlayer);
+	theDisplay.p = make_shared<Panel>(thePlayer.get());
 	theDisplay.w->notify(*thePlayer);
 	theDisplay.p->notify(*thePlayer);
 }

@@ -20,6 +20,8 @@ class Enemy: public Character{
 	virtual bool be_visit(Vampire &vampire, Type t) override;
 	virtual bool be_visit(Troll &troll, Type t) override;
 	virtual bool be_visit(Goblin &goblin, Type t) override;
+	virtual bool be_visit(Eason &goblin, Type t) override;
+	virtual bool be_visit(NightElf &goblin, Type t) override;
 };
 
 #endif

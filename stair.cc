@@ -1,7 +1,13 @@
 #include "stair.h"
 #include "visitexcept.h"
 #include "aaron.h"
-	
+#include "worgen.h"
+#include "forsaken.h"
+#include "bloodelf.h"
+#include "eason.h"
+#include "nightelf.h"
+
+
 Stair::Stair (int posx, int posy):Cell{posx, posy, STAIR} {}
 
 
@@ -43,3 +49,12 @@ bool Stair::be_visit (Goblin& player, Type type){
 	}
     return false;
 }
+bool Stair::be_visit (Eason& enemy, Type type){
+	if (type == MOVE) return true;
+    return false;
+}
+bool Stair::be_visit (NightElf& enemy, Type type){
+	if (type == MOVE) return true;
+    return false;
+}
+

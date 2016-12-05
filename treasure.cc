@@ -7,6 +7,8 @@
 #include "buff.h"
 #include "visitexcept.h"
 #include "aaron.h"
+#include "eason.h"
+#include "nightelf.h"
 
 Treasure::Treasure (int row, int col, Style style, int gold) 
 		:Item{row, col, style}, gold{gold} {}
@@ -32,7 +34,12 @@ bool Treasure::be_visit (Vampire&player, Type type) {
 bool Treasure::be_visit (Goblin &player, Type type) {
 	return be_visit_by (*this, player, type);
 }	
-
+bool Treasure::be_visit (Eason &player, Type type) {
+	return be_visit_by (*this, player, type);
+}
+bool Treasure::be_visit (NightElf &player, Type type) {
+	return be_visit_by (*this, player, type);
+}
 /*bool Treasure::be_visit (Shade &player, Type type) {
 	be_visit<Shade> (player, type);
 }

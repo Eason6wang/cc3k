@@ -39,6 +39,7 @@ enum Style {
     //new race
     //player
     NIGHTELF,
+    EASON,
 
     //enemy
     WORGEN,

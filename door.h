@@ -16,6 +16,11 @@ class Elf;
 class Orc;
 class Dragon;
 class Merchant;
+class Eason;
+class NightElf;
+class Worgen;
+class ForSaken;
+class BloodElf;
 
 class Door final:public Cell {
 	public:
@@ -33,7 +38,12 @@ class Door final:public Cell {
 //	bool be_visit (Dragon &enemy, Type type) override;
 //	bool be_visit (Merchant &enemy, Type type) override;
 
-*/
+*/	bool be_visit (Eason &enemy, Type type) override;
+	bool be_visit (NightElf &enemy, Type type) override;
+	bool be_visit (Worgen &enemy, Type type) override;
+	bool be_visit (ForSaken &enemy, Type type) override;
+
+
 };
 
 #endif
