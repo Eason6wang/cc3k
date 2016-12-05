@@ -16,6 +16,7 @@ class Treasure :public Item {
 	public:
 	int getGold ();
 	Treasure (int pos, int posy, Style style, int gold);
+	// all the treasure can be visited by player
 	virtual bool be_visit(Shade &player, Type type);
 	virtual bool be_visit(Aaron&player, Type type);
 	virtual bool be_visit(Vampire&player, Type type);

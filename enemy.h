@@ -14,6 +14,8 @@ class Enemy: public Character{
   public:
     Enemy(int hp, int atk, int def, int row, int col, Style style);
     ~Enemy() = default;
+	// enemy has be_visit method for every player
+	// every concrete enemy will have visit method
 	virtual bool be_visit (Shade &shade, Type type) override;
 	virtual bool be_visit (Aaron&shade, Type type) override;
 	virtual bool be_visit(Drow &drow, Type t) override;

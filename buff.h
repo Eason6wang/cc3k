@@ -9,9 +9,10 @@
 #include <string>
 #include "treasure.h"
 #include "merchant.h"
+#include "treasure.h"
+
 class VisitExcept;
 class Potion;
-#include "treasure.h"
 class VisitExcept;
 class Merchant;
 class Object;
@@ -26,27 +27,54 @@ class BloodElf;
 class Worgen;
 class ForSaken;
 
+// these are useful tools we used in this project
 std::vector<std::pair<int, int>> findChar(std::vector<std::vector<char>> s, char c);
 
 void colorLayer(std::vector<std::pair<int, int>> thechar, char c);
 
 //void colorWindow(std::string s);
 
+// it cleans the screen
 void clearScreen();
 
+
+// it can randomly generate a number from min to max
 int getRandom(int min, int max);
 
 std::string messageOut(std::string message);
 
+
+// calculate the damage by take in atk and def
 int getDamage(int, int);
 
-
+//it compares two objects and return true if ob1 goes before ob2 
 bool compare(std::shared_ptr<Object> ob1,std::shared_ptr<Object> ob2);
 
+
+// it gives the distance of two objects
 int distance(int r1, int c1, int r2, int c2);
 
-//void normal_enemy_move();
+// it helps generate a random map
+void generate_map (std::string map0 = "plainfloor.txt", int times = 100);
+
+
+
+
+
+
+
+
+
+
+
 //template
+// be_visit_by is the template for most player, enemy and item
+// it can be called in be_visit method
+// this template can distinguish different types of visit
+// this template needs helper function for each pair of relationship
+// e.g. be_attack(Player, Enemy), player is attacked by enemy
+
+
 template<typename Bevisit , typename Visit , typename Type>
 bool be_visit_by(Bevisit & v1, Visit & v2, Type t){
     if(t == ATTACK){
@@ -63,21 +91,17 @@ bool be_visit_by(Bevisit & v1, Visit & v2, Type t){
 
 
 bool be_attack(Player &player, Enemy &enemy);
-
 bool be_attack(Enemy &enemy, Player &player);  
-
 bool be_attack(Item &item, Player &player);
+
 bool be_pick_up(Treasure &treasure, Player &player);
 bool be_pick_up(Potion &potion, Player &player);
-
 bool be_pick_up(Enemy &enemy, Player &player);
 bool be_pick_up(Player &player, Enemy &enemy);
+
 bool be_go_over(Potion &potion, Player &player);
-
-
 bool be_go_over(Enemy &enemy, Player &player);
 bool be_go_over(Player &player, Enemy &enemy);
 bool be_go_over(Treasure &treasure, Player &player);
-void generate_map (std::string map0 = "plainfloor.txt", int times = 100);
 
 #endif

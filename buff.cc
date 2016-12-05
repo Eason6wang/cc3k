@@ -16,7 +16,6 @@
 #include "merchant.h"
 #include <utility>
 #include "dragon.h"
-//#include "subject.h"
 
 using namespace std;
 
@@ -118,6 +117,10 @@ int distance(int r1,int c1, int r2, int c2){
 }
 
 
+
+
+
+
 /*void rectangle(int height, int width){
 	ofstream out{"randomfloor.txt"};
 	for(int i = 0; i < height; i++){
@@ -213,11 +216,19 @@ int distance(int r1,int c1, int r2, int c2){
 	}
 }*/
 
+
+
+
+
+
+
+
+
+
+
+
+
 //template
-
-// dragon attack is different
-
-
 bool be_attack(Item &item, Player &player){ 
     string newAction = "PC cannot attack an Item. ";     
     player.getPlayerInfo().action += newAction;

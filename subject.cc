@@ -11,18 +11,3 @@ void Subject::notifyObservers() {
     }
 }
 
-//    if (t == SubscriptionType::SwitchOnly) {
-//        for(auto o : observers) {
-//            if (o->subType() == SubscriptionType::SwitchOnly){
-//                o->notify(*this);
-//            }
-//        }
-//    } else {
-//        for(auto o : observers) {
-//            if (o->subType() == SubscriptionType::All){
-//                o->notify(*this);
-//            }
-//        }
-//    }
-//}
-

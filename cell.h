@@ -5,8 +5,8 @@
 class Aaron;
 
 class Cell :public Object {
-	public:
-    Cell (int posx, int posy, Style style):Object(posx, posy, style){}
+public:
+ 	Cell (int posx, int posy, Style style):Object(posx, posy, style){}
 	virtual ~Cell () = default;
 	virtual bool be_visit (Aaron &player, Type type) override;
 
