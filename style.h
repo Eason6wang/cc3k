@@ -5,7 +5,6 @@
 
 
 enum Style {
-	AARON,
     SHADE,
     DROW,
     VAMPIRE,
@@ -40,6 +39,7 @@ enum Style {
     //player
     NIGHTELF,
     EASON,
+    AARON,
 
     //enemy
     WORGEN,

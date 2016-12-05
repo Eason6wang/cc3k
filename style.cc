@@ -3,7 +3,7 @@
 #include <string>
 
 const std::vector<std::string> name {
-	"Aaron",
+    "Aaron",
     "Shade",
     "Drow",
     "Vampire",

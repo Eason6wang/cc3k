@@ -13,6 +13,8 @@
 #include "style.h"
 #include "type.h"
 #include "aaron.h"
+#include "eason.h"
+#include "nightelf.h"
 
 using namespace std;
 
@@ -22,7 +24,6 @@ Potion::Potion (int posx, int posy, Style style)
 
 Info &Potion::modify(){
     if(potion){	
-//      info.hp = potion->modify().hp;
     }
     return info;
 }
@@ -35,54 +36,41 @@ bool Potion::be_visit (Aaron&player, Type type) {
 	return be_visit_by(*this, player, type);
 }	
 bool Potion::be_visit (Shade &player, Type type) {
-/*		if (type == PICKUP) {
-			player.getPlayerInfo().potion = 
-				std::make_shared<Potion> (0,0,getPos().style,player.getPlayerInfo().potion);
-			throw VisitExcept {"pickup_potion", 0};
-		} else return false;
-		*/
 	return be_visit_by(*this, player, type);
 }	
 
 bool Potion::be_visit (Drow &player, Type type) {
-	/*	if (type == PICKUP) {
-			player.getPlayerInfo().potion = 
-				std::make_shared<Potion> (0,0,getPos().style,player.getPlayerInfo().potion);
-			throw VisitExcept {"pickup_potion", 0};
-		} else return false;
-		*/
 	return be_visit_by(*this, player, type);
 
 }	
 
 bool Potion::be_visit (Troll &player, Type type) {
-/*		if (type == PICKUP) {
-			player.getPlayerInfo().potion = 
-				std::make_shared<Potion> (0,0,getPos().style,player.getPlayerInfo().potion);
-			throw VisitExcept {"pickup_potion", 0};
-		} else return false;
-		*/
-return be_visit_by(*this, player, type);
+ 	return be_visit_by(*this, player, type);
 
 }	
 
 bool Potion::be_visit (Vampire&player, Type type) {
-/*		if (type == PICKUP) {
-			player.getPlayerInfo().potion = 
-				std::make_shared<Potion> (0,0,getPos().style,player.getPlayerInfo().potion);
-			throw VisitExcept {"pickup_potion", 0};
-		} else return false;
-		*/
-return be_visit_by(*this, player, type);
+ 	return be_visit_by(*this, player, type);
 
 }	
+
 bool Potion::be_visit (Goblin &player, Type type) {
-		/*if (type == PICKUP) {
-			player.getPlayerInfo().potion = 
-				std::make_shared<Potion> (0,0,getPos().style,player.getPlayerInfo().potion);
-			throw VisitExcept {"pickup_potion", 0};
-		} else return false;
-*/
-return be_visit_by(*this, player, type);
+	return be_visit_by(*this, player, type);
 
 }
+
+
+
+bool Potion::be_visit (NightElf &player, Type type) {
+	return be_visit_by(*this, player, type);
+
+}
+
+
+bool Potion::be_visit (Eason&player, Type type) {
+	return be_visit_by(*this, player, type);
+
+}
+
+
+

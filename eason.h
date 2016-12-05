@@ -6,7 +6,7 @@
 
 class Object;
 
-
+//drop atk by 1 every turn
 class Eason: public Player{
 public:
     Eason(int row, int col);
