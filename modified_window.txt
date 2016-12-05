@@ -21,5 +21,5 @@
 |                                                                             |
 |                       Press 'r' to restart the game!                        |
 |                         Press 'q' to quit the game                          |
-|                             Your score is: 2                                |
+|                             Your score is: 0                                |
 |-----------------------------------------------------------------------------|
