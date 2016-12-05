@@ -21,9 +21,6 @@
 |                                                                             |
 |                       Press 'r' to restart the game!                        |
 |                         Press 'q' to quit the game                          |
-<<<<<<< HEAD
 |                             Your score is: 6                                |
-=======
 |                             Your score is: 7                                |
->>>>>>> a54e5a0dad18de5927e3031eb17102f49c72b3ff
 |-----------------------------------------------------------------------------|
