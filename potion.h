@@ -18,11 +18,12 @@ class NightElf;
 class Potion :public Item {
 	protected:
 	Info info;
-	std::shared_ptr<Potion> potion;
+	std::shared_ptr<Potion> potion;// apply decorator pattern
 	public:
 	Info &modify ();
 	std::shared_ptr<Potion> & getPotion();
 	Potion (int row, int col, Style style);
+	// all the treasure can be visited by player
 	virtual bool be_visit(Aaron&player, Type type);
 	virtual bool be_visit(Shade &player, Type type);
 	virtual bool be_visit(Vampire&player, Type type);

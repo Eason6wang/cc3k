@@ -8,7 +8,7 @@ class Object;
 
 class NightElf: public Player{
 // nightelf can gain 5 hp during night every turn
-	int time;
+	int time = 0;
 public:
     NightElf(int row, int col);
     bool visit(Object&, Type type);
