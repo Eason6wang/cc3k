@@ -22,7 +22,7 @@ Potion::Potion (int posx, int posy, Style style)
 
 Info &Potion::modify(){
     if(potion){	
-      info.hp = potion->modify().hp;
+//      info.hp = potion->modify().hp;
     }
     return info;
 }

@@ -5,6 +5,14 @@
 
 Dragon::Dragon(int r, int c): Enemy(150,20,20,r,c, DRAGON) {}
 
+int &Dragon::getHoardX(){
+	return hoardx;
+
+}
+
+int &Dragon::getHoardY(){
+	return hoardy;
+}
 
 
 bool Dragon::visit(Object& obj, Type type){
