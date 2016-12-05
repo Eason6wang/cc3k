@@ -204,7 +204,7 @@ void N_Floor::selectPlayer(){
 }
 
 void N_Floor::setPlayer(){ // generate player.
-	theDisplay.p = make_shared<Panel>(thePlayer); //create a panel here
+	theDisplay.p = make_shared<Panel>(thePlayer.get()); //create a panel here
 	thePlayer->attach(theDisplay.p); //attach panel to each player
 	theDisplay.w->notify(*thePlayer);
 	theDisplay.p->notify(*thePlayer);
