@@ -50,11 +50,15 @@ bool Stair::be_visit (Goblin& player, Type type){
     return false;
 }
 bool Stair::be_visit (Eason& enemy, Type type){
-	if (type == MOVE) return true;
+	if (type == MOVE)  {
+	    throw VisitExcept{"stair",0};
+	}
     return false;
 }
 bool Stair::be_visit (NightElf& enemy, Type type){
-	if (type == MOVE) return true;
+	if (type == MOVE)  {
+	    throw VisitExcept{"stair",0};
+	}
     return false;
 }
 

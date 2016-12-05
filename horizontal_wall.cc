@@ -6,6 +6,7 @@
 #include "goblin.h"
 #include "aaron.h"
 #include "visitexcept.h"
+#include "eason.h"
 
 
 
@@ -48,6 +49,12 @@ bool Horizontal_Wall::be_visit (Troll& player, Type type){
 bool Horizontal_Wall::be_visit (Goblin& player, Type type){
 	if (type == MOVE){
 	    player.getPlayerInfo().action += "PC cannot go through the wall. ";
+	}
+    return false;
+}
+bool Horizontal_Wall::be_visit (Eason& player, Type type){
+	if (type == MOVE){
+		return true;
 	}
     return false;
 }

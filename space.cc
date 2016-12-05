@@ -4,7 +4,9 @@
 #include "vampire.h"
 #include "troll.h"
 #include "goblin.h"
+#include "aaron.h"
 #include "visitexcept.h"
+#include "eason.h"
 
 bool Space::be_visit (Aaron& player, Type type){
 	if (type == MOVE){
@@ -43,6 +45,12 @@ bool Space::be_visit (Troll& player, Type type){
 bool Space::be_visit (Goblin& player, Type type){
 	if (type == MOVE){
 	    player.getPlayerInfo().action += "PC cannot go into the space ";
+	}
+    return false;
+}
+bool Space::be_visit (Eason& player, Type type){
+	if (type == MOVE){
+		return true;
 	}
     return false;
 }
