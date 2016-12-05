@@ -1,4 +1,4 @@
-#include <iostream>
+#include <iostream>            
 #include <cmath>
 #include <algorithm>
 #include "floor2.h"
@@ -33,7 +33,6 @@
 #include "window.h"
 #include "panel.h"
 #include "observer.h"
-
 #include "enemy.h"
 #include "human.h"
 #include "dwarf.h"
@@ -42,6 +41,11 @@
 #include "orc.h"
 #include "merchant.h"
 #include "dragon.h"
+#include "nightelf.h"
+#include "eason.h"
+#include "worgen.h"
+#include "forsaken.h"
+#include "bloodelf.h"
 
 #include "item.h"
 #include "treasure.h"
@@ -179,6 +183,9 @@ void D_Floor::spawnAction(){
 	for (int j = 0; j < 20; j++){
 		setEnemy();
 	}
+	for(int i = 0; i < 3; i++){
+	    setNewEnemy();
+	}
 }
 
 		
@@ -189,7 +196,7 @@ void D_Floor::selectPlayer(){
 	while (true){
 	 //put this part in to display later.
 		char player_select;
-			printw("Choose your player: s(Shade), d(Drow), v(Vampire),  g(Goblin), t(Troll) ");
+			printw("Choose your player: s(Shade), d(Drow), v(Vampire),  g(Goblin), t(Troll) , a(Aaron), n(Nightelf), e(Eason) ");
 		player_select = getch();
 		if (player_select == 's'){
 			thePlayer = make_shared<Shade>(position.posx, position.posy); //the hp atk .. is assigned in ctor.
@@ -199,6 +206,10 @@ void D_Floor::selectPlayer(){
 			thePlayer = make_shared<Vampire>(position.posx, position.posy);
 		} else if (player_select == 'g') {
 			thePlayer = make_shared<Goblin>(position.posx, position.posy);
+		} else if (player_select == 'n') {
+			thePlayer = make_shared<NightElf>(position.posx, position.posy); 
+		} else if (player_select == 'e') {
+			thePlayer = make_shared<Eason>(position.posx, position.posy); 
 		} else if (player_select == 'a') {
 			thePlayer = make_shared<Aaron>(position.posx, position.posy);
 		} else if (player_select == 't') {
@@ -392,10 +403,44 @@ void D_Floor::setPlayer(){ // generate player.
 		}
 		o->getPos().chamber_num = n+1;	
 		theEnemy.emplace_back(o);
+
 		*(theChamber[n].c[pos]) = o;
 		theDisplay.w->notify(*(*theChamber[n].c[pos]));
 		theChamber[n].c.erase(theChamber[n].c.begin() + pos);
 	}
+
+
+
+	void D_Floor::setNewEnemy(){ //generate enemy.
+		int n = getRandom(0, 4);
+		int pos = getRandom(0, theChamber[n].c.size() - 1);
+		int p = getRandom(1,3);
+		Pos position = (*theChamber[n].c[pos])->getPos();
+		shared_ptr<Enemy> o = nullptr;
+		switch (p){
+			case 1:
+				o = make_shared<BloodElf>(position.posx, position.posy);
+				break;
+			case 2:
+				o = make_shared<Worgen>(position.posx, position.posy);
+				break;
+    			case 3:
+				o = make_shared<ForSaken>(position.posx, position.posy);
+				break;
+
+		}
+		o->getPos().chamber_num = n+1;	
+		theEnemy.emplace_back(o);
+
+		*(theChamber[n].c[pos]) = o;
+		theDisplay.w->notify(*(*theChamber[n].c[pos]));
+		theChamber[n].c.erase(theChamber[n].c.begin() + pos);
+		
+	}
+
+
+
+
 	void D_Floor::floorVisit(string s, Type type){
 		//cout << "enter floorvisit" << endl;
 		int r = thePlayer->getPos().posy;

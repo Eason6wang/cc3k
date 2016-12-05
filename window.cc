@@ -30,6 +30,8 @@ void Window::notify(Subject &whoNotify){
         case VAMPIRE:
         case TROLL:
         case GOBLIN:
+	case EASON:
+	case NIGHTELF:
 			p.posx = whoNotify.getPos().posx;
 			p.posy = whoNotify.getPos().posy;
 		//	theDisplay[r][c] = '@';
@@ -80,9 +82,6 @@ void Window::notify(Subject &whoNotify){
 			break;
 		case TILE:
 			theDisplay[r][c] = '.';
-			break;
-		case NIGHTELF:
-			theDisplay[r][c] = 'N';
 			break;
 		case BLOODELF:
 			theDisplay[r][c] = 'B';

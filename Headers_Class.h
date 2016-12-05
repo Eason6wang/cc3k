@@ -32,5 +32,10 @@ class Door;
 class Tile;
 class Passage;
 class Stair;
+class BloodElf;
+class NightElf;
+class Worgen;
+class ForSaken ;
+class Eason;
 
 #endif

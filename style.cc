@@ -35,6 +35,7 @@ const std::vector<std::string> name {
     "Stair",
     //new player
     "NightElf",
+    "Eason",
     
 
     //new enemy

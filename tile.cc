@@ -55,10 +55,10 @@ bool Tile::be_visit (Merchant_Hoard &hoard, Type type) {
 	if (type == MOVE) return true;
 	return false;
 }
-bool Tile::be_visit (Dragon_Hoard &hoard, Type type) {
+/*bool Tile::be_visit (Dragon_Hoard &hoard, Type type) {
 	if (type == MOVE) return true;
 	return false;
-}
+}*/
 bool Tile::be_visit (Dragon& enemy, Type type){
 	if (type == MOVE) return true;
     return false;
