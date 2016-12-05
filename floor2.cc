@@ -497,7 +497,7 @@ void D_Floor::setPlayer(){ // generate player.
 				 auto deadDragon = find(theDragon.begin(),theDragon.end(),board[target_r][target_c]);
 			  	theDragon.erase(deadDragon);
 				board[target_r][target_c] = make_shared<Tile>(target_c, target_r);
-				 theDisplay.w->notify(*board[target_r][target_c]);
+				 //theDisplay.w->notify(*board[target_r][target_c]);
 			} else {
 			// enemy is dead {
 			     //delete enemy
