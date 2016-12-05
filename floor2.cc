@@ -663,6 +663,26 @@ bool D_Floor::enemyMove(int n, vector<bool>& possibility) {
 	}
 }
 
+void D_Floor::windowPreprocessor(string message, int r, int c){
+	ifstream f {message};
+	fstream after {"modified_window.txt"};
+	string line;
+	for (int i = 0; i < height; i++){
+		getline(f, line);
+		if (i == r){
+			int gold = thePlayer->getPlayerInfo().gold;
+			string s = "Your score is: " + to_string(gold);
+			line.replace (c,s.length(),s);
+			after << line;
+			after << endl;
+		} else {
+			after << line;
+			after << endl;	
+		}
+	}
+	after.close();
+}
+	
 ostream &operator<<(ostream &out, const D_Floor &f){
 	out << *f.theDisplay.w; //this is window.
 	out << *f.theDisplay.p; //this is plane.

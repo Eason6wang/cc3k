@@ -17,7 +17,6 @@
 
 using namespace std;
 
-
 vector<pair<int, int>> findChar(vector<vector<char>> s, char c){
 	vector<pair<int, int>> rv;
 	for(int i = 0; i < s.size(); i++){

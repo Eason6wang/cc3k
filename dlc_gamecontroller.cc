@@ -344,11 +344,13 @@ void D_GameController::play(string file){
 		}
 		catch (char message) {
 			if (message == 'd') {
-				shared_ptr<Window> endWindow = make_shared<Window>("endwindow.txt");
+				d_floor.windowPreprocessor("endwindow.txt", 23, 30);
+				shared_ptr<Window> endWindow = make_shared<Window>("modified_window.txt");
 				clear();
 				mvaddstr(0,0,endWindow->outPut().c_str());//use display.
 			} else if (message == 'w'){
-				shared_ptr<Window> winWindow = make_shared<Window>("win.txt");
+				d_floor.windowPreprocessor("win.txt", 23, 30);
+				shared_ptr<Window> winWindow = make_shared<Window>("modified_window.txt");
 				clear();
 				mvaddstr(0,0,winWindow->outPut().c_str());//use display.
 			} else {
