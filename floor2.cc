@@ -512,6 +512,9 @@ void D_Floor::setPlayer(){ // generate player.
 					}
 					else if (exc.state == "build") {
 					board[target_r][target_c] = make_shared<Vertical_Wall>(target_c, target_r);
+					}
+					else if (exc.state == "build2") {
+					board[target_r][target_c] = make_shared<Passage>(target_c, target_r);
 				} else if (exc.state == "merchant_hoard"){
 					board[target_r][target_c] = make_shared<Merchant_Hoard>(target_c, target_r);	
 				}else if (exc.state == "normal_hoard"){

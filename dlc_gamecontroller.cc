@@ -257,12 +257,12 @@ void D_GameController::play(string file){
 	mvaddstr(0,0,theWindow->outPut().c_str());//use display.
 	mvprintw(25, 0, "Want crazy random floor? [y/n]");
 	char random = getch();
-	generate_map ("pp.txt", 500);
-	string thefile;
-	if (random = 'y'){
+	generate_map ("pp.txt", 300);
+	string thefile = "plainfloor.txt";
+	if (random == 'y'){
 		thefile = "random_floor.txt";
 	} else {
-		thefile = file;
+		thefile == file;
 	}
 	d_floor.init(thefile);
     mvaddstr(0,0,d_floor.outPut().c_str());//use display.
@@ -317,7 +317,7 @@ void D_GameController::play(string file){
 			} else if (key == 'f' || key == 'F') {
 				d_floor.pause();
 			} else if (key == 'r' || key == 'R') {
-				generate_map ("pp.txt", 500);
+				generate_map ("pp.txt", 300);
 				d_floor.clearFloor(true);
 				d_floor.init(thefile); //remember to generate enemies again
 			} else if (key == 'q' || key == 'Q') {

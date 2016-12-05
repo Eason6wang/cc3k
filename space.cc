@@ -4,7 +4,16 @@
 #include "vampire.h"
 #include "troll.h"
 #include "goblin.h"
+#include "visitexcept.h"
 
+bool Space::be_visit (Aaron& player, Type type){
+	if (type == MOVE){
+	    player.getPlayerInfo().action += "PC cannot go into the space ";
+	} else if (type == PICKUP) {
+		throw VisitExcept{"build2", 1};
+	}
+    return false;
+}
 bool Space::be_visit (Shade& player, Type type){
 	if (type == MOVE){
 	    player.getPlayerInfo().action += "PC cannot go into the space ";
