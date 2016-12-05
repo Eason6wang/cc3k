@@ -193,7 +193,8 @@ int distance(int r1,int c1, int r2, int c2){
 			!theEnemy[n]->getPos().sameChamber){ //only trace when in same chamber  move when distance.
 		if (theEnemy[n]->visit(*board[target_r][target_c], MOVE)){
 			swap(theEnemy[n]->getPos().posx, board[target_r][target_c]->getPos().posx);
-			swap(theEnemy[n]->getPos().posy, board[target_r][target_c]->getPos().posy);
+			swap(theEnemy[n]->gent randr, randc;
+			tPos().posy, board[target_r][target_c]->getPos().posy);
 			swap(board[r][c], board[target_r][target_c]);
 			theDisplay.w->notify(*theEnemy[n]);
 			theDisplay.w->notify(*board[r][c]);
@@ -275,6 +276,7 @@ bool be_attack(Enemy &enemy, Player &player){
     int &playerHp = player.getInfo().hp;
     Style enemyType =  enemy.getPos().style; 
     Style playerType = player.getPos().style;
+    int &playergold = player.getPlayerInfo().gold;
     string newAction;
     if(enemyType == DWARF && playerType == VAMPIRE){
 	 playerHp -= 5;
@@ -327,10 +329,13 @@ bool be_attack(Enemy &enemy, Player &player){
 	if(enemyType == DRAGON){
 	   //dragon case
 	   enemy.notifyObservers();
+			   throw VisitExcept{"dragon_hoard", 1};
 	   return true;
 	}
-	 randomnum == 1 ?  throw VisitExcept{"small_hoard",1}:    // normal case
-	              throw VisitExcept{"normal_hoard",1};
+	 randomnum == 1 ?  playergold++:   // normal case
+	                   playergold += 2;
+			   throw VisitExcept{"small_hoard", 1};
+	return true;
     } else {
 	return true;
     }

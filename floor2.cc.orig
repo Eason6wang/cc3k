@@ -189,7 +189,7 @@ void D_Floor::selectPlayer(){
 	while (true){
 	 //put this part in to display later.
 		char player_select;
-			printw("Choose your player: s(Shade), d(Drow), v(Vampire),  g(Goblin), t(Troll) ");
+		printw("Choose your player: s(Shade), d(Drow), v(Vampire),  g(Goblin), t(Troll) ");
 		player_select = getch();
 		if (player_select == 's'){
 			thePlayer = make_shared<Shade>(position.posx, position.posy); //the hp atk .. is assigned in ctor.
@@ -448,11 +448,18 @@ void D_Floor::setPlayer(){ // generate player.
 			//	theDisplay.w->notify(*board[target_r][target_c]);
 			} else if (exc.state == "pickup_gold"){
 					board[target_r][target_c] = make_shared<Tile>(target_c,target_r);
+<<<<<<< HEAD
+			} else if (exc.state == "build") {
+					board[target_r][target_c] = make_shared<Vertical_Wall>(target_c,target_r);
+			} else if (exc.state == "destroy") {
+					board[target_r][target_c] = make_shared<Tile>(target_c,target_r);
+=======
 			} else if(exc.state == "dragon_hoard"){
 				 auto deadDragon = find(theDragon.begin(),theDragon.end(),board[target_r][target_c]);
 			  	theDragon.erase(deadDragon);
 				board[target_r][target_c] = make_shared<Tile>(target_c, target_r);
 				 theDisplay.w->notify(*board[target_r][target_c]);
+>>>>>>> f4e319a472811e5d84e76b0f2399d4b7dc82bda8
 			} else {
 			// enemy is dead {
 			     //delete enemy
@@ -488,7 +495,10 @@ void D_Floor::setPlayer(){ // generate player.
 			}
 		}
 
+<<<<<<< HEAD
+=======
 		theDisplay.w->notify(*board[target_r][target_c]);
+>>>>>>> f4e319a472811e5d84e76b0f2399d4b7dc82bda8
 		if (!isSuccess) {
 				//cout << "false" << endl;
 		} else {
