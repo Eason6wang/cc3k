@@ -38,7 +38,7 @@ void T_GameController::play(string file){
 				t_floor.pause();
 			} else if (cmd == "r") {
 				t_floor.clearFloor(true);
-				t_floor.init(file); //remember to generate enemies again
+				t_floor.init("level1.txt"); //remember to generate enemies again
 			} else if (cmd == "q") {
 				throw false;
 			} else {
