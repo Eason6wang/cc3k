@@ -1,7 +1,15 @@
 #include "tile.h"
+#include "aaron.h"
+#include "visitexcept.h"
+#include "type.h"
 	
 Tile::Tile(int posx, int posy):Cell{posx, posy, TILE} {}
 
+bool Tile::be_visit (Aaron& player, Type type){
+	if (type == MOVE) return true;
+	if (type == PICKUP) throw VisitExcept{"build", 1};
+    return false;
+}
 bool Tile::be_visit (Shade& player, Type type){
 	if (type == MOVE) return true;
     return false;

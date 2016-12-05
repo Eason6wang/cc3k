@@ -54,7 +54,7 @@
 #include "dragon_hoard.h"
 #include "merchant_hoard.h"
 
-#include "buff.h"
+#include "buff.h" 
 #include "display.h"
 #include "visitexcept.h"
 	using namespace std;
@@ -98,7 +98,7 @@ void D_Floor::init(string file){ // set up the board according to the given floo
 				o = make_shared<Tile>(j,i); //这个TILE可以不用输入的。
 				//o->setAttributes(i, j, TILE, false, nullptr);
 			} else if (line[j] == '-') {
-				o = make_shared<Horizontal_Wall>(j,j);
+				o = make_shared<Horizontal_Wall>(j,i);
 			   // o->setAttributes(i, j, HORIZONTAL_WALL, false, nullptr);
 			} else if (line[j] == '|') {
 				o = make_shared<Vertical_Wall>(j,i);

@@ -1,6 +1,7 @@
 #ifndef __SPACE_H__
 #define __SPACE_H__
 #include "cell.h"
+#include "aaron.h"
 
 class Space final:public Cell{
 	public:

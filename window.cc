@@ -92,6 +92,9 @@ void Window::notify(Subject &whoNotify){
 		case FORSAKEN:
 			theDisplay[r][c] = 'F';
 			break;
+		case VERTICAL_WALL:
+			theDisplay[r][c] = '|';
+			break;
 
 
 

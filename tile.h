@@ -16,12 +16,14 @@ class Orc;
 class Dragon;
 class Merchant;
 class Normal_Hoard;
+class Aaron;
 
 class Tile final:public Cell {
 	public:
     Tile (int posx, int posy);
         bool be_visit (Shade &player, Type type) override;
 	bool be_visit (Drow &player, Type type) override;
+	bool be_visit (Aaron&player, Type type) override;
 	bool be_visit (Vampire &player, Type type) override;
 	bool be_visit (Troll &player, Type type) override;
 	bool be_visit (Goblin &player, Type type) override;
