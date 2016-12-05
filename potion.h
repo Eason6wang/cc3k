@@ -11,6 +11,9 @@ class Troll;
 class Goblin;
 class Player;
 class Aaron;
+class Eason;
+class NightElf;
+
 
 class Potion :public Item {
 	protected:
@@ -26,6 +29,9 @@ class Potion :public Item {
 	virtual bool be_visit(Drow&player, Type type);
 	virtual bool be_visit(Troll&player, Type type);
 	virtual bool be_visit(Goblin &player, Type type);
+	virtual bool be_visit(Eason &player, Type type);
+	virtual bool be_visit(NightElf &player, Type type);
+	
 	virtual ~Potion () = default;
 };
 

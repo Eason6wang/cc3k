@@ -30,5 +30,14 @@
 #include "tile.h"
 #include "passage.h"
 #include "stair.h"
+#include "bloodelf.h"
+#include "nightelf.h"
+#include "worgen.h"
+#include "forsaken.h"
+#include "eason.h"
+#include "aaron.h"
+
+
+
 
 #endif

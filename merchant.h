@@ -9,7 +9,9 @@ class Drow;
 class Vampire;
 class Troll;
 class Goblin;
-
+class Eason;
+class NightElf;
+class Aaron;
 
 class Merchant: public Enemy{
 	public:
@@ -21,6 +23,9 @@ class Merchant: public Enemy{
 	bool be_visit(Vampire& , Type t);
 	bool be_visit(Troll& , Type t);
 	bool be_visit(Goblin& , Type t);
+	bool be_visit(Eason& , Type t);
+	bool be_visit(NightElf& , Type t);
+	bool be_visit(Aaron & , Type t);
 	
 };
 
