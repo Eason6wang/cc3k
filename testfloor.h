@@ -20,6 +20,7 @@ class Display;
 class T_Floor{
 	std::vector<std::vector<std::shared_ptr<Object>>> board; //the board
 	std::shared_ptr<Player> thePlayer;
+ 	std::vector<std::shared_ptr<Dragon>> theDragon;
 	std::vector<std::shared_ptr<Object>> theEnemy;
 	Display& theDisplay;
 	int height;
@@ -31,8 +32,8 @@ class T_Floor{
 	void floorVisit(std::string s, Type type);
 	void clearFloor(bool cleanPlayer);
 	void initHelper(std::string file);
-    void init(std::string file); // set up the board according to the given floor in the file.
-    
+        void init(std::string file); // set up the board according to the given floor in the file.
+    	void windowPreprocessor(std::string message, int r, int c);
 	void pause();
 	std::string outPut();
 	

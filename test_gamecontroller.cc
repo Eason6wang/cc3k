@@ -19,7 +19,6 @@ T_GameController::T_GameController():t_floor{display}{}
 
 void T_GameController::play(string file){
 	srand(time(NULL));
-	cout << "enter the play()" << endl;
 	t_floor.initHelper(file);	
 	t_floor.init("level1.txt");
 	display.display();
@@ -38,19 +37,23 @@ void T_GameController::play(string file){
 				t_floor.pause();
 			} else if (cmd == "r") {
 				t_floor.clearFloor(true);
-				t_floor.init("level1.txt"); //remember to generate enemies again
+				t_floor.init("level1.txt"); //remember to generate from level one again
 			} else if (cmd == "q") {
-				throw false;
+				throw 'q';
 			} else {
-				cout << "move !!!!" << endl;
 				t_floor.floorVisit(cmd, MOVE);
 			}
 			display.display();
 		}
-		catch (bool restart) {
-			if (restart) {
-				shared_ptr<Window> endWindow = make_shared<Window>("endwindow.txt");
+		catch (char message) {
+			if (message == 'd') {
+				t_floor.windowPreprocessor("endwindow.txt", 23, 30);
+				shared_ptr<Window> endWindow = make_shared<Window>("modified_window.txt");
 				display.display(endWindow);
+			} else if (message == 'w'){
+				t_floor.windowPreprocessor("win.txt", 23, 30);
+				shared_ptr<Window> winWindow = make_shared<Window>("modified_window.txt");
+				display.display(winWindow);
 			} else {
 				throw;
 			}

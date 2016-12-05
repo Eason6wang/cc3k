@@ -62,7 +62,11 @@ void T_Floor::clearFloor(bool cleanplayer){
 	//	cout << "enter clear" << endl;
 	if (cleanplayer){
 		thePlayer = nullptr;
+		Merchant::revenge = false;
 	} else {
+		if (thePlayer->getPlayerInfo().level == 5){
+			throw 'w';
+		}
 		thePlayer->levelUp();
 	}
 	board.clear();
@@ -262,6 +266,11 @@ void T_Floor::init(string file){
 			//	theDisplay.w->notify(*board[target_r][target_c]);
 			} else if (exc.state == "pickup_gold"){
 					board[target_r][target_c] = make_shared<Tile>(target_c,target_r);
+			} else if(exc.state == "dragon_hoard"){
+				 auto deadDragon = find(theDragon.begin(),theDragon.end(),board[target_r][target_c]);
+			  	theDragon.erase(deadDragon);
+				board[target_r][target_c] = make_shared<Tile>(target_c, target_r);
+				 //theDisplay.w->notify(*board[target_r][target_c]);
 			} else {
 			// enemy is dead {
 			     //delete enemy
@@ -296,6 +305,8 @@ void T_Floor::init(string file){
 				}
 			}
 		}
+
+		theDisplay.w->notify(*board[target_r][target_c]);
 		if (!isSuccess) {
 				//cout << "false" << endl;
 		} else {
@@ -316,42 +327,58 @@ void T_Floor::init(string file){
 		theDisplay.w->notify(*board[target_r][target_c]);
 		theDisplay.p->notify(*thePlayer);
 
+	//enemy random move.
 		sort(theEnemy.begin(), theEnemy.end(), compare);
 		if (!stop) {
-			bool attacked = false;
+			int player_r = thePlayer->getPos().posy;
+			int player_c = thePlayer->getPos().posx;
+			bool playeraround = false;
+
+		    //dragon case
+		 for(int i = 0; i < theDragon.size(); i++){
+		    int dragonr = theDragon[i]->getPos().posy;
+		    int dragonc = theDragon[i]->getPos().posx;
+		    int hoardr = theDragon[i]->getHoardY();
+		    int hoardc = theDragon[i]->getHoardX();
+			if ((abs(player_r - dragonr) <= 1 && abs(player_c - dragonc) <= 1) ||
+			    (abs(player_r - hoardr) <= 1 && abs(player_c - hoardc) <= 1)){
+				playeraround = true;
+				try	{
+				//cout << "player is attacked" << endl;
+						theDragon[i]->visit(*thePlayer, ATTACK);
+				}
+				catch(VisitExcept & exc){
+					if (exc.state == "deadplayer"){
+						playeraround = true;
+						throw 'd';
+					}
+				}
+			}
+			if(playeraround){
+				theDisplay.p->notify(*thePlayer);
+			}
+		 }
+		    // other enemy
 			for (int i = 0; i < theEnemy.size(); i++){
+		    playeraround = false;
 				int r = theEnemy[i]->getPos().posy;
 				int c = theEnemy[i]->getPos().posx;
-				int player_r = thePlayer->getPos().posy;
-				int player_c = thePlayer->getPos().posx;
-				bool playeraround = false;
 				if (abs(player_r - r) <= 1 && abs(player_c - c) <= 1){
 					playeraround = true;
 					try	{
 					//cout << "player is attacked" << endl;
-						if (theEnemy[i]->getPos().style == DRAGON) {
-							if (!attacked){
-								theEnemy[i]->visit(*thePlayer, ATTACK);
-								attacked = true;
-							}
-								
-						} else {
 							theEnemy[i]->visit(*thePlayer, ATTACK);
-						}
 					}
 					catch(VisitExcept & exc){
 						if (exc.state == "deadplayer"){
-						//cout << "player is dead!!!!!!!!!!!!!!" << endl;
 							playeraround = true;
-							throw true;
+							throw 'd';
 						}
 					}
 				}
 				if (!playeraround){
 					vector<bool> possibility(8, false);
-					if ((theEnemy[i]->getPos().style != DRAGON)){
 						enemyMove(i, possibility);
-					}
 				} else {
 					theDisplay.p->notify(*thePlayer);
 				}
@@ -363,8 +390,8 @@ void T_Floor::init(string file){
 		//		
 		//theDisplay.display();
 		thePlayer->getPlayerInfo().action = "";
+	// "enemy random move complete" << endl;
 	}
-
 
 void T_Floor::pause(){
 	if (stop) stop = false;
@@ -423,9 +450,29 @@ bool T_Floor::enemyMove(int n, vector<bool>& possibility) {
 	} else {
 		enemyMove(n, possibility);
 	}
-    return false; //still need to check here.
+    return false;
 }
 
+void T_Floor::windowPreprocessor(string message, int r, int c){
+	ifstream f {message};
+	ofstream after {"modified_window.txt"};
+	string line;
+	for (int i = 0; i < height; i++){
+		getline(f, line);
+		if (i == r){
+			int gold = thePlayer->getPlayerInfo().gold;
+			string s = "Your score is: " + to_string(gold);
+			line.replace (c,s.length(),s);
+			after << line;
+			after << endl;
+		} else {
+			after << line;
+			after << endl;	
+		}
+	}
+	after.close();
+}
+	
 ostream &operator<<(ostream &out, const T_Floor &f){
 	out << *f.theDisplay.w; //this is window.
 	out << *f.theDisplay.p; //this is plane.

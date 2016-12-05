@@ -96,7 +96,7 @@ void D_Floor::init(string file){ // set up the board according to the given floo
 		getline(f, line);
 		for (int j = 0; j < width; j++){
 			if (line[j] == '.') {
-				o = make_shared<Tile>(j,i); //这个TILE可以不用输入的。
+				o = make_shared<Tile>(j,i);
 				//o->setAttributes(i, j, TILE, false, nullptr);
 			} else if (line[j] == '-') {
 				o = make_shared<Horizontal_Wall>(j,i);
@@ -343,6 +343,7 @@ void D_Floor::setPlayer(){ // generate player.
 					dragon->getHoardY() = position.posy;
 				//	if (gard == 0) continue;
 					board[randr][randc] = dragon;
+					theDisplay.w->notify(*board[randr][randc]);
 
 					o = make_shared<Dragon_Hoard>(position.posx, position.posy); //I expect the ctor of DH spawn a dragon here!!!!
 					dragon->attach(o);
@@ -354,7 +355,6 @@ void D_Floor::setPlayer(){ // generate player.
 			theDisplay.w->notify(*(*theChamber[n].c[pos]));
 			theChamber[n].c.erase(theChamber[n].c.begin() + pos);
 	//		break;
-
 	}
 
 
@@ -404,7 +404,6 @@ void D_Floor::setPlayer(){ // generate player.
 		}
 		o->getPos().chamber_num = n+1;	
 		theEnemy.emplace_back(o);
-
 		*(theChamber[n].c[pos]) = o;
 		theDisplay.w->notify(*(*theChamber[n].c[pos]));
 		theChamber[n].c.erase(theChamber[n].c.begin() + pos);
@@ -570,10 +569,6 @@ void D_Floor::setPlayer(){ // generate player.
 
 	//enemy random move.
 		sort(theEnemy.begin(), theEnemy.end(), compare);
-//	for (auto o: theEnemy){
-	//   	cout << getString(o->getPos().style) << endl;
-   //	}
-//	cout << "enemy random move start" << endl;
 		if (!stop) {
 			int player_r = thePlayer->getPos().posy;
 			int player_c = thePlayer->getPos().posx;
@@ -741,6 +736,7 @@ bool D_Floor::enemyMove(int n, vector<bool>& possibility) {
 				}
 		}
 	}
+    return false; 
 }
 
 void D_Floor::windowPreprocessor(string message, int r, int c){

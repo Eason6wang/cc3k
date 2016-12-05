@@ -309,7 +309,8 @@ bool be_attack(Enemy &enemy, Player &player){
        if(randomnum == 1){
           enemyHp -= damage;
        }else{
-	 newAction += "PC unsuccessfully attack L(" + to_string(enemyHp) +  "). " ;
+	      newAction += "PC unsuccessfully attack L(" + to_string(enemyHp) +  "). " ;
+          player.getPlayerInfo().action += newAction;
 	 return true;
        }
     } else {

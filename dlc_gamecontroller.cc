@@ -368,7 +368,6 @@ void D_GameController::play(string file){
 				throw;
 			}
 		}
-	//	mvaddstr(0,0,d_floor.outPut().c_str());//use display.
 		refresh();		
 	}
 }

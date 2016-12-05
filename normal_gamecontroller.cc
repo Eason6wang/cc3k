@@ -19,7 +19,6 @@ N_GameController::N_GameController():n_floor{display}{}
 
 void N_GameController::play(string file){
 	srand(time(NULL));
-	cout << "enter the play()" << endl;
 	shared_ptr<Window> theWindow = make_shared<Window>("normal_version.txt");
 	display.display(theWindow);
 	
@@ -42,22 +41,25 @@ void N_GameController::play(string file){
 				n_floor.clearFloor(true);
 				n_floor.init(file); //remember to generate enemies again
 			} else if (cmd == "q") {
-				throw false;
+				throw 'q';
 			} else {
-				cout << "move !!!!" << endl;
 				n_floor.floorVisit(cmd, MOVE);
 			}
 			display.display();
 		}
-		catch (bool restart) {
-			if (restart) {
-				shared_ptr<Window> endWindow = make_shared<Window>("endwindow.txt");
+		catch (char message) {
+			if (message == 'd') {
+				n_floor.windowPreprocessor("endwindow.txt", 23, 30);
+				shared_ptr<Window> endWindow = make_shared<Window>("modified_window.txt");
 				display.display(endWindow);
+			} else if (message == 'w'){
+				n_floor.windowPreprocessor("win.txt", 23, 30);
+				shared_ptr<Window> winWindow = make_shared<Window>("modified_window.txt");
+				display.display(winWindow);
 			} else {
 				throw;
 			}
         }
     }
 }
-				
 
