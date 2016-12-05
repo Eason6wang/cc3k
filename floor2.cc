@@ -50,7 +50,7 @@
 #include "dragon_hoard.h"
 #include "merchant_hoard.h"
 
-#include "buff.h"
+#include "buff.h" 
 #include "display.h"
 #include "visitexcept.h"
 	using namespace std;
@@ -94,7 +94,7 @@ void D_Floor::init(string file){ // set up the board according to the given floo
 				o = make_shared<Tile>(j,i); //这个TILE可以不用输入的。
 				//o->setAttributes(i, j, TILE, false, nullptr);
 			} else if (line[j] == '-') {
-				o = make_shared<Horizontal_Wall>(j,j);
+				o = make_shared<Horizontal_Wall>(j,i);
 			   // o->setAttributes(i, j, HORIZONTAL_WALL, false, nullptr);
 			} else if (line[j] == '|') {
 				o = make_shared<Vertical_Wall>(j,i);
@@ -327,20 +327,22 @@ void D_Floor::setPlayer(){ // generate player.
 					} while (!dragon->visit(*board[randr][randc], MOVE));
 					dragon->getPos().posx = randc;
 					dragon->getPos().posy = randr;
+					dragon->getHoardX() = position.posx;
+					dragon->getHoardY() = position.posy;
 				//	if (gard == 0) continue;
 					board[randr][randc] = dragon;
-					theEnemy.emplace_back(dragon);
-					theDisplay.w->notify(*board[randr][randc]);
 
 					o = make_shared<Dragon_Hoard>(position.posx, position.posy); //I expect the ctor of DH spawn a dragon here!!!!
-					auto anotherDragon = make_shared<Dragon>(position.posx, position.posy); //I expect the ctor of DH spawn a dragon here!!!!
-					theEnemy.emplace_back(anotherDragon);
+					dragon->attach(o);
+					theDragon.emplace_back(dragon);
+					theDisplay.w->notify(*board[randr][randc]);
 					break;
 					}
 			*(theChamber[n].c[pos]) = o;
 			theDisplay.w->notify(*(*theChamber[n].c[pos]));
 			theChamber[n].c.erase(theChamber[n].c.begin() + pos);
 	//		break;
+
 	}
 
 
@@ -394,7 +396,6 @@ void D_Floor::setPlayer(){ // generate player.
 		theDisplay.w->notify(*(*theChamber[n].c[pos]));
 		theChamber[n].c.erase(theChamber[n].c.begin() + pos);
 	}
-
 	void D_Floor::floorVisit(string s, Type type){
 		//cout << "enter floorvisit" << endl;
 		int r = thePlayer->getPos().posy;
@@ -447,13 +448,18 @@ void D_Floor::setPlayer(){ // generate player.
 			//	theDisplay.w->notify(*board[target_r][target_c]);
 			} else if (exc.state == "pickup_gold"){
 					board[target_r][target_c] = make_shared<Tile>(target_c,target_r);
+			} else if(exc.state == "dragon_hoard"){
+				 auto deadDragon = find(theDragon.begin(),theDragon.end(),board[target_r][target_c]);
+			  	theDragon.erase(deadDragon);
+				board[target_r][target_c] = make_shared<Tile>(target_c, target_r);
+				 theDisplay.w->notify(*board[target_r][target_c]);
 			} else {
 			// enemy is dead {
 			     //delete enemy
 			     auto deadEnemy = find(theEnemy.begin(),theEnemy.end(),board[target_r][target_c]);
 			     theEnemy.erase(deadEnemy);
 				if (exc.state == "small_hoard") {
-					board[target_r][target_c] = make_shared<Small_Hoard>(target_c, target_r);
+					board[target_r][target_c] = make_shared<Tile>(target_c, target_r);
 				} else if (exc.state == "merchant_hoard"){
 					board[target_r][target_c] = make_shared<Merchant_Hoard>(target_c, target_r);	
 				}else if (exc.state == "normal_hoard"){
@@ -481,6 +487,8 @@ void D_Floor::setPlayer(){ // generate player.
 				}
 			}
 		}
+
+		theDisplay.w->notify(*board[target_r][target_c]);
 		if (!isSuccess) {
 				//cout << "false" << endl;
 		} else {
@@ -509,26 +517,44 @@ void D_Floor::setPlayer(){ // generate player.
    //	}
 //	cout << "enemy random move start" << endl;
 		if (!stop) {
-			bool attacked = false;
+			int player_r = thePlayer->getPos().posy;
+			int player_c = thePlayer->getPos().posx;
+			bool playeraround = false;
+
+		    //dragon case
+		 for(int i = 0; i < theDragon.size(); i++){
+		    int dragonr = theDragon[i]->getPos().posy;
+		    int dragonc = theDragon[i]->getPos().posx;
+		    int hoardr = theDragon[i]->getHoardY();
+		    int hoardc = theDragon[i]->getHoardX();
+			if ((abs(player_r - dragonr) <= 1 && abs(player_c - dragonc) <= 1) ||
+			    (abs(player_r - hoardr) <= 1 && abs(player_c - hoardc) <= 1)){
+				playeraround = true;
+				try	{
+				//cout << "player is attacked" << endl;
+						theDragon[i]->visit(*thePlayer, ATTACK);
+				}
+				catch(VisitExcept & exc){
+					if (exc.state == "deadplayer"){
+						playeraround = true;
+						throw 'd';
+					}
+				}
+			}
+			if(playeraround){
+				theDisplay.p->notify(*thePlayer);
+			}
+		 }
+		    // other enemy
 			for (int i = 0; i < theEnemy.size(); i++){
+		    playeraround = false;
 				int r = theEnemy[i]->getPos().posy;
 				int c = theEnemy[i]->getPos().posx;
-				int player_r = thePlayer->getPos().posy;
-				int player_c = thePlayer->getPos().posx;
-				bool playeraround = false;
 				if (abs(player_r - r) <= 1 && abs(player_c - c) <= 1){
 					playeraround = true;
 					try	{
 					//cout << "player is attacked" << endl;
-						if (theEnemy[i]->getPos().style == DRAGON) {
-							if (!attacked){
-								theEnemy[i]->visit(*thePlayer, ATTACK);
-								attacked = true;
-							}
-								
-						} else {
 							theEnemy[i]->visit(*thePlayer, ATTACK);
-						}
 					}
 					catch(VisitExcept & exc){
 						if (exc.state == "deadplayer"){
@@ -539,9 +565,7 @@ void D_Floor::setPlayer(){ // generate player.
 				}
 				if (!playeraround){
 					vector<bool> possibility(8, false);
-					if ((theEnemy[i]->getPos().style != DRAGON)){
 						enemyMove(i, possibility);
-					}
 				} else {
 					theDisplay.p->notify(*thePlayer);
 				}
@@ -555,8 +579,6 @@ void D_Floor::setPlayer(){ // generate player.
 		thePlayer->getPlayerInfo().action = "";
 	//cout << "enemy random move complete" << endl;
 	}
-
-
 void D_Floor::pause(){
 	if (stop) stop = false;
 	else stop = true;

@@ -21,6 +21,7 @@ void N_GameController::play(string file){
 	srand(time(NULL));
 	cout << "enter the play()" << endl;
 	shared_ptr<Window> theWindow = make_shared<Window>("normal_version.txt");
+	generate_map ("pp.txt", 1000);
 	display.display(theWindow);
 	
 	n_floor.init(file);

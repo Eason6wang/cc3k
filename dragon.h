@@ -10,9 +10,13 @@ class Object;
 class Shade;
 
 class Dragon: public Enemy{
+    int hoardx;
+    int hoardy;
 public:
     Dragon(int, int);
 	bool visit(Object&, Type t) override;
+	int &getHoardX();
+	int &getHoardY();	
 	//be_visit
 //	bool be_visit(Shade& , Type t)override;
 //	bool be_visit(Drow& , Type t)override;
