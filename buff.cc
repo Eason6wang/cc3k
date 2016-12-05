@@ -1,5 +1,8 @@
 #include "buff.h"
 #include <curses.h>
+#include <vector>
+#include <fstream>
+#include <string>
 #include "object.h"
 #include"player.h"
 #include"enemy.h"
@@ -457,6 +460,130 @@ bool be_go_over(Player &player, Enemy &enemy){
 }
 
 
+
+char flop (char c) {
+	if (c == ' ') return '.';
+	if (c == '.') return ' ';
+	return '.';
+}
+
+void generate_map (std::string map0, int times) {
+	int height = 23;
+	int width = 77;
+	ifstream f {map0};
+	vector<string> s (25);
+	for (int i = 0; i < 25; i++) {
+		getline (f, s.at(i));
+	}
+	for (;times > 0; --times) {
+		int h = getRandom (1, height);
+		int w = getRandom (1, width);
+		if (s[h][w] == '|') {
+			int rand = getRandom (0, 1);
+			if (rand == 1) {
+				if (w-2 > 0 && 
+						(s[h][w-1] == ' ' || s[h][w-1] == '.') &&
+					(s[h][w-2] == ' ' || s[h][w-2] == '.'))	{
+						if (h-1 > 0 && h+1 < 22 && 
+								(s[h-1][w] == '|' || s[h-1][w] == '-') &&
+								(s[h+1][w] == '|' || s[h+1][w] == '-') &&
+								(s[h-1][w-1] == ' ' || s[h-1][w-1] == '.') &&
+								(s[h-1][w-2] == ' ' || s[h-1][w-2] == '.')) {
+							s[h][w] = flop (s[h][w-1]);
+							s[h][w-1] = s[h][w];
+							s[h-1][w] = s[h+1][w] = '-';
+							s[h-1][w-1] = '-';
+							s[h+1][w-1] = '-';
+							s[h-1][w-2] = '|';
+							s[h+1][w-2] = '|';
+							s[h][w-2] = '|';
+						}
+				}
+			}
+			else {
+				if (w+2 > 0 && 
+						(s[h][w+1] == ' ' || s[h][w+1] == '.') &&
+					(s[h][w+2] == ' ' || s[h][w+2] == '.'))	{
+						if (h-1 > 0 && h+1 < 22 && 
+								(s[h+1][w] == '|' || s[h+1][w] == '-') &&
+								(s[h-1][w] == '|' || s[h-1][w] == '-') &&
+								(s[h+1][w+1] == ' ' || s[h+1][w+1] == '.') &&
+								(s[h+1][w+2] == ' ' || s[h+1][w+2] == '.')) {
+							s[h][w] = flop (s[h][w+1]);
+							s[h][w+1] = s[h][w];
+							s[h+1][w] = s[h+1][w] = '-';
+							s[h+1][w+1] = '-';
+							s[h-1][w+1] = '-';
+							s[h+1][w+2] = '|';
+							s[h-1][w+2] = '|';
+							s[h][w+2] = '|';
+						}
+				}
+		}
+		}
+		if (s[h][w] == '-') {
+			int rand = getRandom (0, 1);
+			if (rand == 1) {
+				if (h-2 > 0 && 
+						(s[h-1][w] == ' ' || s[h-1][w] == '.') &&
+					(s[h-2][w] == ' ' || s[h-2][w] == '.'))	{
+						if (w-1 > 0 && w+1 < 76 && 
+								(s[h][w-1] == '-' || s[h][w-1] == '|') &&
+								(s[h][w+1] == '-' || s[h][w+1] == '|') &&
+								(s[h-1][w-1] == ' ' || s[h-1][w+1] == '.') &&
+								(s[h-2][w-1] == ' ' || s[h-2][w+1] == '.')) {
+							s[h][w] = flop (s[h-1][w]);
+							s[h-1][w] = s[h][w];
+							s[h][w-1] = s[h][w+1] = '|';
+							s[h-1][w-1] = '|';
+							s[h-1][w+1] = '|';
+							s[h-2][w-1] = '|';
+							s[h-2][w+1] = '|';
+							s[h-2][w] = '-';
+						}
+				}
+			}
+			else {
+				if (h+2 > 0 && 
+						(s[h+1][w] == ' ' || s[h+1][w] == '.') &&
+					(s[h+2][w] == ' ' || s[h+2][w] == '.'))	{
+						if (w-1 > 0 && w+1 < 76&& 
+								(s[h][w-1] == '-' || s[h][w-1] == '|') &&
+								(s[h][w+1] == '-' || s[h][w+1] == '|') &&
+								(s[h+1][w-1] == ' ' || s[h+1][w+1] == '.') &&
+								(s[h+2][w-1] == ' ' || s[h+2][w+1] == '.')) {
+							s[h][w] = flop (s[h+1][w]);
+							s[h][w-1] = s[h][w+1] = '|';
+							s[h+1][w] = s[h][w];
+							s[h+1][w-1] = '|';
+							s[h+1][w+1] = '|';
+							s[h+2][w-1] = '|';
+							s[h+2][w+1] = '|';
+							s[h+2][w] = '-';
+						}
+				}
+			}
+		}
+		for (int i = 1; i < 24; i++) {
+			for (int j = 1; j < 78; j++) {
+				if (s[i][j] == '-' && s[i-1][j] == ' ' && s[i+1][j] == ' ' ) {
+					s[i][j] = ' ';
+				} else if ((s[i][j] == '|' && s[i][j-1] == ' ' && s[i][j+1] == ' ') ||
+						(s[i][j] == '|' && s[i][j-1] == '|' && s[i][j+1] == ' ') ||
+						(s[i][j] == '|' && s[i][j-1] == ' ' && s[i][j+1] == '|')) {
+					s[i][j] = ' ';
+				} else if (j+3 < 78 && s[i][j] == '-' && s[i][j+1] == '|' && s[i][j+2] == '|' && s[i][j+3] == '-')  {
+					s[i][j] = s[i][j+1] = s[i][j+2] = s[i][j+3] = '-';
+				} else {}
+			}
+		}
+	}
+	ofstream o {"random_floor.txt"};
+	for (int i = 0; i < 25; i++) {
+		o << s.at(i);
+		o << endl;
+	}
+}
 
 
 

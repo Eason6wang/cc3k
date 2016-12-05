@@ -447,6 +447,10 @@ void D_Floor::setPlayer(){ // generate player.
 			//	theDisplay.w->notify(*board[target_r][target_c]);
 			} else if (exc.state == "pickup_gold"){
 					board[target_r][target_c] = make_shared<Tile>(target_c,target_r);
+			} else if (exc.state == "build") {
+					board[target_r][target_c] = make_shared<Vertical_Wall>(target_c,target_r);
+			} else if (exc.state == "destroy") {
+					board[target_r][target_c] = make_shared<Tile>(target_c,target_r);
 			} else {
 			// enemy is dead {
 			     //delete enemy
@@ -481,6 +485,7 @@ void D_Floor::setPlayer(){ // generate player.
 				}
 			}
 		}
+
 		if (!isSuccess) {
 				//cout << "false" << endl;
 		} else {

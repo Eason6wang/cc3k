@@ -1,4 +1,5 @@
 #include "GAME.h"
+#include "buff.h"
 
 int main(int argc, char* argv[]) {
     //iosfailure

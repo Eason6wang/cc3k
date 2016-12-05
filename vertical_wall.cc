@@ -4,12 +4,20 @@
 #include "vampire.h"
 #include "troll.h"
 #include "goblin.h"
+#include "aaron.h"
+#include "visitexcept.h"
 
 bool Vertical_Wall::be_visit (Shade& player, Type type){
 	if (type == MOVE){
 	    player.getPlayerInfo().action += "PC cannot go through the wall. ";
 	}
     return false;
+}
+bool Vertical_Wall::be_visit (Aaron& player, Type type){
+	if (type == ATTACK){
+		throw VisitExcept{"destroy", 1};
+	}
+	return false;
 }
 bool Vertical_Wall::be_visit (Drow& player, Type type){
 	if (type == MOVE){

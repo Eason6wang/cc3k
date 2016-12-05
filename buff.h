@@ -73,5 +73,6 @@ bool be_go_over(Potion &potion, Player &player);
 bool be_go_over(Enemy &enemy, Player &player);
 bool be_go_over(Player &player, Enemy &enemy);
 bool be_go_over(Treasure &treasure, Player &player);
+void generate_map (std::string map0 = "plainfloor.txt", int times = 100);
 
 #endif
