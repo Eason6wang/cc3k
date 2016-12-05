@@ -67,6 +67,7 @@ void D_Floor::clearFloor(bool cleanPlayer){
 	//	cout << "enter clear" << endl;
 	if (cleanPlayer){
 		thePlayer = nullptr;
+		Merchant::revenge = false;
 	} else {
 		if (thePlayer->getPlayerInfo().level == 5){
 			throw 'w';
@@ -497,7 +498,7 @@ void D_Floor::setPlayer(){ // generate player.
 				 auto deadDragon = find(theDragon.begin(),theDragon.end(),board[target_r][target_c]);
 			  	theDragon.erase(deadDragon);
 				board[target_r][target_c] = make_shared<Tile>(target_c, target_r);
-				 theDisplay.w->notify(*board[target_r][target_c]);
+				 //theDisplay.w->notify(*board[target_r][target_c]);
 			} else {
 			// enemy is dead {
 			     //delete enemy
@@ -505,6 +506,12 @@ void D_Floor::setPlayer(){ // generate player.
 			     theEnemy.erase(deadEnemy);
 				if (exc.state == "small_hoard") {
 					board[target_r][target_c] = make_shared<Tile>(target_c, target_r);
+				}
+					else if (exc.state == "destroy") {
+					board[target_r][target_c] = make_shared<Tile>(target_c, target_r);
+					}
+					else if (exc.state == "build") {
+					board[target_r][target_c] = make_shared<Vertical_Wall>(target_c, target_r);
 				} else if (exc.state == "merchant_hoard"){
 					board[target_r][target_c] = make_shared<Merchant_Hoard>(target_c, target_r);	
 				}else if (exc.state == "normal_hoard"){
@@ -722,7 +729,7 @@ bool D_Floor::enemyMove(int n, vector<bool>& possibility) {
 				} else if (!(possibility[1] &&  possibility[2] &&  possibility[3] &&
 					   	possibility[4] && possibility[5] && possibility[6] &&
 					   	possibility[7] && possibility[8])) {
-					enemyMove(n, possibility);
+			enemyMove(n, possibility);
 				} else { //in this case the enemy is surrounded by other stuff.
 				return false;
 				}
@@ -732,7 +739,7 @@ bool D_Floor::enemyMove(int n, vector<bool>& possibility) {
 
 void D_Floor::windowPreprocessor(string message, int r, int c){
 	ifstream f {message};
-	fstream after {"modified_window.txt"};
+	ofstream after {"modified_window.txt"};
 	string line;
 	for (int i = 0; i < height; i++){
 		getline(f, line);
