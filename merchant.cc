@@ -1,6 +1,9 @@
 #include"merchant.h"
 #include "shade.h"
 #include "buff.h"
+#include "eason.h"
+#include "nightelf.h"
+#include "aaron.h"
 
 Merchant::Merchant(int row, int col):
   Enemy{140, 20, 20, row, col, MERCHANT}{}
@@ -47,6 +50,27 @@ bool Merchant::be_visit(Troll& player, Type type){
 }
 
 bool Merchant::be_visit(Goblin& player, Type type){
+    if(type == ATTACK){
+      revenge = true;
+    }
+    return  be_visit_by(*this, player, type);
+}
+
+bool Merchant::be_visit(Aaron& player, Type type){
+    if(type == ATTACK){
+      revenge = true;
+    }
+    return  be_visit_by(*this, player, type);
+}
+
+bool Merchant::be_visit(Eason& player, Type type){
+    if(type == ATTACK){
+      revenge = true;
+    }
+    return  be_visit_by(*this, player, type);
+}
+
+bool Merchant::be_visit(NightElf& player, Type type){
     if(type == ATTACK){
       revenge = true;
     }

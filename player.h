@@ -6,38 +6,29 @@
 #include "type.h"
 #include "style.h"
 
-
 class Human;
 class Dwarf;
 class Halfling;
 class Elf;
 class Orc;
-/*class Dragon;
+class Dragon;
 class Merchant;
-class Small_Hoard;
-class Normal_Hoard;
-class Dragon_Hoard;
-class Merchant_Hoard;
-class Restore_Health;
-class Boost_Atk;
-class Boost_Def;
-class Poison_Health;
-class Wound_Atk;
-class Wound_Def;
-*/
+class BloodElf;
+class Worgen;
+class ForSaken ;
 
 class Player: public Character{
   	PlayerInfo playerInfo;
-	bool visible = true;
   public: 
-	virtual Info& getInfo () override;
-    PlayerInfo& getPlayerInfo();
-    Player(int hp, int atk, int def, int row, int col, Style style);
-    //Player(Player &);
-    virtual bool isvisible();
-    void levelUp();
-    virtual ~Player() = default;
+    	Player(int hp, int atk, int def, int row, int col, Style style);
+    	virtual ~Player() = default;
+	
+	virtual Info& getInfo () override;//from character class
+    	PlayerInfo& getPlayerInfo();// gold, level, potion, action
+   	void levelUp();
 
+	// player has be_visit method for every enemy
+	// every concrete player will have visit method
 	virtual bool be_visit(Human& , Type t) override;
 	virtual bool be_visit(Dwarf& , Type t) override;
 	virtual bool be_visit(Halfling& , Type t) override;
