@@ -47,6 +47,7 @@ For WASD control, even thought we can set shortcuts to enable the player move to
 
 Also, there is tiny possibility for the random generation fail causing segmentation fault(because of the size of the chamber may be too small, which is easy to handle)
 
-All dlc feature is displayed using curses.h, thanks to one of our member, our program managed to display with color.
+All the enemies in the same chamber with the player would chasing the player but with one specialcase: Merchant only chases the player under revenge mode. 
 
+All dlc feature is displayed using curses.h, thanks to one of our member, our program managed to display with color.
 
