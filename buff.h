@@ -20,6 +20,11 @@ class Enemy;
 class Item;
 class Dragon;
 class Aaron;
+class Eason;
+class NightElf;
+class BloodElf;
+class Worgen;
+class ForSaken;
 
 std::vector<std::pair<int, int>> findChar(std::vector<std::vector<char>> s, char c);
 

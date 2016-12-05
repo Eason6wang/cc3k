@@ -15,6 +15,8 @@ class Orc;
 class Dragon;
 class Merchant;
 class Aaron;
+class Eason;
+class NightElf;
 
 
 class Stair final:public Cell {
@@ -26,6 +28,8 @@ class Stair final:public Cell {
 	bool be_visit (Vampire &player, Type type) override;
 	bool be_visit (Troll &player, Type type) override;
 	bool be_visit (Goblin &player, Type type) override;
+	bool be_visit (Eason &enemy, Type type) override;
+	bool be_visit (NightElf &enemy, Type type) override;
 
 };
 

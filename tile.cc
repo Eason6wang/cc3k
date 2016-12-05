@@ -2,7 +2,12 @@
 #include "aaron.h"
 #include "visitexcept.h"
 #include "type.h"
-	
+#include "worgen.h"
+#include "forsaken.h"
+#include "bloodelf.h"
+#include "eason.h"
+#include "nightelf.h"
+
 Tile::Tile(int posx, int posy):Cell{posx, posy, TILE} {}
 
 bool Tile::be_visit (Aaron& player, Type type){
@@ -72,7 +77,23 @@ bool Tile::be_visit (Dragon& enemy, Type type){
     return false;
 }
 
-bool Tile::be_visit (Merchant& enemy, Type type){
+bool Tile::be_visit (Eason& enemy, Type type){
+	if (type == MOVE) return true;
+    return false;
+}
+bool Tile::be_visit (NightElf& enemy, Type type){
+	if (type == MOVE) return true;
+    return false;
+}
+bool Tile::be_visit (ForSaken& enemy, Type type){
+	if (type == MOVE) return true;
+    return false;
+}
+bool Tile::be_visit (Worgen& enemy, Type type){
+	if (type == MOVE) return true;
+    return false;
+}
+bool Tile::be_visit (BloodElf& enemy, Type type){
 	if (type == MOVE) return true;
     return false;
 }

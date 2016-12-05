@@ -9,6 +9,9 @@
 #include "elf.h"
 #include "orc.h"
 #include "dragon.h"
+#include "worgen.h"
+#include "forsaken.h"
+#include "bloodelf.h"
 /*#include "merchant.h"
 #include "small_hoard.h"
 #include "normal_Hoard.h"
@@ -161,4 +164,14 @@ bool Player::be_visit(Merchant& enemy, Type type){
 
  return be_visit_by(*this, enemy, type);
 
+}
+
+bool Player::be_visit(Worgen &enemy, Type type){
+    return be_visit_by(*this,enemy,type);
+}
+bool Player::be_visit(ForSaken &enemy, Type type){
+    return be_visit_by(*this,enemy,type);
+}
+bool Player::be_visit(BloodElf &enemy, Type type){
+    return be_visit_by(*this,enemy,type);
 }
